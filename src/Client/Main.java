@@ -1,10 +1,17 @@
 package Client;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.bullet.collision.shapes.CollisionShape;
+import com.jme3.bullet.control.RigidBodyControl;
+import com.jme3.bullet.util.CollisionShapeFactory;
+import com.jme3.input.KeyInput;
+import com.jme3.input.controls.ActionListener;
+import com.jme3.input.controls.KeyTrigger;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 
 /**
@@ -14,6 +21,9 @@ import com.jme3.scene.shape.Box;
  */
 public class Main extends SimpleApplication {
 
+    RigidBodyControl landscape;
+    Spatial sceneModel;
+    
     public static void main(String[] args) {
         Main app = new Main();
         app.start();
@@ -27,8 +37,15 @@ public class Main extends SimpleApplication {
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         mat.setColor("Color", ColorRGBA.Blue);
         geom.setMaterial(mat);
+        
+        sceneModel = assetManager.loadModel("Scenes/MainScene.j3o");
+        CollisionShape sceneShape = CollisionShapeFactory.createMeshShape(sceneModel);
+        landscape = new RigidBodyControl(sceneShape, 0);
+        sceneModel.addControl(landscape);
+        
 
         rootNode.attachChild(geom);
+        rootNode.attachChild(sceneModel);
     }
 
     @Override
@@ -40,4 +57,16 @@ public class Main extends SimpleApplication {
     public void simpleRender(RenderManager rm) {
         //TODO: add render code
     }
+    private void initiateControlls()
+    {
+        inputManager.addMapping("Forward", new KeyTrigger(KeyInput.KEY_W));
+    }
+    private final ActionListener actionListener = new ActionListener()
+    {
+        @Override
+        public void onAction(String name, boolean isPressed, float tpf)
+        {
+        }
+        
+    };
 }

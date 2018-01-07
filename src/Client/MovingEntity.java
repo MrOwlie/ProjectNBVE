@@ -6,6 +6,7 @@
 package Client;
 
 import static com.jme3.math.FastMath.PI;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 
@@ -14,22 +15,23 @@ import com.jme3.scene.Node;
  * @author Anton
  */
 public abstract class MovingEntity extends Node{
-    public static final float ANGULAR_VELOCITY = 2*PI/30f;
+    public static final float ACCELERATION = 5f;
     
     protected Vector3f truePosition;
     protected Vector3f trueDirection;
     protected Vector3f localDirection;
-    protected Vector3f chaseDirection;
     
     protected float speed;
+    
+    protected boolean truePositionReached;
     
     public void setTruePosition(Vector3f truePosition)
     {
         this.truePosition = truePosition;
-        this.chaseDirection = truePosition.subtract(this.getLocalTranslation()).normalize();
+        truePositionReached = false;
     }
     
-    public void setTrueVelocity(Vector3f trueDirection)
+    public void setTrueDirection(Vector3f trueDirection)
     {
         this.trueDirection = trueDirection;
     }
@@ -39,19 +41,33 @@ public abstract class MovingEntity extends Node{
         this.speed = speed;
     }
     
+    public void setLocalDirection(Vector3f localDirection)
+    {
+        this.localDirection = localDirection;
+    }
+    
+    public void setRotation(Quaternion rotation)
+    {
+        this.setLocalRotation(rotation);
+    }
+    
     public abstract void correctPosition(float tpf);
     
     public void correctDirection(float tpf)
     {
-        if(!localDirection.equals(chaseDirection))
+        Vector3f chaseDirection = 
+                truePosition.subtract(this.getLocalTranslation());
+        
+        if(!localDirection.normalize().equals(chaseDirection))
         {
-            float fraction = (tpf*ANGULAR_VELOCITY)/
-                            (localDirection.angleBetween(chaseDirection));
-            if(fraction >= 1f) localDirection = chaseDirection.clone();
+            float fraction = (tpf*ACCELERATION)/chaseDirection.length();
+            chaseDirection.normalizeLocal();
+            
+            if(fraction >= 1f) localDirection = chaseDirection;
             else
             {
                 localDirection.interpolateLocal(chaseDirection, fraction);
-                localDirection.normalizeLocal();
+                //localDirection.normalizeLocal();
             }
         }   
     }

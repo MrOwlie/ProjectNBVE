@@ -93,4 +93,28 @@ public class Packet {
         
     }
     
+    @Serializable
+    public static class Authenticate extends MyAbstractMessage {
+        protected String username;
+        protected String password;
+        
+        public Authenticate() {
+            
+        }
+        
+        public Authenticate(String username, String password) {
+            this.username = username;
+            this.password = password;
+        }
+        
+        public String getUsername() {
+            return this.username;
+        }
+        
+        public String getPassword() {
+            return this.password;
+        }
+        
+    }
+    
 }

@@ -38,6 +38,7 @@ public class Player {
     
     @SuppressWarnings("LeakingThisInConstructor")
     private Player(String username, int level, int exp, int ammo) {
+
         this.username = username;
         this.level = level;
         this.exp = exp;
@@ -97,5 +98,12 @@ public class Player {
         }
     }
     
+    public void takeDamage(int damage){
+        hp = hp - damage < 0 ? 0 : hp - damage;
+    }
+    
+    public void reload(){
+        this.ammo++;
+    }
     
 }

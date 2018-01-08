@@ -14,6 +14,7 @@ import com.jme3.network.Server;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import packets.Packet.KeyPressed;
 
 /**
  *
@@ -37,16 +38,19 @@ public class Networking implements MessageListener<HostedConnection>, Connection
 
     @Override
     public void messageReceived(HostedConnection source, Message m) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(m instanceof KeyPressed) {
+            System.out.println("Key pressed: " + ((KeyPressed) m).getKey());
+        }
     }
 
     @Override
     public void connectionAdded(Server server, HostedConnection conn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //Player joins game
+        
     }
 
     @Override
     public void connectionRemoved(Server server, HostedConnection conn) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 }

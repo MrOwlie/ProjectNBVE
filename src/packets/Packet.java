@@ -20,7 +20,7 @@ public class Packet {
         public MyAbstractMessage() {
         }
     }
-
+  
     @Serializable
     public static class TimeSync extends MyAbstractMessage {
         protected float time;
@@ -38,6 +38,7 @@ public class Packet {
         }
         
     }
+    
     @Serializable
     public static class TimeDiff extends MyAbstractMessage {
         protected float diff;
@@ -52,6 +53,42 @@ public class Packet {
         
         public float getDiff() {
             return this.diff;
+        }
+        
+    }
+    
+    @Serializable
+    public static class KeyPressed extends MyAbstractMessage {
+        protected byte key;
+        
+        public KeyPressed() {
+            
+        }
+        
+        public KeyPressed(byte key) {
+            this.key = key;
+        }
+        
+        public byte getKey() {
+            return this.key;
+        }
+        
+    }
+    
+    @Serializable
+    public static class KeyReleased extends MyAbstractMessage {
+        protected byte key;
+        
+        public KeyReleased() {
+            
+        }
+        
+        public KeyReleased(byte key) {
+            this.key = key;
+        }
+        
+        public byte getKey() {
+            return this.key;
         }
         
     }

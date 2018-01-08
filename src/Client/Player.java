@@ -67,26 +67,6 @@ public class Player extends MovingEntity{
         );
     }
     
-    public void levelUp()
-    {
-        //TODO
-    }
-    
-    public void takeDamage(int damage)
-    {
-        currentHealth = currentHealth - damage < 0 ? 0 : currentHealth - damage;
-    }
-    
-    public void reload(int nSnowballs)
-    {
-        this.nSnowballs += nSnowballs;
-    }
-    
-    public void awardExperince(int experience)
-    {
-        this.experience = experience;
-    }
-    
     @Override
     public void correctPosition(float tpf) 
     {

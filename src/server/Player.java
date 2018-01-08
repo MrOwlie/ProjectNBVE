@@ -27,15 +27,17 @@ public class Player {
     int hp;
     int maxHp;
     int dmg;
+    int nSnowballs;
     
     @SuppressWarnings("LeakingThisInConstructor")
-    private Player(String username, int level, int exp) {
+    private Player(String username, int level, int exp, int nSnowballs) {
         this.username = username;
         this.level = level;
         this.exp = exp;
         this.maxHp = 20 + (level * 5);
         this.hp = this.maxHp;
         this.dmg = 10 + (level * 1);
+        this.nSnowballs = nSnowballs;
     }
     
     static Player authenticate(String username, String password) {
@@ -69,5 +71,12 @@ public class Player {
         }
     }
     
+    public void takeDamage(int damage){
+        hp = hp - damage < 0 ? 0 : hp - damage;
+    }
+    
+    public void reload(int nSnowballs){
+        this.nSnowballs += nSnowballs;
+    }
     
 }

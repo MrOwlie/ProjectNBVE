@@ -22,6 +22,7 @@ public abstract class MovingEntity extends Node{
     protected Vector3f localDirection;
     
     protected float speed;
+    protected float correctionSpeed;
     
     protected boolean truePositionReached;
     

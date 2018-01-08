@@ -99,7 +99,7 @@ public class Player extends MovingEntity{
         {
             float distance = truePosition.subtract(this.getLocalTranslation()).length();
             
-            if(distance < tpf*speed)
+            if(distance < tpf*correctionSpeed)
             {
                 controller.warp(truePosition);
                 localDirection = trueDirection;
@@ -107,8 +107,7 @@ public class Player extends MovingEntity{
             }
             else
             {
-                correctDirection(tpf);
-                controller.warp(localDirection.mult(speed));
+                controller.warp(localDirection.mult(correctionSpeed));
             }
         }
     }   

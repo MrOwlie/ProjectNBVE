@@ -14,11 +14,26 @@ import java.util.ArrayList;
 public class Modeling implements Runnable
 {
     private static ArrayList<MovingEntity> movingEntities = new ArrayList<>();
-    private float currentTpf;
-    private float nextTpf;
+    private Player localPlayer;
+    private float currentTpf = 0f;
+    private float nextTpf = 0f;
+    private boolean running = true;
     
     public void run() 
     {
+        while(running)
+        {
+            if(getNextTpf() != 0f)
+            {
+                setCurrentTpf();
+                
+                for(MovingEntity entity : movingEntities)
+                {
+                    entity.correctDirection(currentTpf);
+                    entity.correctPosition(currentTpf);
+                }
+            }
+        }
     }
     
     public synchronized void updateTpf(float tpf)
@@ -26,9 +41,14 @@ public class Modeling implements Runnable
         this.nextTpf += tpf;
     }
     
-    private synchronized void setCurrentTpf(float tpf)
+    private synchronized void setCurrentTpf()
     {
         currentTpf = nextTpf;
         nextTpf = 0f;
+    }
+    
+    private synchronized float getNextTpf()
+    {
+        return nextTpf;
     }
 }

@@ -14,7 +14,9 @@ import com.jme3.network.Server;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import packets.Packet.Authenticate;
 import packets.Packet.KeyPressed;
+import packets.Packet.KeyReleased;
 
 /**
  *
@@ -38,8 +40,15 @@ public class Networking implements MessageListener<HostedConnection>, Connection
 
     @Override
     public void messageReceived(HostedConnection source, Message m) {
-        if(m instanceof KeyPressed) {
+        if(m instanceof Authenticate){
+            Authenticate packet = (Authenticate) m;
+            Player.authenticate(packet.getUsername(), packet.getPassword(), source);
+        }
+        
+        else if(m instanceof KeyPressed) {
             System.out.println("Key pressed: " + ((KeyPressed) m).getKey());
+        }else if(m instanceof KeyReleased) {
+            
         }
     }
 

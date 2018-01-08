@@ -5,6 +5,7 @@
  */
 package server;
 
+import com.jme3.network.HostedConnection;
 import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -36,8 +37,9 @@ public class Player {
     int dmg;
     int ammo;
     
-    @SuppressWarnings("LeakingThisInConstructor")
-    private Player(String username, int level, int exp, int ammo) {
+    HostedConnection connection;
+    
+    private Player(String username, HostedConnection connection, int level, int exp, int ammo) {
 
         this.username = username;
         this.level = level;
@@ -46,26 +48,25 @@ public class Player {
         this.hp = this.maxHp;
         this.dmg = 10 + (level * 1);
         this.ammo = ammo;
+        this.connection = connection;
     }
     
-    static Player authenticate(String username, String password) {
+    static void authenticate(String username, String password, HostedConnection connection) {
         List<String> account;
         try {
             account = Files.readAllLines(Paths.get("./Accounts/" + username));
             if(password.equals(account.get(0))){
-                Player player = new Player(username,    Integer.parseInt(account.get(1)), 
+                Player player = new Player(username,    connection,
+                                                        Integer.parseInt(account.get(1)), 
                                                         Integer.parseInt(account.get(2)), 
                                                         Integer.parseInt(account.get(3)));
                 Player.players.add(player);
-                return player;
-
             } else {
-                return null;
+                System.out.println("ERROR PASSWORD MISSMATCH! #" + password + "#" + account.get(0) + "#");
             }
         } catch (IOException ex) {
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
     }
     
     void save() throws IOException {

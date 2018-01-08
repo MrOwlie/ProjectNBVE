@@ -117,4 +117,21 @@ public class Packet {
         
     }
     
+    @Serializable
+    public static class Error extends MyAbstractMessage {
+        protected String error;
+        
+        public Error() {
+            
+        }
+        
+        public Error(String error) {
+            this.error = error;
+        }
+        
+        public String getError() {
+            return this.error;
+        }
+    }
+    
 }

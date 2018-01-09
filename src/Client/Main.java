@@ -54,6 +54,7 @@ public class Main extends SimpleApplication {
         refRootNode = rootNode;
         bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
+        this.flyCam.setMoveSpeed(333);
         Box b = new Box(1, 1, 1);
         Geometry geom = new Geometry("Box", b);
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");

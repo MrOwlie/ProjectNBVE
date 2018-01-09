@@ -55,8 +55,11 @@ public class Player extends MovingEntity{
         this.setLocalTranslation(startPos);
         
         controller = new BetterCharacterControl(CYLINDER_RADIUS, CYLINDER_HEIGHT, MASS);
-        this.addControl(controller);
+        //controller.warp(startPos);
+        controller.setGravity(new Vector3f(0f,1f,0f));
         Main.bulletAppState.getPhysicsSpace().add(controller);
+        Main.refRootNode.attachChild(this);
+        this.addControl(controller);
     }
     
     public Player (Vector3f startPos, Camera playerCam) // New character
@@ -74,12 +77,15 @@ public class Player extends MovingEntity{
     {
         Vector3f forward = playerCam.getDirection().clone().normalize();
         Vector3f left = playerCam.getLeft().clone().normalize();
+        forward.y = 0;
+        left.y = 0;
+        
         trueDirection.set(Vector3f.ZERO);
         
-        if(input[0])trueDirection.add(forward);
-        else if(input[1])trueDirection.add(left);
-        else if(input[2])trueDirection.add(forward.negate());
-        else if(input[3])trueDirection.add(left.negate());
+        if(input[0])trueDirection.addLocal(forward);
+        if(input[1])trueDirection.addLocal(left);
+        if(input[2])trueDirection.addLocal(forward.negate());
+        if(input[3])trueDirection.addLocal(left.negate());
         
         trueDirection.normalizeLocal();
     }

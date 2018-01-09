@@ -61,8 +61,8 @@ public class Main extends SimpleApplication {
         geom.setMaterial(mat);
         
         initiateMap();
+        initiateControlls();
         initiatePlayer();
-        bulletAppState.getPhysicsSpace().setGravity(new Vector3f(0, -9.81f, 0));
     }
 
     @Override
@@ -80,9 +80,12 @@ public class Main extends SimpleApplication {
     private void initiatePlayer()
     {
         flyCam.setEnabled(true);
-        player = new Player(new Vector3f(0f,20f,0f), cam);
+        player = new Player(new Vector3f(30f,20f,0f), cam);
+        Node camNode = new Node();
+        player.attachChild(camNode);
+        camNode.setLocalTranslation(new Vector3f(0f,5f,0f));
         myModel.addEntity(player);
-        chaseCam = new ChaseCamera(cam, player, inputManager);
+        chaseCam = new ChaseCamera(cam, camNode, inputManager);
         chaseCam.setMaxDistance(1f);
         chaseCam.setMinDistance(1f);
         chaseCam.setDragToRotate(false);

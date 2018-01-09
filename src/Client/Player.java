@@ -7,8 +7,7 @@ package Client;
 
 import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.Spatial;
+import com.jme3.renderer.Camera;
 
 /**
  *
@@ -17,7 +16,9 @@ import com.jme3.scene.Spatial;
 public class Player extends MovingEntity{
     public static final float CYLINDER_HEIGHT = 5f;
     public static final float CYLINDER_RADIUS = 2f;
-    public static final float MASS = 1f;
+    public static final float MASS = 5f;
+    
+    public static final float SPEED = 8f;
     
     public static final int START_LEVEL = 1;
     public static final int START_HEALTH = 50;
@@ -31,15 +32,17 @@ public class Player extends MovingEntity{
     private int maxHealth;
     private int dmg;
     
-    BetterCharacterControl controller;
-    Geometry model;
+    private BetterCharacterControl controller;
+    private Camera playerCam;
+    
+    private boolean input[] = new boolean[4];
     
     public Player (int level, 
             int nSnowballs, 
             int maxHealth, 
             int dmg, 
-            Vector3f startPos, 
-            Spatial model)
+            Vector3f startPos,
+            Camera playerCam)
     //Load existing character       
     // Kanske finns ett bättre sätt att få in datan till objektet?
     {
@@ -48,23 +51,37 @@ public class Player extends MovingEntity{
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
         this.dmg = dmg;
-        
+        this.playerCam = playerCam;
         this.setLocalTranslation(startPos);
         
         controller = new BetterCharacterControl(CYLINDER_RADIUS, CYLINDER_HEIGHT, MASS);
         this.addControl(controller);
-        this.attachChild(model);    
+        Main.bulletAppState.getPhysicsSpace().add(controller);
     }
     
-    public Player (Vector3f startPos, Spatial model) // New character
+    public Player (Vector3f startPos, Camera playerCam) // New character
     {
         this(START_LEVEL, 
                 START_SNOWBALLS, 
                 START_HEALTH, 
                 START_DMG, 
                 startPos,
-                model
+                playerCam
         );
+    }
+    
+    public void update()
+    {
+        Vector3f forward = playerCam.getDirection().clone().normalize();
+        Vector3f left = playerCam.getLeft().clone().normalize();
+        trueDirection.set(Vector3f.ZERO);
+        
+        if(input[0])trueDirection.add(forward);
+        else if(input[1])trueDirection.add(left);
+        else if(input[2])trueDirection.add(forward.negate());
+        else if(input[3])trueDirection.add(left.negate());
+        
+        trueDirection.normalizeLocal();
     }
     
     @Override
@@ -72,14 +89,14 @@ public class Player extends MovingEntity{
     {
         if(truePositionReached)
         {
-            controller.setWalkDirection(localDirection.mult(speed));
+            controller.setWalkDirection(trueDirection.mult(SPEED));
         }
         
         else
         {
             float distance = truePosition.subtract(this.getLocalTranslation()).length();
             
-            if(distance < tpf*correctionSpeed)
+            if(distance < tpf*CORRECTION_SPEED)
             {
                 controller.warp(truePosition);
                 localDirection = trueDirection;
@@ -87,8 +104,27 @@ public class Player extends MovingEntity{
             }
             else
             {
-                controller.warp(localDirection.mult(correctionSpeed));
+                controller.warp(localDirection.mult(CORRECTION_SPEED));
             }
         }
-    }   
+    }
+    
+    public void input(String name, boolean state)
+    {
+        switch(name)
+        {
+            case "W":
+                input[0] = state;
+                break;
+            case "A":
+                input[1] = state;
+                break;
+            case "S":
+                input[2] = state;
+                break;
+            case "D":
+                input[3] = state;
+                break;
+        }
+    }
 }

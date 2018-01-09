@@ -11,29 +11,25 @@ import java.util.ArrayList;
  *
  * @author Anton
  */
-public class Modeling implements Runnable
+public class Modeling
 {
-    private static ArrayList<MovingEntity> movingEntities = new ArrayList<>();
-    private Player localPlayer;
+    private ArrayList<MovingEntity> movingEntities = new ArrayList<>();
     private float currentTpf = 0f;
     private float nextTpf = 0f;
     private boolean running = true;
     
-    public void run() 
-    {
-        while(running)
+    public void update(float tpf) 
+    {            
+        for(MovingEntity entity : movingEntities)
         {
-            if(getNextTpf() != 0f)
-            {
-                setCurrentTpf();
-                
-                for(MovingEntity entity : movingEntities)
-                {
-                    entity.correctDirection(currentTpf);
-                    entity.correctPosition(currentTpf);
-                }
-            }
+            entity.correctDirection(tpf);
+            entity.correctPosition(tpf);
         }
+    }
+    
+    public void addEntity(MovingEntity entity)
+    {
+        movingEntities.add(entity);
     }
     
     public synchronized void updateTpf(float tpf)

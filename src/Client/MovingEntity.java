@@ -5,7 +5,6 @@
  */
 package Client;
 
-import static com.jme3.math.FastMath.PI;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
@@ -15,36 +14,29 @@ import com.jme3.scene.Node;
  * @author Anton
  */
 public abstract class MovingEntity extends Node{
-    public static final float ACCELERATION = 5f;
+    public static final float DIRECTION_CORRECTION_SPEED = 5f;
+    public static final float CORRECTION_SPEED = 10f;
     
-    protected Vector3f truePosition;
-    protected Vector3f trueDirection;
-    protected Vector3f localDirection;
+    protected Vector3f truePosition = this.getLocalTranslation();
+    protected Vector3f trueDirection = new Vector3f();
+    protected Vector3f localDirection = new Vector3f();
     
-    protected float speed;
-    protected float correctionSpeed;
+    protected boolean truePositionReached = true;
     
-    protected boolean truePositionReached;
     
     public void setTruePosition(Vector3f truePosition)
     {
-        this.truePosition = truePosition;
-        truePositionReached = false;
+        if(!this.getLocalTranslation().equals(truePosition))
+        {
+            this.truePosition = truePosition;
+            truePositionReached = false;
+            
+        }
     }
     
     public void setTrueDirection(Vector3f trueDirection)
     {
-        this.trueDirection = trueDirection;
-    }
-    
-    public void setSpeed(float speed)
-    {
-        this.speed = speed;
-    }
-    
-    public void setLocalDirection(Vector3f localDirection)
-    {
-        this.localDirection = localDirection;
+        this.trueDirection = trueDirection.normalize();
     }
     
     public void setRotation(Quaternion rotation)
@@ -59,9 +51,9 @@ public abstract class MovingEntity extends Node{
         Vector3f chaseDirection = 
                 truePosition.subtract(this.getLocalTranslation());
         
-        if(!localDirection.normalize().equals(chaseDirection))
+        if(!localDirection.normalize().equals(chaseDirection.normalize()))
         {
-            float fraction = (tpf*ACCELERATION)/chaseDirection.length();
+            float fraction = (tpf*DIRECTION_CORRECTION_SPEED)/chaseDirection.length();
             chaseDirection.normalizeLocal();
             
             if(fraction >= 1f) localDirection = chaseDirection;

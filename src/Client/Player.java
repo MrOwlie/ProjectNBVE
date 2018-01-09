@@ -73,7 +73,8 @@ public class Player extends MovingEntity{
         );
     }
     
-    public void update()
+    @Override
+    public void update(float tpf)
     {
         Vector3f forward = playerCam.getDirection().clone().normalize();
         Vector3f left = playerCam.getLeft().clone().normalize();
@@ -88,10 +89,13 @@ public class Player extends MovingEntity{
         if(input[3])trueDirection.addLocal(left.negate());
         
         trueDirection.normalizeLocal();
+        
+        correctDirection(tpf);
+        correctPosition(tpf);
     }
     
     @Override
-    public void correctPosition(float tpf) 
+    protected void correctPosition(float tpf) 
     {
         if(truePositionReached)
         {

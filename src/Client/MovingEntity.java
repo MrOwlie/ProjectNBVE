@@ -44,9 +44,15 @@ public abstract class MovingEntity extends Node{
         this.setLocalRotation(rotation);
     }
     
-    public abstract void correctPosition(float tpf);
+    public void update(float tpf)
+    {
+        correctDirection(tpf);
+        correctPosition(tpf);
+    }
     
-    public void correctDirection(float tpf)
+    protected abstract void correctPosition(float tpf);
+    
+    protected void correctDirection(float tpf)
     {
         Vector3f chaseDirection = 
                 truePosition.subtract(this.getLocalTranslation());

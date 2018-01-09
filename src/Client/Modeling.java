@@ -22,8 +22,7 @@ public class Modeling
     {            
         for(MovingEntity entity : movingEntities)
         {
-            entity.correctDirection(tpf);
-            entity.correctPosition(tpf);
+            entity.update(tpf);
         }
     }
     

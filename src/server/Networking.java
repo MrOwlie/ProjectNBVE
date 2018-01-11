@@ -40,6 +40,7 @@ public class Networking implements MessageListener<HostedConnection>, Connection
 
     @Override
     public void messageReceived(HostedConnection source, Message m) {
+        System.out.println("message recieved.");
         if(m instanceof Authenticate){
             Authenticate packet = (Authenticate) m;
             System.out.println(packet.getUsername() + "  :  " + packet.getPassword());
@@ -56,7 +57,7 @@ public class Networking implements MessageListener<HostedConnection>, Connection
     @Override
     public void connectionAdded(Server server, HostedConnection conn) {
         //Player joins game
-        
+        System.out.println("Player joined game.");
     }
 
     @Override

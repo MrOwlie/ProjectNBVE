@@ -1,11 +1,9 @@
 package server;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
+import com.jme3.bullet.BulletAppState;
 import com.jme3.renderer.RenderManager;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.shape.Box;
+import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import com.jme3.system.JmeContext;
 
@@ -14,6 +12,8 @@ import com.jme3.system.JmeContext;
  */
 public class Main extends SimpleApplication {
 
+    public static Node refRootNode;
+    public static BulletAppState bulletAppState;
     private static Main app;
 
     static Networking net;
@@ -31,6 +31,8 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         net = new Networking();
+        refRootNode = rootNode;
+        bulletAppState = new BulletAppState();
     }
 
     @Override

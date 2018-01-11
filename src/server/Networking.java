@@ -18,7 +18,6 @@ import java.util.logging.Logger;
 import packets.Packet;
 import packets.Packet.Authenticate;
 import packets.Packet.KeyPressed;
-import packets.Packet.KeyReleased;
 
 /**
  *
@@ -52,8 +51,6 @@ public class Networking implements MessageListener<HostedConnection>, Connection
         
         else if(m instanceof KeyPressed) {
             System.out.println("Key pressed: " + ((KeyPressed) m).getKey());
-        }else if(m instanceof KeyReleased) {
-            
         }
     }
 

@@ -5,6 +5,8 @@
  */
 package packets;
 
+import com.jme3.math.Quaternion;
+import com.jme3.math.Vector3f;
 import com.jme3.network.AbstractMessage;
 import com.jme3.network.serializing.Serializable;
 
@@ -59,23 +61,31 @@ public class Packet {
     
     @Serializable
     public static class KeyPressed extends MyAbstractMessage {
-        protected byte key;
+        protected String key;
+        protected boolean state;
         
         public KeyPressed() {
             
         }
         
-        public KeyPressed(byte key) {
+        public KeyPressed(String key, boolean state) {
             this.key = key;
+            this.state = state;
         }
         
-        public byte getKey() {
+        public String getKey() {
             return this.key;
+        }
+        
+        public boolean getState() {
+            return this.state;
         }
         
     }
     
-    @Serializable
+    
+    
+   /* @Serializable
     public static class KeyReleased extends MyAbstractMessage {
         protected byte key;
         
@@ -91,6 +101,40 @@ public class Packet {
             return this.key;
         }
         
+    }
+   */
+    @Serializable
+    public static class PlayerOrientation extends MyAbstractMessage
+    {
+        protected Vector3f forward;
+        protected Vector3f left;
+        
+        protected Quaternion modelOrientation;
+        
+        public PlayerOrientation(){
+        
+        }
+        
+        public PlayerOrientation(Vector3f forward, Vector3f left, Quaternion modelOrientation){
+            this.forward = forward;
+            this.left = left;
+            this.modelOrientation = modelOrientation;
+        }
+        
+        public Vector3f getLeft()
+        {
+            return left;
+        }
+        
+        public Vector3f getForward()
+        {
+            return forward;
+        }
+        
+        public Quaternion getModeOrientation()
+        {
+            return modelOrientation;
+        }
     }
     
     @Serializable
@@ -133,6 +177,26 @@ public class Packet {
         public String getError() {
             return this.error;
         }
+    }
+    
+    public static class UpdateEntity extends MyAbstractMessage {
+        int entityId;
+        
+        Vector3f truePosition;
+        Vector3f trueDirection;
+        
+        Quaternion entityOrientation;
+        
+        public UpdateEntity(){
+            
+        }
+        
+        public UpdateEntity(Vector3f truePosition, Vector3f trueDirection, Quaternion entityOrientation, int entityId){
+            this.entityId = entityId;
+            this.truePosition = truePosition;
+            this.trueDirection = trueDirection;
+        }
+        
     }
     
 }

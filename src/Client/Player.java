@@ -35,17 +35,18 @@ public class Player extends MovingEntity{
     private BetterCharacterControl controller;
     private Camera playerCam;
     
-    private boolean input[] = new boolean[4];
+    private boolean input[] = new boolean[5];
     
     public Player (int level, 
             int nSnowballs, 
             int maxHealth, 
             int dmg, 
             Vector3f startPos,
-            Camera playerCam)
-    //Load existing character       
-    // Kanske finns ett bättre sätt att få in datan till objektet?
+            Camera playerCam,
+            int entityId)
     {
+        super(entityId);
+        
         this.level = level;
         this.nSnowballs = nSnowballs;
         this.maxHealth = maxHealth;
@@ -55,43 +56,47 @@ public class Player extends MovingEntity{
         this.setLocalTranslation(startPos);
         
         controller = new BetterCharacterControl(CYLINDER_RADIUS, CYLINDER_HEIGHT, MASS);
-        //controller.warp(startPos);
+        controller.warp(startPos);
         controller.setGravity(new Vector3f(0f,1f,0f));
         Main.bulletAppState.getPhysicsSpace().add(controller);
         Main.refRootNode.attachChild(this);
         this.addControl(controller);
     }
     
-    public Player (Vector3f startPos, Camera playerCam) // New character
+    public Player (Vector3f startPos, Camera playerCam, int entityId) // New character
     {
         this(START_LEVEL, 
                 START_SNOWBALLS, 
                 START_HEALTH, 
                 START_DMG, 
                 startPos,
-                playerCam
+                playerCam,
+                entityId
         );
     }
     
     @Override
     public void update(float tpf)
     {
-        Vector3f forward = playerCam.getDirection().clone().normalize();
-        Vector3f left = playerCam.getLeft().clone().normalize();
-        forward.y = 0;
-        left.y = 0;
-        
-        trueDirection.set(Vector3f.ZERO);
-        
-        if(input[0])trueDirection.addLocal(forward);
-        if(input[1])trueDirection.addLocal(left);
-        if(input[2])trueDirection.addLocal(forward.negate());
-        if(input[3])trueDirection.addLocal(left.negate());
-        
-        trueDirection.normalizeLocal();
-        
-        correctDirection(tpf);
-        correctPosition(tpf);
+        if(controller.isOnGround())
+        {
+            Vector3f forward = playerCam.getDirection().clone().normalize();
+            Vector3f left = playerCam.getLeft().clone().normalize();
+            forward.y = 0;
+            left.y = 0;
+
+            trueDirection.set(Vector3f.ZERO);
+
+            if(input[0])trueDirection.addLocal(forward);
+            if(input[1])trueDirection.addLocal(left);
+            if(input[2])trueDirection.addLocal(forward.negate());
+            if(input[3])trueDirection.addLocal(left.negate());
+            if(input[4])controller.jump();
+            trueDirection.normalizeLocal();
+
+            correctDirection(tpf);
+            correctPosition(tpf);
+        }
     }
     
     @Override
@@ -135,6 +140,8 @@ public class Player extends MovingEntity{
             case "D":
                 input[3] = state;
                 break;
+            case "Jump":
+                input[4] = state;
         }
     }
 }

@@ -5,17 +5,16 @@
  */
 package server;
 
+import com.jme3.bullet.control.BetterCharacterControl;
+import com.jme3.math.Vector3f;
 import com.jme3.network.HostedConnection;
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -25,9 +24,17 @@ import java.util.logging.Logger;
  *
  * @author fredr
  */
-public class Player {
+public class Player extends MovingEntity {
+    public static final float CYLINDER_HEIGHT = 5f;
+    public static final float CYLINDER_RADIUS = 2f;
+    public static final float MASS = 5f;
+    public static final float SPEED = 8f;
     
     static ArrayList<Player> players;
+    
+    private boolean[] input = new boolean[6];
+    Vector3f playerLeft = new Vector3f();
+    Vector3f playerForward = new Vector3f();
     
     String username;
     int level;
@@ -38,8 +45,10 @@ public class Player {
     int ammo;
     
     HostedConnection connection;
+    BetterCharacterControl controller;
     
-    private Player(String username, HostedConnection connection, int level, int exp, int ammo, float x, float y) {
+    
+    private Player(String username, HostedConnection connection, int level, int exp, int ammo, float startX,  float startY, float startZ) {
 
         this.username = username;
         this.level = level;
@@ -49,6 +58,14 @@ public class Player {
         this.dmg = 10 + (level * 1);
         this.ammo = ammo;
         this.connection = connection;
+        this.direction = new Vector3f();
+        this.controller = new BetterCharacterControl(CYLINDER_RADIUS, CYLINDER_HEIGHT, MASS);
+        this.setLocalTranslation(startX, startY, startZ);
+        
+        Main.bulletAppState.getPhysicsSpace().add(controller);
+        Main.refRootNode.attachChild(this);
+        this.addControl(controller);
+        
     }
     
     static void authenticate(String username, String password, HostedConnection connection) {
@@ -123,6 +140,52 @@ public class Player {
     
     public void reload(){
         this.ammo++;
+    }
+
+    @Override
+    public synchronized void update(float tpf) 
+    {
+        if(controller.isOnGround())
+        {
+            direction.set(Vector3f.ZERO);
+
+            if(input[0])direction.addLocal(playerForward);
+            if(input[1])direction.addLocal(playerLeft);
+            if(input[2])direction.addLocal(playerForward.negate());
+            if(input[3])direction.addLocal(playerLeft.negate());
+            if(input[4])controller.jump();
+            
+            direction.normalizeLocal();
+            
+            controller.setWalkDirection(direction.mult(SPEED));
+        }
+    }
+    
+    public synchronized void setForwardAndLeft(float xForward, float zForward, float xLeft, float zLeft)
+    {
+        playerLeft.set(xLeft, 0f, zLeft);
+        playerForward.set(xForward, 0f, zForward);
+    }
+    
+    public synchronized void input(String name, boolean state)
+    {
+        switch(name)
+        {
+            case "W":
+                input[0] = state;
+                break;
+            case "A":
+                input[1] = state;
+                break;
+            case "S":
+                input[2] = state;
+                break;
+            case "D":
+                input[3] = state;
+                break;
+            case "Jump":
+                input[4] = state;
+        }
     }
     
 }

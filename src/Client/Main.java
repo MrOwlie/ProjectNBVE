@@ -54,7 +54,7 @@ public class Main extends SimpleApplication {
     Boolean isLoggedIn;
     
     Client myClient;
-    Modeling myModel = new Modeling();
+    Modeling myModel;
     ChaseCamera chaseCam;
     Player player;
     
@@ -77,6 +77,7 @@ public class Main extends SimpleApplication {
         this.isLoggedIn = false;
         refRootNode = rootNode;
         bulletAppState = new BulletAppState();
+        myModel = new Modeling();
         stateManager.attach(bulletAppState);
         this.flyCam.setMoveSpeed(333);
         
@@ -184,7 +185,7 @@ public class Main extends SimpleApplication {
     private void initiatePlayer()
     {
         flyCam.setEnabled(true);
-        player = new Player(new Vector3f(30f,20f,0f), cam);
+        player = new Player(new Vector3f(30f,20f,0f), cam, 1); //Dummy id
         Node camNode = new Node();
         player.attachChild(camNode);
         camNode.setLocalTranslation(new Vector3f(0f,5f,0f));

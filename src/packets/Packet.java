@@ -163,7 +163,6 @@ public class Packet {
     
     @Serializable
     public static class AuthPlayer extends MyAbstractMessage {
-        protected int id;
         protected int level;
         protected int exp;
         protected int ammo;
@@ -182,10 +181,6 @@ public class Packet {
             this.x = x;
             this.y = y;
             this.z = z;
-        }
-        
-        int getId() {
-            return this.id;
         }
         
         int getLevel() {

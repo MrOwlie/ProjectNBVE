@@ -51,6 +51,7 @@ public class Main extends SimpleApplication {
     Spatial sceneModel;
     
     LoginScreen loginScreen;
+    static Nifty nifty;
     Boolean isLoggedIn;
     
     Client myClient;
@@ -72,6 +73,7 @@ public class Main extends SimpleApplication {
     public void simpleInitApp() {
         
         Serializer.registerClass(Packet.Authenticate.class);
+        Serializer.registerClass(Packet.AuthPlayer.class);
         
         
         this.isLoggedIn = false;
@@ -95,7 +97,7 @@ public class Main extends SimpleApplication {
         
         NiftyJmeDisplay niftyDisplay = NiftyJmeDisplay.newNiftyJmeDisplay(
             assetManager, inputManager, audioRenderer, guiViewPort);
-        Nifty nifty = niftyDisplay.getNifty();
+        nifty = niftyDisplay.getNifty();
         guiViewPort.addProcessor(niftyDisplay);
         flyCam.setDragToRotate(true);
 

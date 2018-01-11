@@ -121,6 +121,8 @@ public class Player extends MovingEntity {
         bw.write("" + this.getLocalTranslation().y);
         bw.newLine();
         bw.write("" + this.getLocalTranslation().z);
+        
+        bw.close();
     }
     
     static void create(String username, String password) throws IOException {
@@ -129,26 +131,29 @@ public class Player extends MovingEntity {
         
         bw.write(password);
         bw.newLine();
-        bw.write(0);
+        bw.write("0");
         bw.newLine();
-        bw.write(0);
+        bw.write("0");
         bw.newLine();
-        bw.write(0);
+        bw.write("0");
         bw.newLine();
-        bw.write(0);
+        bw.write("0");
         bw.newLine();
-        bw.write(0);
+        bw.write("0");
         bw.newLine();
-        bw.write(0);
+        bw.write("0");
+        
+        bw.close();
         
     }
     
-    void addExp(int exp) {
+    void addExp() {
+        int exp = 50;
         if(this.level < 10) {
-            if(this.exp + exp < 100) {
+            if(this.exp + exp < 100 * this.level) {
                 this.exp += exp;
             } else {
-                this.exp = this.exp + exp - 100;
+                this.exp = this.exp + exp - 100 * this.level;
                 this.level++;
                 this.maxHp = 20 + (level * 5);
                 this.dmg = 10 + (level * 1);

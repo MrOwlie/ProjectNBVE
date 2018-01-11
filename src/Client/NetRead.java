@@ -23,6 +23,8 @@ public class NetRead implements MessageListener<Client>
         if(m instanceof TimeSync)
         {
             
+        } else if(m instanceof AuthPlayer) {
+            Main.nifty.gotoScreen("asd");
         }
     }
     

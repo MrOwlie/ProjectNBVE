@@ -14,6 +14,7 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.network.Client;
 import com.jme3.network.Network;
+import com.jme3.network.serializing.Serializer;
 import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
@@ -28,6 +29,7 @@ import de.lessvoid.nifty.controls.button.builder.ButtonBuilder;
 import de.lessvoid.nifty.controls.chatcontrol.builder.ChatBuilder;
 import de.lessvoid.nifty.controls.textfield.builder.TextFieldBuilder;
 import de.lessvoid.nifty.screen.DefaultScreenController;
+import packets.Packet;
 
 
 /**
@@ -37,7 +39,7 @@ import de.lessvoid.nifty.screen.DefaultScreenController;
  */
 public class Main extends SimpleApplication {
     //Constans
-    public static final String NAME = "MultiDisk";
+    public static final String NAME = "UCS";
     public static final String DEFAULT_SERVER = "mrowlie.asuscomm.com";
     public static final int PORT = 2000;
     public static final int VERSION = 1;
@@ -68,6 +70,10 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
+        
+        Serializer.registerClass(Packet.Authenticate.class);
+        
+        
         this.isLoggedIn = false;
         refRootNode = rootNode;
         bulletAppState = new BulletAppState();
@@ -109,7 +115,7 @@ public class Main extends SimpleApplication {
                    alignRight();
                     // GUI elements
                     control(new TextFieldBuilder("Username", ""){{
-                        
+                        id("username");
                         alignRight();
                         height("15px");
                         width("100px");
@@ -117,7 +123,8 @@ public class Main extends SimpleApplication {
                         valignBottom();
                     }});
                     control(new TextFieldBuilder("Password", ""){{
-                        
+                        id("password");
+                        passwordChar("*".charAt(0));
                         alignRight();
                         height("15px");
                         width("100px");
@@ -131,7 +138,7 @@ public class Main extends SimpleApplication {
                         height("15px");
                         width("100px");
                         
-                        interactOnClick("authenticate(test, test)");
+                        interactOnClick("authenticate()");
                         
                         valignBottom();
                     }});
@@ -157,6 +164,7 @@ public class Main extends SimpleApplication {
         initiateMap();
         initiateControlls();
         initiatePlayer();
+        initiateClient();
     }
 
     @Override
@@ -191,9 +199,11 @@ public class Main extends SimpleApplication {
         try
         {
             NetRead netRead =  new NetRead();
-                myClient = Network.connectToServer(NAME, VERSION, DEFAULT_SERVER, PORT, PORT);
-                myClient.addMessageListener(netRead);
-                myClient.start(); 
+            myClient = Network.connectToServer(NAME, VERSION, DEFAULT_SERVER, PORT, PORT);
+            myClient.addMessageListener(netRead);
+            myClient.start();
+            Thread netWriteThread = new Thread(new NetWrite(myClient));
+            netWriteThread.start();
         }
         catch(Exception e)
         {

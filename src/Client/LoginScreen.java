@@ -6,6 +6,8 @@
 package Client;
 
 import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.controls.TextField;
+import de.lessvoid.nifty.elements.Element;
 import de.lessvoid.nifty.screen.Screen;
 import de.lessvoid.nifty.screen.ScreenController;
 
@@ -13,14 +15,18 @@ import de.lessvoid.nifty.screen.ScreenController;
  *
  * @author mrowlie
  */
-class LoginScreen implements ScreenController{
+public class LoginScreen implements ScreenController{
 
     Nifty nifty;
     Screen screen;
     
-    public boolean authenticate(String username, String password) {
-        System.out.println(username + " : " + password);
-        return true;
+    public void authenticate() {
+        Element userBox = nifty.getCurrentScreen().findElementById("username");
+        Element passBox = nifty.getCurrentScreen().findElementById("password");
+        String username = userBox.getNiftyControl(TextField.class).getRealText();
+        String password = passBox.getNiftyControl(TextField.class).getRealText();
+        
+        NetWrite.authenticate(username, password);
     }
     
     @Override

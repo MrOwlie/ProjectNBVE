@@ -16,6 +16,9 @@ public class Main extends SimpleApplication {
 
     private static Main app;
 
+    static Networking net;
+    
+    
     public static void main(String[] args){
         Main application = new Main();
         AppSettings newSettings = new AppSettings(true);
@@ -27,7 +30,7 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
-        
+        net = new Networking();
     }
 
     @Override

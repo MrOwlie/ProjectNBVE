@@ -9,6 +9,7 @@ import com.jme3.network.Client;
 import com.jme3.network.Message;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.logging.Level;
+import packets.Packet;
 
 /**
  *
@@ -23,6 +24,11 @@ public class NetWrite implements Runnable
     public NetWrite(Client myClient)
     {
         this.myClient = myClient;
+    }
+    
+    public static void authenticate(String username, String password) {
+        messageQueue.add(new Packet.Authenticate(username, password));
+        System.out.println("sending auth packet");
     }
 
     @Override

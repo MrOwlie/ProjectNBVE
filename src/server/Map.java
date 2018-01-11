@@ -27,8 +27,8 @@ public class Map {
         sceneModel.addControl(landscape);
         
 
-        rootNode.attachChild(geom);
-        rootNode.attachChild(sceneModel);
+        //rootNode.attachChild(geom);
+        //rootNode.attachChild(sceneModel);
     }
     
     

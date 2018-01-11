@@ -23,15 +23,15 @@ import packets.Packet.KeyReleased;
  * @author fredr
  */
 public class Networking implements MessageListener<HostedConnection>, ConnectionListener {
-    Server server;
+    public static Server server;
     
     public Networking() {
         
         
         
         try {
-            this.server = Network.createServer("snowball", 0, 2000, 2000);
-            this.server.start();
+            Networking.server = Network.createServer("UCS", 0, 2000, 2000);
+            Networking.server.start();
         } catch (IOException ex) {
             Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -42,6 +42,7 @@ public class Networking implements MessageListener<HostedConnection>, Connection
     public void messageReceived(HostedConnection source, Message m) {
         if(m instanceof Authenticate){
             Authenticate packet = (Authenticate) m;
+            System.out.println(packet.getUsername() + "  :  " + packet.getPassword());
             Player.authenticate(packet.getUsername(), packet.getPassword(), source);
         }
         

@@ -14,7 +14,20 @@ import com.jme3.scene.Node;
  */
 public abstract class MovingEntity extends Node 
 {
-    protected Vector3f direction;
+    private static int nextId = 0;
+    
+    protected Vector3f direction = new Vector3f();
+    protected int entityId;
+    
+    public MovingEntity()
+    {
+        entityId = nextId++;
+    }
+    
+    public int getEntityId()
+    {
+        return entityId;
+    }
     
     public abstract void update(float tpf);
     

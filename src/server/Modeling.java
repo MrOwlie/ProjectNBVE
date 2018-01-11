@@ -5,8 +5,7 @@
  */
 package server;
 
-import com.jme3.network.Message;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import packets.Packet.PlayerOrientation;
 
@@ -19,7 +18,7 @@ public class Modeling
     private static ConcurrentLinkedQueue<PlayerOrientation> playerUpdateQueue = new ConcurrentLinkedQueue<PlayerOrientation>();
     
     public static final float UPDATE_FREQUENCY = 0.1f;
-    private ArrayList<MovingEntity> entities = new ArrayList<>();
+    private static HashMap<Integer, MovingEntity> entities = new HashMap<Integer, MovingEntity>();
     private float timeSinceLastUpdate;
     private boolean update;
     
@@ -28,30 +27,44 @@ public class Modeling
         while(!playerUpdateQueue.isEmpty())
         {
             PlayerOrientation newOrientation = playerUpdateQueue.remove();
+            int entityId = newOrientation.getEntityId();        
+            Player player = (Player)entities.get(entityId);
+            if(player != null)
+            {
+                player.setLocalRotation(newOrientation.getModelOrientation());
+                player.setForwardAndLeft(newOrientation.getForward(), newOrientation.getLeft());
+            }
         }
+        
         timeSinceLastUpdate += tpf;
         if(timeSinceLastUpdate >= UPDATE_FREQUENCY)
         {
             update = true;
             timeSinceLastUpdate = 0f;
         }
-        for(MovingEntity entity : entities)
+        
+        for(MovingEntity entity : entities.values())
         {
             entity.update(tpf);
             if(update)
             {
-                // Send update to ALL clients
+              // Send update to ALL clients
             }             
         }
     }
     
-    public void addEntity(MovingEntity entity)
+    public static void addEntity(MovingEntity entity)
     {
-        entities.add(entity);
+        entities.put(entity.getEntityId(), entity);
     }
     
-    public static void addPlayerUpdate(Message playerupdate)
+    public static void removeEntity(int entityId)
     {
-        playerUpdateQueue.add(playerupdate);
+        entities.remove(entityId);
+    }
+    
+    public static void addPlayerUpdate(PlayerOrientation playerUpdate)
+    {
+        playerUpdateQueue.add(playerUpdate);
     }
 }

@@ -11,9 +11,11 @@ import com.jme3.network.Message;
 import com.jme3.network.MessageListener;
 import com.jme3.network.Network;
 import com.jme3.network.Server;
+import com.jme3.network.serializing.Serializer;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import packets.Packet;
 import packets.Packet.Authenticate;
 import packets.Packet.KeyPressed;
 import packets.Packet.KeyReleased;
@@ -26,11 +28,12 @@ public class Networking implements MessageListener<HostedConnection>, Connection
     public static Server server;
     
     public Networking() {
-        
+        Serializer.registerClass(Packet.Authenticate.class);
         
         
         try {
-            Networking.server = Network.createServer("UCS", 0, 2000, 2000);
+            Networking.server = Network.createServer("UCS", 1, 2000, 2000);
+            Networking.server.addMessageListener(this);
             Networking.server.start();
         } catch (IOException ex) {
             Logger.getLogger(Networking.class.getName()).log(Level.SEVERE, null, ex);

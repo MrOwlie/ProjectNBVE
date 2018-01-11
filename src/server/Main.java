@@ -33,6 +33,7 @@ public class Main extends SimpleApplication {
         net = new Networking();
         refRootNode = rootNode;
         bulletAppState = new BulletAppState();
+        net = new Networking();
     }
 
     @Override

@@ -5,17 +5,16 @@
  */
 package server;
 
+import com.jme3.bullet.control.BetterCharacterControl;
+import com.jme3.math.Vector3f;
 import com.jme3.network.HostedConnection;
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -25,8 +24,11 @@ import java.util.logging.Logger;
  *
  * @author fredr
  */
-public class Player {
-    
+public class Player extends MovingEntity {
+    public static final float CYLINDER_HEIGHT = 5f;
+    public static final float CYLINDER_RADIUS = 2f;
+    public static final float MASS = 5f;
+    public static final float SPEED = 8f;
     static ArrayList<Player> players;
     
     String username;
@@ -38,6 +40,8 @@ public class Player {
     int ammo;
     
     HostedConnection connection;
+    BetterCharacterControl controller;
+    Vector3f direction;
     
     private Player(String username, HostedConnection connection, int level, int exp, int ammo) {
 
@@ -49,6 +53,8 @@ public class Player {
         this.dmg = 10 + (level * 1);
         this.ammo = ammo;
         this.connection = connection;
+        this.direction = new Vector3f();
+        this.controller = new BetterCharacterControl(CYLINDER_RADIUS, CYLINDER_HEIGHT, MASS);
     }
     
     static void authenticate(String username, String password, HostedConnection connection) {
@@ -105,6 +111,12 @@ public class Player {
     
     public void reload(){
         this.ammo++;
+    }
+
+    @Override
+    public void update(float tpf) 
+    {
+        controller.setWalkDirection(direction.mult(SPEED));
     }
     
 }

@@ -229,7 +229,8 @@ public class Main extends SimpleApplication {
         inputManager.addMapping("S", new KeyTrigger(KeyInput.KEY_S));
         inputManager.addMapping("A", new KeyTrigger(KeyInput.KEY_A));
         inputManager.addMapping("D", new KeyTrigger(KeyInput.KEY_D));
-        inputManager.addListener(actionListener, "W", "A", "S", "D");
+        inputManager.addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE));
+        inputManager.addListener(actionListener, "W", "A", "S", "D", "Jump");
     }
     private final ActionListener actionListener = new ActionListener()
     {

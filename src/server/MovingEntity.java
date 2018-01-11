@@ -17,4 +17,5 @@ public abstract class MovingEntity extends Node
     protected Vector3f direction;
     
     public abstract void update(float tpf);
+    
 }

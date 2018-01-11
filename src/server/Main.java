@@ -2,10 +2,12 @@ package server;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
+import com.jme3.network.serializing.Serializer;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import com.jme3.system.JmeContext;
+import packets.Packet;
 
 /**
  * @author mrowlie
@@ -30,10 +32,11 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
+        Serializer.registerClass(Packet.Authenticate.class);
         net = new Networking();
         refRootNode = rootNode;
         bulletAppState = new BulletAppState();
-        net = new Networking();
+        stateManager.attach(bulletAppState);
     }
 
     @Override

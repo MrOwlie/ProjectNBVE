@@ -31,6 +31,7 @@ public class Player extends MovingEntity {
     public static final float SPEED = 8f;
     
     static ArrayList<Player> players;
+    static int nextId;
     
     private boolean[] input = new boolean[6];
     Vector3f playerLeft = new Vector3f();

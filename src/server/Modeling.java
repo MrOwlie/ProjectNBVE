@@ -8,6 +8,7 @@ package server;
 import com.jme3.network.Message;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import packets.Packet.PlayerOrientation;
 
 /**
  *
@@ -15,7 +16,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class Modeling 
 {
-    static ConcurrentLinkedQueue<Message> messageQueue = new ConcurrentLinkedQueue<Message>();
+    private static ConcurrentLinkedQueue<PlayerOrientation> playerUpdateQueue = new ConcurrentLinkedQueue<PlayerOrientation>();
     
     public static final float UPDATE_FREQUENCY = 0.1f;
     private ArrayList<MovingEntity> entities = new ArrayList<>();
@@ -24,6 +25,10 @@ public class Modeling
     
     public void update (float tpf)
     {
+        while(!playerUpdateQueue.isEmpty())
+        {
+            PlayerOrientation newOrientation = playerUpdateQueue.remove();
+        }
         timeSinceLastUpdate += tpf;
         if(timeSinceLastUpdate >= UPDATE_FREQUENCY)
         {
@@ -43,5 +48,10 @@ public class Modeling
     public void addEntity(MovingEntity entity)
     {
         entities.add(entity);
+    }
+    
+    public static void addPlayerUpdate(Message playerupdate)
+    {
+        playerUpdateQueue.add(playerupdate);
     }
 }

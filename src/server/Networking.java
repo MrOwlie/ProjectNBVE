@@ -27,7 +27,6 @@ public class Networking implements MessageListener<HostedConnection>, Connection
     public static Server server;
     
     public Networking() {
-        Serializer.registerClass(Packet.Authenticate.class);
         
         
         try {

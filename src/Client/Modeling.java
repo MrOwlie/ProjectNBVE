@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Modeling
 {
-    private ArrayList<MovingEntity> movingEntities = new ArrayList<>();
+    private static ArrayList<MovingEntity> movingEntities = new ArrayList<>();
     private float currentTpf = 0f;
     private float nextTpf = 0f;
     private boolean running = true;
@@ -26,7 +26,7 @@ public class Modeling
         }
     }
     
-    public void addEntity(MovingEntity entity)
+    public static void addEntity(MovingEntity entity)
     {
         movingEntities.add(entity);
     }

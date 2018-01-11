@@ -6,12 +6,13 @@ import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.util.CollisionShapeFactory;
 import com.jme3.input.ChaseCamera;
+import com.jme3.input.FlyByCamera;
+import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Vector3f;
 import com.jme3.network.Client;
 import com.jme3.network.Network;
 import com.jme3.network.serializing.Serializer;
@@ -26,9 +27,7 @@ import de.lessvoid.nifty.builder.LayerBuilder;
 import de.lessvoid.nifty.builder.PanelBuilder;
 import de.lessvoid.nifty.builder.ScreenBuilder;
 import de.lessvoid.nifty.controls.button.builder.ButtonBuilder;
-import de.lessvoid.nifty.controls.chatcontrol.builder.ChatBuilder;
 import de.lessvoid.nifty.controls.textfield.builder.TextFieldBuilder;
-import de.lessvoid.nifty.screen.DefaultScreenController;
 import packets.Packet;
 
 
@@ -44,7 +43,11 @@ public class Main extends SimpleApplication {
     public static final int PORT = 2000;
     public static final int VERSION = 1;
     //
+    public static Player localPlayer;
+    //
     public static Node refRootNode;
+    public static InputManager refInputManager;
+    public static FlyByCamera refFlyCam;
     public static BulletAppState bulletAppState;
     
     RigidBodyControl landscape;
@@ -57,7 +60,6 @@ public class Main extends SimpleApplication {
     Client myClient;
     Modeling myModel;
     ChaseCamera chaseCam;
-    Player player;
     
     
     //public NiftyJmeDisplay niftyDisplay;
@@ -77,7 +79,11 @@ public class Main extends SimpleApplication {
         
         
         this.isLoggedIn = false;
+        
         refRootNode = rootNode;
+        refInputManager = inputManager;
+        refFlyCam = flyCam;
+        
         bulletAppState = new BulletAppState();
         myModel = new Modeling();
         stateManager.attach(bulletAppState);
@@ -166,8 +172,8 @@ public class Main extends SimpleApplication {
         
         initiateMap();
         initiateControlls();
-        initiatePlayer();
         initiateClient();
+        initiatePlayer();
     }
 
     @Override
@@ -186,16 +192,7 @@ public class Main extends SimpleApplication {
     }
     private void initiatePlayer()
     {
-        flyCam.setEnabled(true);
-        player = new Player(new Vector3f(30f,20f,0f), cam, 1); //Dummy id
-        Node camNode = new Node();
-        player.attachChild(camNode);
-        camNode.setLocalTranslation(new Vector3f(0f,5f,0f));
-        myModel.addEntity(player);
-        chaseCam = new ChaseCamera(cam, camNode, inputManager);
-        chaseCam.setMaxDistance(1f);
-        chaseCam.setMinDistance(1f);
-        chaseCam.setDragToRotate(false);
+        
     }
     private void initiateClient()
     {
@@ -240,7 +237,10 @@ public class Main extends SimpleApplication {
         @Override
         public void onAction(String name, boolean isPressed, float tpf)
         {
-            player.input(name, isPressed);
+            if(localPlayer != null)
+            {
+                localPlayer.input(name, isPressed);
+            }
         }        
     };
     

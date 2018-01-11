@@ -6,14 +6,17 @@
 package Client;
 
 import com.jme3.bullet.control.BetterCharacterControl;
+import com.jme3.input.ChaseCamera;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
+import com.jme3.scene.Node;
 
 /**
  *
  * @author Anton
  */
 public class Player extends MovingEntity{
+    
     public static final float CYLINDER_HEIGHT = 5f;
     public static final float CYLINDER_RADIUS = 2f;
     public static final float MASS = 5f;
@@ -61,6 +64,18 @@ public class Player extends MovingEntity{
         Main.bulletAppState.getPhysicsSpace().add(controller);
         Main.refRootNode.attachChild(this);
         this.addControl(controller);
+        
+        Main.refFlyCam.setEnabled(true);
+        Node camNode = new Node();
+        this.attachChild(camNode);
+        camNode.setLocalTranslation(new Vector3f(0f,5f,0f));
+        Modeling.addEntity(this);
+        ChaseCamera chaseCam = new ChaseCamera(playerCam, camNode, Main.refInputManager);
+        chaseCam.setMaxDistance(1f);
+        chaseCam.setMinDistance(1f);
+        chaseCam.setDragToRotate(false);
+        
+        Main.localPlayer = this;
     }
     
     public Player (Vector3f startPos, Camera playerCam, int entityId) // New character

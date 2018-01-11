@@ -24,7 +24,8 @@ public class NetRead implements MessageListener<Client>
         {
             
         } else if(m instanceof AuthPlayer) {
-            Main.nifty.gotoScreen("asd");
+            AuthPlayer p = (AuthPlayer)m;
+            
         }
     }
     

@@ -14,11 +14,20 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.network.Client;
 import com.jme3.network.Network;
+import com.jme3.niftygui.NiftyJmeDisplay;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
+import de.lessvoid.nifty.Nifty;
+import de.lessvoid.nifty.builder.LayerBuilder;
+import de.lessvoid.nifty.builder.PanelBuilder;
+import de.lessvoid.nifty.builder.ScreenBuilder;
+import de.lessvoid.nifty.controls.button.builder.ButtonBuilder;
+import de.lessvoid.nifty.controls.chatcontrol.builder.ChatBuilder;
+import de.lessvoid.nifty.controls.textfield.builder.TextFieldBuilder;
+import de.lessvoid.nifty.screen.DefaultScreenController;
 
 
 /**
@@ -39,10 +48,18 @@ public class Main extends SimpleApplication {
     RigidBodyControl landscape;
     Spatial sceneModel;
     
+    LoginScreen loginScreen;
+    Boolean isLoggedIn;
+    
     Client myClient;
     Modeling myModel = new Modeling();
     ChaseCamera chaseCam;
     Player player;
+    
+    
+    //public NiftyJmeDisplay niftyDisplay;
+    //public Nifty nifty;
+    
     
     public static void main(String[] args) {
         Main app = new Main();
@@ -51,10 +68,86 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
+        this.isLoggedIn = false;
         refRootNode = rootNode;
         bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
         this.flyCam.setMoveSpeed(333);
+        
+
+        loginScreen = new LoginScreen();
+        
+        //flyCam.setDragToRotate(true);
+        /*//GUI Stuffs
+        LoginScreen loginScreen = new LoginScreen();
+        niftyDisplay = NiftyJmeDisplay.newNiftyJmeDisplay(this.assetManager, this.inputManager, this.audioRenderer, this.viewPort);
+        nifty = niftyDisplay.getNifty();
+        nifty.fromXml("GUI/chat.xml", "chat");
+        guiViewPort.addProcessor(niftyDisplay);
+        nifty.gotoScreen("screen0");*/
+        
+        NiftyJmeDisplay niftyDisplay = NiftyJmeDisplay.newNiftyJmeDisplay(
+            assetManager, inputManager, audioRenderer, guiViewPort);
+        Nifty nifty = niftyDisplay.getNifty();
+        guiViewPort.addProcessor(niftyDisplay);
+        flyCam.setDragToRotate(true);
+
+        nifty.loadStyleFile("nifty-default-styles.xml");
+        nifty.loadControlFile("nifty-default-controls.xml");
+
+        // <screen>
+        nifty.addScreen("Screen_ID", new ScreenBuilder("Hello Nifty Screen"){{
+            controller(loginScreen); // Screen properties
+
+            // <layer>
+            layer(new LayerBuilder("Layer_ID") {{
+                childLayoutVertical(); // layer properties, add more...
+                valignBottom();
+                // <panel>
+                panel(new PanelBuilder("Panel_ID") {{
+                   childLayoutVertical(); // panel properties, add more...
+                   alignRight();
+                    // GUI elements
+                    control(new TextFieldBuilder("Username", ""){{
+                        
+                        alignRight();
+                        height("15px");
+                        width("100px");
+                        focusable(true);
+                        valignBottom();
+                    }});
+                    control(new TextFieldBuilder("Password", ""){{
+                        
+                        alignRight();
+                        height("15px");
+                        width("100px");
+                        focusable(true);
+                        
+                        valignBottom();
+                    }});
+                    control(new ButtonBuilder("login", "Login"){{
+                        
+                        alignRight();
+                        height("15px");
+                        width("100px");
+                        
+                        interactOnClick("authenticate(test, test)");
+                        
+                        valignBottom();
+                    }});
+
+                    //.. add more GUI elements here
+
+                }});
+                // </panel>
+              }});
+            // </layer>
+          }}.build(nifty));
+        // </screen>
+
+        nifty.gotoScreen("Screen_ID"); // start the screen
+        
+        //Do shiet
         Box b = new Box(1, 1, 1);
         Geometry geom = new Geometry("Box", b);
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
@@ -69,8 +162,11 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleUpdate(float tpf) 
     {
-        myModel.update(tpf);
-        System.out.println(player.getLocalTranslation());
+        if(this.isLoggedIn){
+            myModel.update(tpf);
+            
+        }
+        //System.out.println(player.getLocalTranslation());
     }
 
     @Override

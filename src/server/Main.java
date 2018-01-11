@@ -17,7 +17,6 @@ public class Main extends SimpleApplication {
     private static Main app;
 
     public static void main(String[] args){
-        
         Main application = new Main();
         AppSettings newSettings = new AppSettings(true);
         newSettings.setFrameRate(100);

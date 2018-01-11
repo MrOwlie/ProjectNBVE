@@ -117,6 +117,7 @@ public class Packet {
         
     }
     
+    
     @Serializable
     public static class Error extends MyAbstractMessage {
         protected String error;

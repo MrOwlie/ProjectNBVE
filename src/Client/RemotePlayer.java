@@ -23,12 +23,18 @@ public class RemotePlayer extends MovingEntity
     public static Spatial playerModel;
     private BetterCharacterControl controller;
     
-    public RemotePlayer(Vector3f startPos) 
+    public RemotePlayer(Vector3f startPos, int entityId) 
     {
+        super(entityId);
+        
         this.setLocalTranslation(startPos);
         this.attachChild(playerModel.clone());
         
         controller = new BetterCharacterControl(CYLINDER_RADIUS, CYLINDER_HEIGHT, MASS);
+        controller.warp(startPos);
+        controller.setGravity(new Vector3f(0f,1f,0f));
+        Main.bulletAppState.getPhysicsSpace().add(controller);
+        Main.refRootNode.attachChild(this);
         this.addControl(controller);
     }
 

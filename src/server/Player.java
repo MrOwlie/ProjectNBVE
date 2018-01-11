@@ -183,10 +183,10 @@ public class Player extends MovingEntity {
         }
     }
     
-    public synchronized void setForwardAndLeft(float xForward, float zForward, float xLeft, float zLeft)
+    public synchronized void setForwardAndLeft(Vector3f forward, Vector3f left)
     {
-        playerLeft.set(xLeft, 0f, zLeft);
-        playerForward.set(xForward, 0f, zForward);
+        playerLeft.set(forward);
+        playerForward.set(left);
     }
     
     public synchronized void input(String name, boolean state)

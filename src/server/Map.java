@@ -9,6 +9,7 @@ import com.jme3.asset.AssetManager;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.util.CollisionShapeFactory;
+import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
 /**
@@ -19,16 +20,13 @@ public class Map {
     AssetManager assetManager;
     
     
-    public Map(AssetManager assetManager) {
+    public Map(AssetManager assetManager, Node node) {
         this.assetManager = assetManager;
         Spatial sceneModel = assetManager.loadModel("Scenes/MainScene.j3o");
         CollisionShape sceneShape = CollisionShapeFactory.createMeshShape(sceneModel);
         RigidBodyControl landscape = new RigidBodyControl(sceneShape, 0);
         sceneModel.addControl(landscape);
-        
-
-        //rootNode.attachChild(geom);
-        //rootNode.attachChild(sceneModel);
+        node.attachChild(sceneModel);
     }
     
     

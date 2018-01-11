@@ -5,9 +5,12 @@
  */
 package server;
 
+import com.jme3.math.Quaternion;
+import com.jme3.math.Vector3f;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import packets.Packet.PlayerOrientation;
+import packets.Packet.UpdateEntity;
 
 /**
  *
@@ -48,7 +51,7 @@ public class Modeling
             entity.update(tpf);
             if(update)
             {
-              // Send update to ALL clients
+              Networking.server.broadcast(new UpdateEntity(entity.getLocalTranslation(), entity.direction, entity.getLocalRotation(), entity.getEntityId()));
             }             
         }
     }

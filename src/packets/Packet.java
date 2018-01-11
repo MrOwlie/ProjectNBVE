@@ -235,6 +235,7 @@ public class Packet {
         }
     }
     
+    @Serializable
     public static class UpdateEntity extends MyAbstractMessage {
         int entityId;
         

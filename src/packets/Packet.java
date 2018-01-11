@@ -177,42 +177,49 @@ public class Packet {
         protected float x;
         protected float y;
         protected float z;
+        protected int entityId;
         
         public AuthPlayer() {
             
         }
         
-        public AuthPlayer(int level, int exp, int ammo, float x, float y, float z) {
+        public AuthPlayer(int level, int exp, int ammo, float x, float y, float z, int entityId) {
             this.level = level;
             this.exp = exp;
             this.ammo = ammo;
             this.x = x;
             this.y = y;
             this.z = z;
+            this.entityId = entityId;
         }
         
-        int getLevel() {
+        public int getLevel() {
             return this.level;
         }
         
-        int getExp() {
+        public int getExp() {
             return this.exp;
         }
         
-        int getAmmo() {
+        public int getAmmo() {
             return this.ammo;
         }
         
-        float getX() {
+        public float getX() {
             return this.x;
         }
         
-        float getY() {
+        public float getY() {
             return this.y;
         }
         
-        float getZ() {
+        public float getZ() {
             return this.z;
+        }
+        
+        public int getEntityId()
+        {
+            return entityId;
         }
         
     }
@@ -252,6 +259,23 @@ public class Packet {
             this.entityId = entityId;
             this.truePosition = truePosition;
             this.trueDirection = trueDirection;
+        }
+        
+        public int getEntityId()
+        {
+            return entityId;
+        }
+        public Vector3f getTruePos()
+        {
+            return truePosition;
+        }
+        public Vector3f getTrueDir()
+        {
+            return trueDirection;
+        }
+        public Quaternion getEntityOrientation()
+        {
+            return entityOrientation;
         }
         
     }

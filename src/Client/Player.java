@@ -31,8 +31,6 @@ public class Player extends MovingEntity{
     private int level;
     private int experience;
     private int nSnowballs;
-    private int currentHealth;
-    private int maxHealth;
     private int dmg;
     
     private BetterCharacterControl controller;
@@ -40,21 +38,20 @@ public class Player extends MovingEntity{
     
     private boolean input[] = new boolean[5];
     
-    public Player (int level, 
-            int nSnowballs, 
-            int maxHealth, 
-            int dmg, 
+    public Player (
+            int level,
+            int experience,
+            int nSnowballs,  
             Vector3f startPos,
             Camera playerCam,
-            int entityId)
+            int entityId
+    )
     {
         super(entityId);
         
         this.level = level;
+        this.experience = experience;
         this.nSnowballs = nSnowballs;
-        this.maxHealth = maxHealth;
-        this.currentHealth = maxHealth;
-        this.dmg = dmg;
         this.playerCam = playerCam;
         this.setLocalTranslation(startPos);
         
@@ -75,19 +72,6 @@ public class Player extends MovingEntity{
         chaseCam.setMinDistance(1f);
         chaseCam.setDragToRotate(false);
         
-        Main.localPlayer = this;
-    }
-    
-    public Player (Vector3f startPos, Camera playerCam, int entityId) // New character
-    {
-        this(START_LEVEL, 
-                START_SNOWBALLS, 
-                START_HEALTH, 
-                START_DMG, 
-                startPos,
-                playerCam,
-                entityId
-        );
     }
     
     @Override

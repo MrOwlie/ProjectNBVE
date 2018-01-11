@@ -17,6 +17,7 @@ import com.jme3.network.Client;
 import com.jme3.network.Network;
 import com.jme3.network.serializing.Serializer;
 import com.jme3.niftygui.NiftyJmeDisplay;
+import com.jme3.renderer.Camera;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
@@ -49,6 +50,7 @@ public class Main extends SimpleApplication {
     public static InputManager refInputManager;
     public static FlyByCamera refFlyCam;
     public static BulletAppState bulletAppState;
+    public static Camera refCam;
     
     RigidBodyControl landscape;
     Spatial sceneModel;

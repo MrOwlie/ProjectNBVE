@@ -85,14 +85,14 @@ public class Player extends MovingEntity {
                                                             Float.parseFloat(account.get(6))
                     );
                     Player.players.add(player);
-                    connection.send(new Packet.AuthPlayer(player.level, player.exp, player.ammo, player.getLocalTranslation().x, player.getLocalTranslation().y, player.getLocalTranslation().z));
+                    connection.send(new Packet.AuthPlayer(player.level, player.exp, player.ammo, player.getLocalTranslation().x, player.getLocalTranslation().y, player.getLocalTranslation().z, player.getEntityId()));
                 } else {
                     System.out.println("ERROR PASSWORD MISSMATCH! #" + password + "#" + account.get(0) + "#");
                 
                 }
             } else {
                 Player player = new Player(username, connection, 0, 0, 0, 0, 0, 0);
-                connection.send(new Packet.AuthPlayer(0, 0, 0, 0, 0, 0));
+                connection.send(new Packet.AuthPlayer(0, 0, 0, 0, 0, 0, player.getEntityId()));
                 Player.create(username, password);
                 Player.players.add(player);
             }

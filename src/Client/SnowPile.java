@@ -5,6 +5,7 @@
  */
 package Client;
 
+import com.jme3.asset.AssetManager;
 import com.jme3.scene.Node;
 
 /**

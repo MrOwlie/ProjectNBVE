@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import packets.Packet;
 
 /**
  *
@@ -30,7 +31,7 @@ public class Player extends MovingEntity {
     public static final float MASS = 5f;
     public static final float SPEED = 8f;
     
-    static ArrayList<Player> players;
+    static ArrayList<Player> players = new ArrayList();
     static int nextId;
     
     private boolean[] input = new boolean[6];
@@ -47,8 +48,7 @@ public class Player extends MovingEntity {
     
     HostedConnection connection;
     BetterCharacterControl controller;
-    
-    
+        
     private Player(String username, HostedConnection connection, int level, int exp, int ammo, float startX,  float startY, float startZ) {
 
         this.username = username;
@@ -72,30 +72,39 @@ public class Player extends MovingEntity {
     static void authenticate(String username, String password, HostedConnection connection) {
         List<String> account;
         try {
-            if(Files.exists(Paths.get("./Accounts/" + username))) {
-                account = Files.readAllLines(Paths.get("./Accounts/" + username));
+            if(Files.exists(Paths.get("C:/Accounts/" + username + ".txt"))) {
+                System.out.println("existst");
+                account = Files.readAllLines(Paths.get("C:/Accounts/" + username + ".txt"));
                 if(password.equals(account.get(0))){
                     Player player = new Player(username,    connection,
                                                             Integer.parseInt(account.get(1)), 
                                                             Integer.parseInt(account.get(2)), 
-                                                            Integer.parseInt(account.get(3)));
+                                                            Integer.parseInt(account.get(3)),
+                                                            Float.parseFloat(account.get(4)),
+                                                            Float.parseFloat(account.get(5)),
+                                                            Float.parseFloat(account.get(6))
+                    );
                     Player.players.add(player);
+                    connection.send(new Packet.AuthPlayer(player.level, player.exp, player.ammo, player.getLocalTranslation().x, player.getLocalTranslation().y, player.getLocalTranslation().z));
                 } else {
                     System.out.println("ERROR PASSWORD MISSMATCH! #" + password + "#" + account.get(0) + "#");
                 
                 }
             } else {
-                Player player = new Player(username, connection, 0, 0, 0);
+                Player player = new Player(username, connection, 0, 0, 0, 0, 0, 0);
+                connection.send(new Packet.AuthPlayer(0, 0, 0, 0, 0, 0));
+                Player.create(username, password);
+                Player.players.add(player);
             }
         } catch (IOException ex) {
-            System.out.println("error authenticating...");
+            System.out.println(ex);
         }
     }
     
     void save() throws IOException {
-        FileWriter fw = new FileWriter("./Accounts/" + this.username, false);
+        FileWriter fw = new FileWriter("C:/Accounts/" + username + ".txt", false);
         BufferedWriter bw = new BufferedWriter(fw);
-        BufferedReader br = new BufferedReader(new FileReader("./Accounts/" + this.username));
+        BufferedReader br = new BufferedReader(new FileReader("C:/Accounts/" + username + ".txt"));
         
         String password = br.readLine();
                 
@@ -106,13 +115,25 @@ public class Player extends MovingEntity {
         bw.write(this.exp);
         bw.newLine();
         bw.write(this.ammo);
+        bw.newLine();
+        bw.write("" + this.getLocalTranslation().x);
+        bw.newLine();
+        bw.write("" + this.getLocalTranslation().y);
+        bw.newLine();
+        bw.write("" + this.getLocalTranslation().z);
     }
     
     static void create(String username, String password) throws IOException {
-        FileWriter fw = new FileWriter("./Accounts/" + username, false);
+        FileWriter fw = new FileWriter("C:/Accounts/" + username + ".txt", false);
         BufferedWriter bw = new BufferedWriter(fw);
         
         bw.write(password);
+        bw.newLine();
+        bw.write(0);
+        bw.newLine();
+        bw.write(0);
+        bw.newLine();
+        bw.write(0);
         bw.newLine();
         bw.write(0);
         bw.newLine();

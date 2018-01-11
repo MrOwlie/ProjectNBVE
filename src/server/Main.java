@@ -33,6 +33,7 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         Serializer.registerClass(Packet.Authenticate.class);
+        Serializer.registerClass(Packet.AuthPlayer.class);
         net = new Networking();
         refRootNode = rootNode;
         bulletAppState = new BulletAppState();

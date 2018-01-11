@@ -161,6 +161,59 @@ public class Packet {
         
     }
     
+    @Serializable
+    public static class AuthPlayer extends MyAbstractMessage {
+        protected int id;
+        protected int level;
+        protected int exp;
+        protected int ammo;
+        protected float x;
+        protected float y;
+        protected float z;
+        
+        public AuthPlayer() {
+            
+        }
+        
+        public AuthPlayer(int level, int exp, int ammo, float x, float y, float z) {
+            this.level = level;
+            this.exp = exp;
+            this.ammo = ammo;
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+        
+        int getId() {
+            return this.id;
+        }
+        
+        int getLevel() {
+            return this.level;
+        }
+        
+        int getExp() {
+            return this.exp;
+        }
+        
+        int getAmmo() {
+            return this.ammo;
+        }
+        
+        float getX() {
+            return this.x;
+        }
+        
+        float getY() {
+            return this.y;
+        }
+        
+        float getZ() {
+            return this.z;
+        }
+        
+    }
+    
     
     @Serializable
     public static class Error extends MyAbstractMessage {

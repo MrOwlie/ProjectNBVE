@@ -39,7 +39,7 @@ public class Player {
     
     HostedConnection connection;
     
-    private Player(String username, HostedConnection connection, int level, int exp, int ammo) {
+    private Player(String username, HostedConnection connection, int level, int exp, int ammo, float x, float y) {
 
         this.username = username;
         this.level = level;
@@ -54,18 +54,23 @@ public class Player {
     static void authenticate(String username, String password, HostedConnection connection) {
         List<String> account;
         try {
-            account = Files.readAllLines(Paths.get("./Accounts/" + username));
-            if(password.equals(account.get(0))){
-                Player player = new Player(username,    connection,
-                                                        Integer.parseInt(account.get(1)), 
-                                                        Integer.parseInt(account.get(2)), 
-                                                        Integer.parseInt(account.get(3)));
-                Player.players.add(player);
+            if(Files.exists(Paths.get("./Accounts/" + username))) {
+                account = Files.readAllLines(Paths.get("./Accounts/" + username));
+                if(password.equals(account.get(0))){
+                    Player player = new Player(username,    connection,
+                                                            Integer.parseInt(account.get(1)), 
+                                                            Integer.parseInt(account.get(2)), 
+                                                            Integer.parseInt(account.get(3)));
+                    Player.players.add(player);
+                } else {
+                    System.out.println("ERROR PASSWORD MISSMATCH! #" + password + "#" + account.get(0) + "#");
+                
+                }
             } else {
-                System.out.println("ERROR PASSWORD MISSMATCH! #" + password + "#" + account.get(0) + "#");
+                Player player = new Player(username, connection, 0, 0, 0);
             }
         } catch (IOException ex) {
-            Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("error authenticating...");
         }
     }
     
@@ -83,6 +88,19 @@ public class Player {
         bw.write(this.exp);
         bw.newLine();
         bw.write(this.ammo);
+    }
+    
+    static void create(String username, String password) throws IOException {
+        FileWriter fw = new FileWriter("./Accounts/" + username, false);
+        BufferedWriter bw = new BufferedWriter(fw);
+        
+        bw.write(password);
+        bw.newLine();
+        bw.write(0);
+        bw.newLine();
+        bw.write(0);
+        bw.newLine();
+        bw.write(0);
         
     }
     

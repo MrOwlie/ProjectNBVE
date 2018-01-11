@@ -42,10 +42,11 @@ public class Player extends MovingEntity{
             int maxHealth, 
             int dmg, 
             Vector3f startPos,
-            Camera playerCam)
-    //Load existing character       
-    // Kanske finns ett bättre sätt att få in datan till objektet?
+            Camera playerCam,
+            int entityId)
     {
+        super(entityId);
+        
         this.level = level;
         this.nSnowballs = nSnowballs;
         this.maxHealth = maxHealth;
@@ -55,21 +56,22 @@ public class Player extends MovingEntity{
         this.setLocalTranslation(startPos);
         
         controller = new BetterCharacterControl(CYLINDER_RADIUS, CYLINDER_HEIGHT, MASS);
-        //controller.warp(startPos);
+        controller.warp(startPos);
         controller.setGravity(new Vector3f(0f,1f,0f));
         Main.bulletAppState.getPhysicsSpace().add(controller);
         Main.refRootNode.attachChild(this);
         this.addControl(controller);
     }
     
-    public Player (Vector3f startPos, Camera playerCam) // New character
+    public Player (Vector3f startPos, Camera playerCam, int entityId) // New character
     {
         this(START_LEVEL, 
                 START_SNOWBALLS, 
                 START_HEALTH, 
                 START_DMG, 
                 startPos,
-                playerCam
+                playerCam,
+                entityId
         );
     }
     

@@ -5,7 +5,9 @@
  */
 package server;
 
+import com.jme3.network.Message;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  *
@@ -13,15 +15,28 @@ import java.util.ArrayList;
  */
 public class Modeling 
 {
-    public final float timeSinceUpdate 
+    static ConcurrentLinkedQueue<Message> messageQueue = new ConcurrentLinkedQueue<Message>();
+    
+    public static final float UPDATE_FREQUENCY = 0.1f;
     private ArrayList<MovingEntity> entities = new ArrayList<>();
     private float timeSinceLastUpdate;
+    private boolean update;
     
     public void update (float tpf)
     {
+        timeSinceLastUpdate += tpf;
+        if(timeSinceLastUpdate >= UPDATE_FREQUENCY)
+        {
+            update = true;
+            timeSinceLastUpdate = 0f;
+        }
         for(MovingEntity entity : entities)
         {
             entity.update(tpf);
+            if(update)
+            {
+                // Send update to ALL clients
+            }             
         }
     }
     

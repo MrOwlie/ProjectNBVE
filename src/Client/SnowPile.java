@@ -21,13 +21,16 @@ import com.jme3.texture.Texture;
  */
 public class SnowPile {
     
+    boolean toggle = true;
+    Geometry geom;
+    Material snow;
     
     public SnowPile(AssetManager assetManager, Node node, float x, float z) {
         Sphere s = new Sphere(10, 10, 2);
-        Geometry geom = new Geometry("Sphere", s);
-        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        mat.setTexture("ColorMap", assetManager.loadTexture("Textures/snowmound.png"));
-        geom.setMaterial(mat);
+        geom = new Geometry("Sphere", s);
+        snow = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        snow.setTexture("ColorMap", assetManager.loadTexture("Textures/snowmound.png"));
+        geom.setMaterial(snow);
         geom.setLocalTranslation(x, 0, z);
         node.attachChild(geom);
     }

@@ -46,6 +46,8 @@ public class Main extends SimpleApplication {
         Serializer.registerClass(PlayerOrientation.class);
         Serializer.registerClass(UpdateEntity.class);
         Serializer.registerClass(SpawnEntity.class);
+        
+        
         net = new Networking();
         refRootNode = rootNode;
         bulletAppState = new BulletAppState();

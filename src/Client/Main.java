@@ -84,6 +84,9 @@ public class Main extends SimpleApplication {
         Serializer.registerClass(KeyPressed.class);
         Serializer.registerClass(SpawnEntity.class);
         
+        RemotePlayer.playerModel = assetManager.loadModel("Models/Ninja.mesh.xml");
+        RemotePlayer.playerModel.setMaterial(assetManager.loadMaterial("/Models/Ninja.material"));
+        
         this.isLoggedIn = false;
         initiateClient();
         refRootNode = rootNode;

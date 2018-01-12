@@ -27,6 +27,7 @@ public class RemotePlayer extends MovingEntity
     {
         super(entityId);
         
+        
         this.setLocalTranslation(startPos);
         this.attachChild(playerModel.clone());
         

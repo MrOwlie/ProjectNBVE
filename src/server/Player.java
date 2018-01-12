@@ -68,9 +68,6 @@ public class Player extends MovingEntity {
         Main.bulletAppState.getPhysicsSpace().add(controller);
         Main.refRootNode.attachChild(this);
         this.addControl(controller);
-        Modeling.addEntity(this);
-        controller.warp(new Vector3f(startX, startY, startZ));
-        
         for(MovingEntity entity : Modeling.getEntities())
         {
             connection.send(new SpawnEntity(
@@ -79,6 +76,9 @@ public class Player extends MovingEntity {
                     entity.type)
                     );
         }
+        Modeling.addEntity(this);
+        controller.warp(new Vector3f(startX, startY, startZ));
+        
         
     }
     

@@ -95,10 +95,10 @@ public class Player extends MovingEntity{
             if(input[3])trueDirection.addLocal(left.negate());
             if(input[4])controller.jump();
             trueDirection.normalizeLocal();
-
-            correctDirection(tpf);
-            correctPosition(tpf);
         }
+        
+        correctDirection(tpf);
+        correctPosition(tpf);
         
         timeSinceUpdate += tpf;
         if(timeSinceUpdate >= UPDATE_FREQUENCY)
@@ -117,7 +117,7 @@ public class Player extends MovingEntity{
     @Override
     protected void correctPosition(float tpf) 
     {
-        if(truePositionReached)
+        if(truePositionReached && controller.isOnGround())
         {
             controller.setWalkDirection(trueDirection.mult(SPEED));
         }

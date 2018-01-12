@@ -32,7 +32,6 @@ public class RemotePlayer extends MovingEntity
         this.attachChild(playerModel.clone());
         
         controller = new BetterCharacterControl(CYLINDER_RADIUS, CYLINDER_HEIGHT, MASS);
-        controller.warp(startPos);
         controller.setGravity(new Vector3f(0f,1f,0f));
         Main.bulletAppState.getPhysicsSpace().add(controller);
         Main.refRootNode.attachChild(this);

@@ -15,7 +15,7 @@ import com.jme3.network.serializing.Serializable;
  * @author mrowlie
  */
 public class Packet {
-    
+    public static final int PLAYER = 1;
     
     abstract public static class MyAbstractMessage extends AbstractMessage {
         
@@ -61,6 +61,7 @@ public class Packet {
     
     @Serializable
     public static class KeyPressed extends MyAbstractMessage {
+        protected int entityId;
         protected String key;
         protected boolean state;
         
@@ -68,9 +69,10 @@ public class Packet {
             
         }
         
-        public KeyPressed(String key, boolean state) {
+        public KeyPressed(String key, boolean state, int entityId) {
             this.key = key;
             this.state = state;
+            this.entityId = entityId;
         }
         
         public String getKey() {
@@ -79,6 +81,11 @@ public class Packet {
         
         public boolean getState() {
             return this.state;
+        }
+        
+        public int getEntityId()
+        {
+            return entityId;
         }
         
     }
@@ -258,6 +265,7 @@ public class Packet {
         public UpdateEntity(Vector3f truePosition, Vector3f trueDirection, Quaternion entityOrientation, int entityId){
             this.entityId = entityId;
             this.truePosition = truePosition;
+            this.entityOrientation = entityOrientation;
             this.trueDirection = trueDirection;
         }
         
@@ -278,6 +286,38 @@ public class Packet {
             return entityOrientation;
         }
         
+    }
+    
+    @Serializable
+    public static class SpawnEntity extends MyAbstractMessage {
+        protected Vector3f position;
+        protected int entityId;
+        protected int entityType;
+        
+        public SpawnEntity(){
+            
+        }
+        
+        public SpawnEntity(Vector3f position, int entityId, int entityType){
+            this.entityId = entityId;
+            this.position = position;
+            this.entityType = entityType;
+        }
+        
+        public Vector3f getPos()
+        {
+            return position;
+        }
+        
+        public int getEntityId()
+        {
+            return entityId;
+        }
+        
+        public int getEntityType()
+        {
+            return entityType;
+        }
     }
     
 }

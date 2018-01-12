@@ -35,7 +35,7 @@ public class RemotePlayer extends MovingEntity
         controller.setGravity(new Vector3f(0f,1f,0f));
         Main.bulletAppState.getPhysicsSpace().add(controller);
         Main.refRootNode.attachChild(this);
-        Modeling.addEntity(this);
+        Modeling.addEntity(this, entityId);
         this.addControl(controller);
     }
 

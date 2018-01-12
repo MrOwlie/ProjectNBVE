@@ -14,6 +14,11 @@ import com.jme3.scene.Node;
  * @author Anton
  */
 public abstract class MovingEntity extends Node{
+    
+    ////Entity types
+    public static final int PLAYER = 1;
+    /////
+    
     public static final float DIRECTION_CORRECTION_SPEED = 5f;
     public static final float CORRECTION_SPEED = 10f;
     

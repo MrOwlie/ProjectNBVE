@@ -5,8 +5,7 @@
  */
 package server;
 
-import com.jme3.math.Quaternion;
-import com.jme3.math.Vector3f;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import packets.Packet.PlayerOrientation;
@@ -20,14 +19,14 @@ public class Modeling
 {
     private static ConcurrentLinkedQueue<PlayerOrientation> playerUpdateQueue = new ConcurrentLinkedQueue<PlayerOrientation>();
     
-    public static final float UPDATE_FREQUENCY = 0.1f;
+    public static final float UPDATE_FREQUENCY = 1000f;
     private static HashMap<Integer, MovingEntity> entities = new HashMap<Integer, MovingEntity>();
     private float timeSinceLastUpdate;
     private boolean update;
     
     public void update (float tpf)
     {
-        while(!playerUpdateQueue.isEmpty())
+        if(!playerUpdateQueue.isEmpty())
         {
             PlayerOrientation newOrientation = playerUpdateQueue.remove();
             int entityId = newOrientation.getEntityId();        
@@ -59,6 +58,16 @@ public class Modeling
     public static void addEntity(MovingEntity entity)
     {
         entities.put(entity.getEntityId(), entity);
+    }
+    
+    public static Collection<MovingEntity> getEntities()
+    {
+        return entities.values();
+    }
+    
+    public static Player getPlayer(int entityId)
+    {
+        return (Player)entities.get(entityId);
     }
     
     public static void removeEntity(int entityId)

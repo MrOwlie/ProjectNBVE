@@ -29,7 +29,7 @@ import de.lessvoid.nifty.builder.PanelBuilder;
 import de.lessvoid.nifty.builder.ScreenBuilder;
 import de.lessvoid.nifty.controls.button.builder.ButtonBuilder;
 import de.lessvoid.nifty.controls.textfield.builder.TextFieldBuilder;
-import packets.Packet;
+import packets.Packet.*;
 import packets.Packet.KeyPressed;
 
 
@@ -41,7 +41,7 @@ import packets.Packet.KeyPressed;
 public class Main extends SimpleApplication {
     //Constans
     public static final String NAME = "UCS";
-    public static final String DEFAULT_SERVER = "mrowlie.asuscomm.com";
+    public static final String DEFAULT_SERVER = "localhost";
     public static final int PORT = 2000;
     public static final int VERSION = 1;
     //
@@ -77,15 +77,19 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         
-        Serializer.registerClass(Packet.Authenticate.class);
-        Serializer.registerClass(Packet.AuthPlayer.class);
-        
+        Serializer.registerClass(Authenticate.class);
+        Serializer.registerClass(AuthPlayer.class);
+        Serializer.registerClass(PlayerOrientation.class);
+        Serializer.registerClass(UpdateEntity.class);
+        Serializer.registerClass(KeyPressed.class);
+        Serializer.registerClass(SpawnEntity.class);
         
         this.isLoggedIn = false;
-        
+        initiateClient();
         refRootNode = rootNode;
         refInputManager = inputManager;
         refFlyCam = flyCam;
+        refCam = cam;
         
         bulletAppState = new BulletAppState();
         myModel = new Modeling();
@@ -177,17 +181,16 @@ public class Main extends SimpleApplication {
         
         initiateMap();
         initiateControlls();
-        initiateClient();
         initiatePlayer();
     }
 
     @Override
     public void simpleUpdate(float tpf) 
     {
-        if(this.isLoggedIn){
+        //if(this.isLoggedIn){
             myModel.update(tpf);
             
-        }
+        //}
         //System.out.println(player.getLocalTranslation());
     }
 
@@ -245,7 +248,8 @@ public class Main extends SimpleApplication {
             if(localPlayer != null)
             {
                 localPlayer.input(name, isPressed);
-                myClient.send(new KeyPressed(name, isPressed));
+                myClient.send(new KeyPressed(name, isPressed, localPlayer.entityId));
+                System.out.println("Not null");
             }
         }        
     };

@@ -25,15 +25,11 @@ public class NetRead implements MessageListener<Client>
         {
             
         } else if(m instanceof AuthPlayer) {
-            AuthPlayer p = (AuthPlayer)m;
-            Main.localPlayer = new Player(
-                    p.getLevel(),
-                    p.getExp(),
-                    p.getAmmo(),
-                    new Vector3f(p.getX(), p.getY(), p.getZ()),
-                    Main.refCam,
-                    p.getEntityId()                    
-            );
+            Modeling.addMessage(m);
+        } else if(m instanceof UpdateEntity) {
+            Modeling.addMessage(m);
+        } else if(m instanceof SpawnEntity) {
+            Modeling.addMessage(m);
         }
     }
     

@@ -49,6 +49,12 @@ public class Networking implements MessageListener<HostedConnection>, Connection
         }
         
         else if(m instanceof KeyPressed) {
+            KeyPressed keyPressed = (KeyPressed)m;
+            Player player = Modeling.getPlayer(keyPressed.getEntityId());
+            if(player != null)
+            {
+                player.input(keyPressed.getKey(), keyPressed.getState());
+            }
             System.out.println("Key pressed: " + ((KeyPressed) m).getKey());
         }
     }

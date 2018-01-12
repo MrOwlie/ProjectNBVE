@@ -23,7 +23,7 @@ public class Player extends MovingEntity{
     public static final float MASS = 5f;
     
     public static final float SPEED = 8f;
-    public static final float UPDATE_FREQUENCY = 0.1f;
+    public static final float UPDATE_FREQUENCY = 10000f;
     
     public static final int START_LEVEL = 1;
     public static final int START_HEALTH = 50;
@@ -60,7 +60,6 @@ public class Player extends MovingEntity{
         this.setLocalTranslation(startPos);
         
         controller = new BetterCharacterControl(CYLINDER_RADIUS, CYLINDER_HEIGHT, MASS);
-        controller.warp(startPos);
         controller.setGravity(new Vector3f(0f,1f,0f));
         Main.bulletAppState.getPhysicsSpace().add(controller);
         Main.refRootNode.attachChild(this);
@@ -70,7 +69,7 @@ public class Player extends MovingEntity{
         Node camNode = new Node();
         this.attachChild(camNode);
         camNode.setLocalTranslation(new Vector3f(0f,5f,0f));
-        Modeling.addEntity(this);
+        Modeling.addEntity(this, entityId);
         ChaseCamera chaseCam = new ChaseCamera(playerCam, camNode, Main.refInputManager);
         chaseCam.setMaxDistance(1f);
         chaseCam.setMinDistance(1f);
@@ -80,7 +79,7 @@ public class Player extends MovingEntity{
     
     @Override
     public void update(float tpf)
-    {
+    {   
         Vector3f forward = playerCam.getDirection().clone().normalize();
         Vector3f left = playerCam.getLeft().clone().normalize();
         forward.y = 0;
@@ -88,7 +87,7 @@ public class Player extends MovingEntity{
             
         if(controller.isOnGround())
         {
-
+            System.out.println("updating player");
             trueDirection.set(Vector3f.ZERO);
 
             if(input[0])trueDirection.addLocal(forward);

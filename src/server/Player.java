@@ -7,6 +7,7 @@ package server;
 
 import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.math.Vector3f;
+import com.jme3.network.Filters;
 import com.jme3.network.HostedConnection;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -17,9 +18,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import packets.Packet;
+import packets.Packet.SpawnEntity;
 
 /**
  *
@@ -51,7 +51,8 @@ public class Player extends MovingEntity {
     
         
     private Player(String username, HostedConnection connection, int level, int exp, int ammo, float startX,  float startY, float startZ) {
-
+        
+        this.type = Packet.PLAYER;
         this.username = username;
         this.level = level;
         this.exp = exp;
@@ -62,11 +63,21 @@ public class Player extends MovingEntity {
         this.connection = connection;
         this.direction = new Vector3f();
         this.controller = new BetterCharacterControl(CYLINDER_RADIUS, CYLINDER_HEIGHT, MASS);
-        this.setLocalTranslation(startX, startY, startZ);
+        //this.setLocalTranslation(startX, startY, startZ);
         
         Main.bulletAppState.getPhysicsSpace().add(controller);
         Main.refRootNode.attachChild(this);
         this.addControl(controller);
+        controller.warp(new Vector3f(startX, startY, startZ));
+        
+        for(MovingEntity entity : Modeling.getEntities())
+        {
+            connection.send(new SpawnEntity(
+                    entity.getLocalTranslation(),
+                    entity.entityId,
+                    entity.type)
+                    );
+        }
         
     }
     
@@ -87,15 +98,17 @@ public class Player extends MovingEntity {
                     );
                     Player.players.add(player);
                     connection.send(new Packet.AuthPlayer(player.level, player.exp, player.ammo, player.getLocalTranslation().x, player.getLocalTranslation().y, player.getLocalTranslation().z, player.getEntityId()));
+                    Networking.server.broadcast(Filters.notEqualTo(connection), new SpawnEntity(player.getLocalTranslation(), player.entityId, Packet.PLAYER));
                 } else {
                     System.out.println("ERROR PASSWORD MISSMATCH! #" + password + "#" + account.get(0) + "#");
                 
                 }
             } else {
-                Player player = new Player(username, connection, 0, 0, 0, 0, 0, 0);
-                connection.send(new Packet.AuthPlayer(0, 0, 0, 0, 0, 0, player.getEntityId()));
+                Player player = new Player(username, connection, 0, 0, 0, 0, 10f, 0);
+                connection.send(new Packet.AuthPlayer(0, 0, 0, 0, 10f, 0, player.getEntityId()));
                 Player.create(username, password);
                 Player.players.add(player);
+                Networking.server.broadcast(Filters.notEqualTo(connection), new SpawnEntity(player.getLocalTranslation(), player.entityId, Packet.PLAYER));
             }
         } catch (IOException ex) {
             System.out.println(ex);

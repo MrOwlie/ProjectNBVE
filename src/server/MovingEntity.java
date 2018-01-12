@@ -13,11 +13,12 @@ import com.jme3.scene.Node;
  * @author Anton
  */
 public abstract class MovingEntity extends Node 
-{
+{   
     private static int nextId = 0;
     
     protected Vector3f direction = new Vector3f();
     protected int entityId;
+    protected int type;
     
     public MovingEntity()
     {

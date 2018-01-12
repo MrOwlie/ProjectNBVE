@@ -29,6 +29,7 @@ public class RemotePlayer extends MovingEntity
         
         
         this.setLocalTranslation(startPos);
+        truePosition = startPos;
         this.attachChild(playerModel.clone());
         
         controller = new BetterCharacterControl(CYLINDER_RADIUS, CYLINDER_HEIGHT, MASS);

@@ -22,7 +22,7 @@ public abstract class MovingEntity extends Node{
     public static final float DIRECTION_CORRECTION_SPEED = 5f;
     public static final float CORRECTION_SPEED = 10f;
     
-    protected Vector3f truePosition = this.getLocalTranslation();
+    protected Vector3f truePosition;
     protected Vector3f trueDirection = new Vector3f();
     protected Vector3f localDirection = new Vector3f();
     

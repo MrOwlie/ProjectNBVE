@@ -59,6 +59,8 @@ public class Player extends MovingEntity{
         this.playerCam = playerCam;
         this.setLocalTranslation(startPos);
         
+        truePosition = startPos;
+        
         controller = new BetterCharacterControl(CYLINDER_RADIUS, CYLINDER_HEIGHT, MASS);
         controller.setGravity(new Vector3f(0f,1f,0f));
         Main.bulletAppState.getPhysicsSpace().add(controller);
@@ -122,7 +124,7 @@ public class Player extends MovingEntity{
             controller.setWalkDirection(trueDirection.mult(SPEED));
         }
         
-        else
+        else if(!truePositionReached)
         {
             controller.setWalkDirection(Vector3f.ZERO);
             float distance = truePosition.subtract(this.getLocalTranslation()).length();

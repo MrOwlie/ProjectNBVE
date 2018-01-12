@@ -11,13 +11,12 @@ import com.jme3.network.Message;
 import com.jme3.network.MessageListener;
 import com.jme3.network.Network;
 import com.jme3.network.Server;
-import com.jme3.network.serializing.Serializer;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import packets.Packet;
 import packets.Packet.Authenticate;
 import packets.Packet.KeyPressed;
+import packets.Packet.PlayerOrientation;
 
 /**
  *
@@ -56,6 +55,10 @@ public class Networking implements MessageListener<HostedConnection>, Connection
                 player.input(keyPressed.getKey(), keyPressed.getState());
             }
             System.out.println("Key pressed: " + ((KeyPressed) m).getKey());
+        }
+        
+        else if(m instanceof PlayerOrientation) {
+            Modeling.addPlayerUpdate((PlayerOrientation)m);
         }
     }
 

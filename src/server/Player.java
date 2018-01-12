@@ -206,8 +206,8 @@ public class Player extends MovingEntity {
     
     public synchronized void setForwardAndLeft(Vector3f forward, Vector3f left)
     {
-        playerLeft.set(forward);
-        playerForward.set(left);
+        playerLeft.set(left);
+        playerForward.set(forward);
     }
     
     public synchronized void input(String name, boolean state)

@@ -30,6 +30,7 @@ import de.lessvoid.nifty.builder.ScreenBuilder;
 import de.lessvoid.nifty.controls.button.builder.ButtonBuilder;
 import de.lessvoid.nifty.controls.textfield.builder.TextFieldBuilder;
 import packets.Packet;
+import packets.Packet.KeyPressed;
 
 
 /**
@@ -244,6 +245,7 @@ public class Main extends SimpleApplication {
             if(localPlayer != null)
             {
                 localPlayer.input(name, isPressed);
+                myClient.send(new KeyPressed(name, isPressed));
             }
         }        
     };

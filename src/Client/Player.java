@@ -10,6 +10,7 @@ import com.jme3.input.ChaseCamera;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
+import packets.Packet.PlayerOrientation;
 
 /**
  *
@@ -22,6 +23,7 @@ public class Player extends MovingEntity{
     public static final float MASS = 5f;
     
     public static final float SPEED = 8f;
+    public static final float UPDATE_FREQUENCY = 0.1f;
     
     public static final int START_LEVEL = 1;
     public static final int START_HEALTH = 50;
@@ -33,6 +35,8 @@ public class Player extends MovingEntity{
     private int nSnowballs;
     private int dmg;
     
+    private float timeSinceUpdate = 0f;
+            
     private BetterCharacterControl controller;
     private Camera playerCam;
     
@@ -77,12 +81,13 @@ public class Player extends MovingEntity{
     @Override
     public void update(float tpf)
     {
+        Vector3f forward = playerCam.getDirection().clone().normalize();
+        Vector3f left = playerCam.getLeft().clone().normalize();
+        forward.y = 0;
+        left.y = 0;
+            
         if(controller.isOnGround())
         {
-            Vector3f forward = playerCam.getDirection().clone().normalize();
-            Vector3f left = playerCam.getLeft().clone().normalize();
-            forward.y = 0;
-            left.y = 0;
 
             trueDirection.set(Vector3f.ZERO);
 
@@ -95,6 +100,19 @@ public class Player extends MovingEntity{
 
             correctDirection(tpf);
             correctPosition(tpf);
+        }
+        
+        timeSinceUpdate += tpf;
+        if(timeSinceUpdate >= UPDATE_FREQUENCY)
+        {
+            timeSinceUpdate = 0f;
+            NetWrite.addMessage(new PlayerOrientation
+            (
+            forward,
+            left,
+            this.getLocalRotation(),
+            this.entityId
+            ));
         }
     }
     

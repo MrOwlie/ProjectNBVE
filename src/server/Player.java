@@ -48,6 +48,7 @@ public class Player extends MovingEntity {
     
     HostedConnection connection;
     BetterCharacterControl controller;
+    
         
     private Player(String username, HostedConnection connection, int level, int exp, int ammo, float startX,  float startY, float startZ) {
 
@@ -186,6 +187,7 @@ public class Player extends MovingEntity {
             
             controller.setWalkDirection(direction.mult(SPEED));
         }
+         
     }
     
     public synchronized void setForwardAndLeft(Vector3f forward, Vector3f left)

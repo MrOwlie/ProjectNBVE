@@ -32,8 +32,7 @@ public class NetRead implements MessageListener<Client>
                     p.getAmmo(),
                     new Vector3f(p.getX(), p.getY(), p.getZ()),
                     Main.refCam,
-                    p.get
-                    
+                    p.getEntityId()                    
             );
         }
     }

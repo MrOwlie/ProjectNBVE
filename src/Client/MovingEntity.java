@@ -29,13 +29,13 @@ public abstract class MovingEntity extends Node{
     {
         this.entityId = entityId;
     }
+    
     public void setTruePosition(Vector3f truePosition)
     {
         if(!this.getLocalTranslation().equals(truePosition))
         {
             this.truePosition = truePosition;
             truePositionReached = false;
-            
         }
     }
     

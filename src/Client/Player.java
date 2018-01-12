@@ -124,6 +124,7 @@ public class Player extends MovingEntity{
         
         else
         {
+            controller.setWalkDirection(Vector3f.ZERO);
             float distance = truePosition.subtract(this.getLocalTranslation()).length();
             
             if(distance < tpf*CORRECTION_SPEED)

@@ -85,6 +85,9 @@ public class Main extends SimpleApplication {
         Serializer.registerClass(SpawnEntity.class);
         
         RemotePlayer.playerModel = assetManager.loadModel("/Models/Ninja.mesh.xml");
+        RemotePlayer.playerModel.scale(0.1f);
+        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        mat.setTexture("ColorMap", assetManager.loadTexture("Models/Ninja.jpg"));
         //RemotePlayer.playerModel.setMaterial(assetManager.loadMaterial("/Models/Ninja.material"));
         
         this.isLoggedIn = false;
@@ -176,9 +179,9 @@ public class Main extends SimpleApplication {
         //Do shiet
         Box b = new Box(1, 1, 1);
         Geometry geom = new Geometry("Box", b);
-        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        mat.setColor("Color", ColorRGBA.Blue);
-        geom.setMaterial(mat);
+        Material mats = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        mats.setColor("Color", ColorRGBA.Blue);
+        geom.setMaterial(mats);
         
         SnowPile pile = new SnowPile(assetManager, rootNode, 20f, 20f);
         

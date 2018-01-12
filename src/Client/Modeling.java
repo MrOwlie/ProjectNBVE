@@ -53,12 +53,16 @@ public class Modeling
     {
         if(message instanceof UpdateEntity)
         {
+            System.out.println("updateEntity received");
             UpdateEntity updateEntity = (UpdateEntity)message;
             MovingEntity entity = entities.get(updateEntity.getEntityId());
             
-            entity.setTruePosition(updateEntity.getTruePos());
-            entity.setTrueDirection(updateEntity.getTrueDir());
-            entity.setLocalRotation(updateEntity.getEntityOrientation());
+            if(entity != null) {
+                entity.setTruePosition(updateEntity.getTruePos());
+                entity.setTrueDirection(updateEntity.getTrueDir());
+                entity.setLocalRotation(updateEntity.getEntityOrientation());
+                
+            }
         }
         
         else if(message instanceof SpawnEntity)

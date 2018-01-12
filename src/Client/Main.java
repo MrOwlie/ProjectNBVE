@@ -85,10 +85,10 @@ public class Main extends SimpleApplication {
         Serializer.registerClass(SpawnEntity.class);
         
         RemotePlayer.playerModel = assetManager.loadModel("/Models/Ninja.mesh.xml");
-        RemotePlayer.playerModel.scale(0.1f);
+        RemotePlayer.playerModel.scale(0.05f);
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         mat.setTexture("ColorMap", assetManager.loadTexture("Models/Ninja.jpg"));
-        //RemotePlayer.playerModel.setMaterial(assetManager.loadMaterial("/Models/Ninja.material"));
+        RemotePlayer.playerModel.setMaterial(mat);
         
         this.isLoggedIn = false;
         initiateClient();

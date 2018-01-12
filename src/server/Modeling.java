@@ -26,6 +26,7 @@ public class Modeling
     
     public void update (float tpf)
     {
+        System.out.println("HERE");
         if(!playerUpdateQueue.isEmpty())
         {
             PlayerOrientation newOrientation = playerUpdateQueue.remove();
@@ -41,18 +42,22 @@ public class Modeling
         timeSinceLastUpdate += tpf;
         if(timeSinceLastUpdate >= UPDATE_FREQUENCY)
         {
+            System.out.println("HERE2");
             update = true;
             timeSinceLastUpdate = 0f;
         }
         
         for(MovingEntity entity : entities.values())
         {
+            System.out.println("HERE3");
             entity.update(tpf);
             if(update)
             {
-              Networking.server.broadcast(new UpdateEntity(entity.getLocalTranslation(), entity.direction, entity.getLocalRotation(), entity.getEntityId()));
-            }             
+                System.out.println("broadcasting");
+                Networking.server.broadcast(new UpdateEntity(entity.getLocalTranslation(), entity.direction, entity.getLocalRotation(), entity.getEntityId()));
+            }           
         }
+        update = false;
     }
     
     public static void addEntity(MovingEntity entity)

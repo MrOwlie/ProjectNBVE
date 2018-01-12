@@ -87,7 +87,6 @@ public class Player extends MovingEntity{
             
         if(controller.isOnGround())
         {
-            System.out.println("updating player");
             trueDirection.set(Vector3f.ZERO);
 
             if(input[0])trueDirection.addLocal(forward);

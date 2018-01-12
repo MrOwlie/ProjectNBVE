@@ -41,7 +41,7 @@ import packets.Packet.KeyPressed;
 public class Main extends SimpleApplication {
     //Constans
     public static final String NAME = "UCS";
-    public static final String DEFAULT_SERVER = "localhost";
+    public static final String DEFAULT_SERVER = "mrowlie.asuscomm.com";
     public static final int PORT = 2000;
     public static final int VERSION = 1;
     //
@@ -84,8 +84,8 @@ public class Main extends SimpleApplication {
         Serializer.registerClass(KeyPressed.class);
         Serializer.registerClass(SpawnEntity.class);
         
-        RemotePlayer.playerModel = assetManager.loadModel("Models/Ninja.mesh.xml");
-        RemotePlayer.playerModel.setMaterial(assetManager.loadMaterial("/Models/Ninja.material"));
+        RemotePlayer.playerModel = assetManager.loadModel("/Models/Ninja.mesh.xml");
+        //RemotePlayer.playerModel.setMaterial(assetManager.loadMaterial("/Models/Ninja.material"));
         
         this.isLoggedIn = false;
         initiateClient();

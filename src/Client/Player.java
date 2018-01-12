@@ -23,7 +23,7 @@ public class Player extends MovingEntity{
     public static final float MASS = 5f;
     
     public static final float SPEED = 8f;
-    public static final float UPDATE_FREQUENCY = 10000f;
+    public static final float UPDATE_FREQUENCY = 1f;
     
     public static final int START_LEVEL = 1;
     public static final int START_HEALTH = 50;

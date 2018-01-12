@@ -19,7 +19,7 @@ public class Modeling
 {
     private static ConcurrentLinkedQueue<PlayerOrientation> playerUpdateQueue = new ConcurrentLinkedQueue<PlayerOrientation>();
     
-    public static final float UPDATE_FREQUENCY = 1000f;
+    public static final float UPDATE_FREQUENCY = 1f;
     private static HashMap<Integer, MovingEntity> entities = new HashMap<Integer, MovingEntity>();
     private float timeSinceLastUpdate;
     private boolean update;

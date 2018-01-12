@@ -104,8 +104,8 @@ public class Player extends MovingEntity {
                 
                 }
             } else {
-                Player player = new Player(username, connection, 0, 0, 0, 0, 10f, 0);
-                connection.send(new Packet.AuthPlayer(0, 0, 0, 0, 10f, 0, player.getEntityId()));
+                Player player = new Player(username, connection, 0, 0, 0, 40f, 10f, 0);
+                connection.send(new Packet.AuthPlayer(0, 0, 0, 40f, 10f, 0, player.getEntityId()));
                 Player.create(username, password);
                 Player.players.add(player);
                 Networking.server.broadcast(Filters.notEqualTo(connection), new SpawnEntity(player.getLocalTranslation(), player.entityId, Packet.PLAYER));

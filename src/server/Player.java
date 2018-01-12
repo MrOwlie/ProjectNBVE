@@ -86,7 +86,6 @@ public class Player extends MovingEntity {
         List<String> account;
         try {
             if(Files.exists(Paths.get("C:/Accounts/" + username + ".txt"))) {
-                System.out.println("existst");
                 account = Files.readAllLines(Paths.get("C:/Accounts/" + username + ".txt"));
                 if(password.equals(account.get(0))){
                     Player player = new Player(username,    connection,

@@ -53,11 +53,10 @@ public class Modeling
     {
         if(message instanceof UpdateEntity)
         {
-            System.out.println("updateEntity received");
             UpdateEntity updateEntity = (UpdateEntity)message;
             MovingEntity entity = entities.get(updateEntity.getEntityId());
-            
             if(entity != null) {
+                System.out.println("ID: " + updateEntity.getEntityId() + ", POS: " + updateEntity.getTruePos() + ", DIR: " + updateEntity.getTrueDir());
                 entity.setTruePosition(updateEntity.getTruePos());
                 entity.setTrueDirection(updateEntity.getTrueDir());
                 entity.setLocalRotation(updateEntity.getEntityOrientation());

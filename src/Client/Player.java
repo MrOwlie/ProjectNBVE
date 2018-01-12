@@ -82,6 +82,7 @@ public class Player extends MovingEntity{
     @Override
     public void update(float tpf)
     {   
+        System.out.println("LOCAL: " + this.getLocalTranslation() + ", POS: " + this.truePosition + ", DIR: " + this.trueDirection + ", LOCAL: " + this.localDirection);
         Vector3f forward = playerCam.getDirection().clone().normalize();
         Vector3f left = playerCam.getLeft().clone().normalize();
         forward.y = 0;
@@ -137,7 +138,7 @@ public class Player extends MovingEntity{
             }
             else
             {
-                controller.warp(localDirection.mult(CORRECTION_SPEED));
+                this.getLocalTranslation().add(localDirection.mult(CORRECTION_SPEED*tpf));
             }
         }
     }

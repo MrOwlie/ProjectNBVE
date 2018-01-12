@@ -60,7 +60,7 @@ public class RemotePlayer extends MovingEntity
             }
             else
             {
-                controller.warp(localDirection.mult(CORRECTION_SPEED));
+                this.getLocalTranslation().add(localDirection.mult(CORRECTION_SPEED*tpf));
             }
         }
     }

@@ -138,7 +138,7 @@ public class Player extends MovingEntity{
             }
             else
             {
-                controller.warp(this.getLocalTransform().add(localDirection.mult(CORRECTION_SPEED*tpf)));
+                controller.warp(this.getLocalTranslation().add(localDirection.mult(CORRECTION_SPEED*tpf)));
             }
         }
     }

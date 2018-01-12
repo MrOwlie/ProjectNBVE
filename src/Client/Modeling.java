@@ -59,7 +59,7 @@ public class Modeling
                 System.out.println("ID: " + updateEntity.getEntityId() + ", POS: " + updateEntity.getTruePos() + ", DIR: " + updateEntity.getTrueDir());
                 entity.setTruePosition(updateEntity.getTruePos());
                 entity.setTrueDirection(updateEntity.getTrueDir());
-                entity.setLocalRotation(updateEntity.getEntityOrientation());
+                entity.setViewDirection(updateEntity.getViewDirection());
                 
             }
         }

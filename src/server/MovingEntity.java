@@ -30,6 +30,10 @@ public abstract class MovingEntity extends Node
         return entityId;
     }
     
+    public abstract void setViewDirection(Vector3f dir);
+    
+    public abstract Vector3f getViewDirection();
+    
     public abstract void update(float tpf);
     
 }

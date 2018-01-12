@@ -51,7 +51,7 @@ public class Modeling
             if(update)
             {
                 System.out.println("broadcasting");
-                Networking.server.broadcast(new UpdateEntity(entity.getLocalTranslation(), entity.direction, entity.getLocalRotation(), entity.getEntityId()));
+                Networking.server.broadcast(new UpdateEntity(entity.getLocalTranslation(), entity.direction, entity.getViewDirection(), entity.getEntityId()));
             }           
         }
         update = false;

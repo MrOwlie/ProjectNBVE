@@ -64,5 +64,15 @@ public class RemotePlayer extends MovingEntity
             }
         }
     }
+
+    @Override
+    public void setViewDirection(Vector3f dir) {
+        controller.setViewDirection(dir);
+    }
+
+    @Override
+    public Vector3f getViewDirection() {
+        return controller.getViewDirection();
+    }
     
 }

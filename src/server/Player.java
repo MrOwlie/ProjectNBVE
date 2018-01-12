@@ -208,6 +208,7 @@ public class Player extends MovingEntity {
     {
         playerLeft.set(left);
         playerForward.set(forward);
+        controller.setViewDirection(forward);
     }
     
     public synchronized void input(String name, boolean state)
@@ -229,6 +230,16 @@ public class Player extends MovingEntity {
             case "Jump":
                 input[4] = state;
         }
+    }
+
+    @Override
+    public void setViewDirection(Vector3f dir) {
+        controller.setViewDirection(dir);
+    }
+
+    @Override
+    public Vector3f getViewDirection() {
+        return controller.getViewDirection();
     }
     
 }

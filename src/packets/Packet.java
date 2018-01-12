@@ -255,17 +255,16 @@ public class Packet {
         
         Vector3f truePosition;
         Vector3f trueDirection;
-        
-        Quaternion entityOrientation;
+        Vector3f viewDirection;
         
         public UpdateEntity(){
             
         }
         
-        public UpdateEntity(Vector3f truePosition, Vector3f trueDirection, Quaternion entityOrientation, int entityId){
+        public UpdateEntity(Vector3f truePosition, Vector3f trueDirection, Vector3f viewDirection, int entityId){
             this.entityId = entityId;
             this.truePosition = truePosition;
-            this.entityOrientation = entityOrientation;
+            this.viewDirection = viewDirection;
             this.trueDirection = trueDirection;
         }
         
@@ -281,9 +280,9 @@ public class Packet {
         {
             return trueDirection;
         }
-        public Quaternion getEntityOrientation()
+        public Vector3f getViewDirection()
         {
-            return entityOrientation;
+            return viewDirection;
         }
         
     }

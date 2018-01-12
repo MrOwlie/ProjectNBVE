@@ -63,7 +63,7 @@ public class Player extends MovingEntity {
         this.connection = connection;
         this.direction = new Vector3f();
         this.controller = new BetterCharacterControl(CYLINDER_RADIUS, CYLINDER_HEIGHT, MASS);
-        //this.setLocalTranslation(startX, startY, startZ);
+        this.setLocalTranslation(startX, startY, startZ);
         
         Main.bulletAppState.getPhysicsSpace().add(controller);
         Main.refRootNode.attachChild(this);
@@ -77,7 +77,7 @@ public class Player extends MovingEntity {
                     );
         }
         Modeling.addEntity(this);
-        controller.warp(new Vector3f(startX, startY, startZ));
+        //controller.warp(new Vector3f(startX, startY, startZ));
         
         
     }
@@ -199,6 +199,7 @@ public class Player extends MovingEntity {
             
             direction.normalizeLocal();
             
+            System.out.println(direction);
             controller.setWalkDirection(direction.mult(SPEED));
         }
          

@@ -26,6 +26,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
+import com.jme3.scene.shape.Sphere;
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.builder.LayerBuilder;
 import de.lessvoid.nifty.builder.PanelBuilder;
@@ -93,6 +94,13 @@ public class Main extends SimpleApplication {
         Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         mat.setTexture("ColorMap", assetManager.loadTexture("Models/Ninja.jpg"));
         RemotePlayer.playerModel.setMaterial(mat);
+        
+        Sphere snowball = new Sphere(32, 32, 1.5f);
+        Geometry geomSnowball = new Geometry("Snowball", snowball);
+        Material matsSnowball = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
+        matsSnowball.setColor("snowballColor", ColorRGBA.White);
+        geomSnowball.setMaterial(matsSnowball);
+        Snowball.snowballModel = geomSnowball;
         
         this.isLoggedIn = false;
         initiateClient();

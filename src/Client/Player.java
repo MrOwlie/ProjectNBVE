@@ -73,6 +73,7 @@ public class Player extends MovingEntity{
         camNode.setLocalTranslation(new Vector3f(0f,5f,0f));
         Modeling.addEntity(this, entityId);
         ChaseCamera chaseCam = new ChaseCamera(playerCam, camNode, Main.refInputManager);
+        chaseCam.setInvertVerticalAxis(true);
         chaseCam.setMaxDistance(1f);
         chaseCam.setMinDistance(1f);
         chaseCam.setDragToRotate(false);

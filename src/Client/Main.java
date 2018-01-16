@@ -118,7 +118,7 @@ public class Main extends SimpleApplication {
             assetManager, inputManager, audioRenderer, guiViewPort);
         nifty = niftyDisplay.getNifty();
         guiViewPort.addProcessor(niftyDisplay);
-        //flyCam.setDragToRotate(true);
+        flyCam.setDragToRotate(true);
 
         nifty.loadStyleFile("nifty-default-styles.xml");
         nifty.loadControlFile("nifty-default-controls.xml");

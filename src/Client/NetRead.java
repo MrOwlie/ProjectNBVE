@@ -26,6 +26,7 @@ public class NetRead implements MessageListener<Client>
             
         } else if(m instanceof AuthPlayer) {
             Modeling.addMessage(m);
+            Main.refFlyCam.setDragToRotate(false);
             Main.nifty.gotoScreen("none");
         } else if(m instanceof UpdateEntity) {
             Modeling.addMessage(m);

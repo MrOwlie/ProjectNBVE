@@ -52,7 +52,6 @@ public class Modeling
             entity.update(tpf);
             if(update)
             {
-                System.out.println("broadcasting");
                 if(entity instanceof Player)
                 {
                     Player player = (Player)entity;

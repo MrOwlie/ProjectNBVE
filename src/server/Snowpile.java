@@ -15,7 +15,7 @@ import packets.Packet.SpawnSnowpile;
  */
 public class Snowpile {
     static final float MAX_X = 10;
-    static final float MAX_Y = 10;
+    static final float MAX_Z = 10;
     static final float MAX_AMOUNT = 60;
     static final float TIME_ALIVE = 20;
     
@@ -28,21 +28,23 @@ public class Snowpile {
     int id;
     
     float x;
-    float y;
+    float z;
     float timeAlive;
     
     public Snowpile() {
         this.x = (rand.nextFloat() * MAX_X) - (MAX_X / 2);
-        this.y = (rand.nextFloat() * MAX_Y) - (MAX_Y / 2);
+        this.y = (rand.nextFloat() * MAX_Z) - (MAX_Z / 2);
         this.timeAlive = Snowpile.TIME_ALIVE;
         this.id = Snowpile.idCounter++;
+        System.out.println("ID: " + this.id + ", X: " + this.x + ", Z: " + this.z);
+        
     }
     
     public static void update(float tpf) {
         if (Snowpile.snowpiles.size() < Snowpile.MAX_AMOUNT) {
             Snowpile newPile = new Snowpile();
             Snowpile.snowpiles.add(newPile);
-            Networking.server.broadcast(new SpawnSnowpile(newPile.id, newPile.x, newPile.y));
+            Networking.server.broadcast(new SpawnSnowpile(newPile.id, newPile.x, newPile.z));
         }
         
         for(Snowpile pile : Snowpile.snowpiles) {

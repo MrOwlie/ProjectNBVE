@@ -16,7 +16,7 @@ import packets.Packet.PlayerOrientation;
  *
  * @author Anton
  */
-public class Player extends MovingEntity{
+public class Player extends Node{
     
     public static final float CYLINDER_HEIGHT = 5f;
     public static final float CYLINDER_RADIUS = 2f;
@@ -34,12 +34,13 @@ public class Player extends MovingEntity{
     private int experience;
     private int nSnowballs;
     private int dmg;
+    private int entityId;
     
     private float timeSinceUpdate = 0f;
             
     private BetterCharacterControl controller;
     private Camera playerCam;
-    
+    private Vector3f direction = new Vector3f();
     private boolean input[] = new boolean[5];
     
     public Player (
@@ -51,15 +52,13 @@ public class Player extends MovingEntity{
             int entityId
     )
     {
-        super(entityId);
         
         this.level = level;
         this.experience = experience;
         this.nSnowballs = nSnowballs;
         this.playerCam = playerCam;
         this.setLocalTranslation(startPos);
-        
-        truePosition = startPos;
+        this.entityId = entityId;
         
         controller = new BetterCharacterControl(CYLINDER_RADIUS, CYLINDER_HEIGHT, MASS);
         controller.setGravity(new Vector3f(0f,1f,0f));
@@ -71,7 +70,6 @@ public class Player extends MovingEntity{
         Node camNode = new Node();
         this.attachChild(camNode);
         camNode.setLocalTranslation(new Vector3f(0f,5f,0f));
-        Modeling.addEntity(this, entityId);
         ChaseCamera chaseCam = new ChaseCamera(playerCam, camNode, Main.refInputManager);
         chaseCam.setInvertVerticalAxis(true);
         chaseCam.setMaxDistance(1f);
@@ -80,7 +78,7 @@ public class Player extends MovingEntity{
         
     }
     
-    @Override
+
     public void update(float tpf)
     {   
         Vector3f forward = playerCam.getDirection().clone().normalize();
@@ -90,16 +88,16 @@ public class Player extends MovingEntity{
             
         if(controller.isOnGround())
         {
-            trueDirection.set(Vector3f.ZERO);
+            direction.set(Vector3f.ZERO);
 
-            if(input[0])trueDirection.addLocal(forward);
-            if(input[1])trueDirection.addLocal(left);
-            if(input[2])trueDirection.addLocal(forward.negate());
-            if(input[3])trueDirection.addLocal(left.negate());
+            if(input[0])direction.addLocal(forward);
+            if(input[1])direction.addLocal(left);
+            if(input[2])direction.addLocal(forward.negate());
+            if(input[3])direction.addLocal(left.negate());
             if(input[4])controller.jump();
-            trueDirection.normalizeLocal();
+            direction.normalizeLocal();
         }
-        controller.setWalkDirection(trueDirection.mult(SPEED));
+        controller.setWalkDirection(direction.mult(SPEED));
         timeSinceUpdate += tpf;
         if(timeSinceUpdate >= UPDATE_FREQUENCY)
         {
@@ -108,7 +106,7 @@ public class Player extends MovingEntity{
             (
             forward,
             left,
-            this.getLocalRotation(),
+            this.getLocalTranslation(),
             this.entityId
             ));
         }
@@ -133,20 +131,5 @@ public class Player extends MovingEntity{
             case "Jump":
                 input[4] = state;
         }
-    }
-    
-    @Override
-    public Vector3f getViewDirection() {
-        return controller.getViewDirection();
-    }
-
-    @Override
-    protected void correctPosition(float tpf) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setViewDirection(Vector3f dir) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

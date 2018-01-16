@@ -24,7 +24,6 @@ public class Modeling
     private static HashMap<Integer, MovingEntity> entities = new HashMap<Integer, MovingEntity>();
     private float currentTpf = 0f;
     private float nextTpf = 0f;
-    private Player player;
     private boolean running = true;
     
     public void update(float tpf) 
@@ -38,6 +37,10 @@ public class Modeling
         {
             entity.update(tpf);
         }
+        if(Main.localPlayer != null)
+        {
+            Main.localPlayer.update(tpf);
+        }
     }
     
     public static void addEntity(MovingEntity entity, int entityId)
@@ -49,6 +52,7 @@ public class Modeling
     {
         playerUpdateQueue.add(message);
     }
+    
     
     private void handleMessage(Message message)
     {
@@ -88,19 +92,5 @@ public class Modeling
         }
     }
     
-    public synchronized void updateTpf(float tpf)
-    {
-        this.nextTpf += tpf;
-    }
-    
-    private synchronized void setCurrentTpf()
-    {
-        currentTpf = nextTpf;
-        nextTpf = 0f;
-    }
-    
-    private synchronized float getNextTpf()
-    {
-        return nextTpf;
-    }
+
 }

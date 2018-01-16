@@ -58,7 +58,7 @@ public class Networking implements MessageListener<HostedConnection>, Connection
         }
         
         else if(m instanceof PlayerOrientation) {
-            Modeling.addPlayerUpdate((PlayerOrientation)m);
+            Modeling.addPlayerUpdate((PlayerOrientation)m, source);
         }
     }
 

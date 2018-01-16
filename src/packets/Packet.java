@@ -115,8 +115,8 @@ public class Packet {
     {
         protected Vector3f forward;
         protected Vector3f left;
+        protected Vector3f position;
         
-        protected Quaternion modelOrientation;
         
         int entityId;
         
@@ -124,10 +124,10 @@ public class Packet {
         
         }
         
-        public PlayerOrientation(Vector3f forward, Vector3f left, Quaternion modelOrientation, int entityId){
+        public PlayerOrientation(Vector3f forward, Vector3f left, Vector3f position, int entityId){
             this.forward = forward;
             this.left = left;
-            this.modelOrientation = modelOrientation;
+            this.position = position;
             this.entityId = entityId;
         }
         
@@ -141,15 +141,16 @@ public class Packet {
             return forward;
         }
         
-        public Quaternion getModelOrientation()
+        public Vector3f getPosition()
         {
-            return modelOrientation;
+            return position;
         }
         
         public int getEntityId()
         {
             return entityId;
         }
+        
     }
     
     @Serializable

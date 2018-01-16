@@ -6,6 +6,7 @@
 package server;
 
 import com.jme3.network.Filters;
+import com.jme3.network.HostedConnection;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -34,8 +35,8 @@ public class Modeling
             Player player = (Player)entities.get(entityId);
             if(player != null)
             {
-                player.setLocalRotation(newOrientation.getModelOrientation());
                 player.setForwardAndLeft(newOrientation.getForward(), newOrientation.getLeft());
+                player.setPosition(newOrientation.getPosition());
             }
         }
         
@@ -86,8 +87,24 @@ public class Modeling
         entities.remove(entityId);
     }
     
-    public static void addPlayerUpdate(PlayerOrientation playerUpdate)
+    public static void addPlayerUpdate(PlayerOrientation playerUpdate, HostedConnection source)
     {
-        playerUpdateQueue.add(playerUpdate);
+        Player player = (Player)entities.get(playerUpdate.getEntityId());
+        try
+        {           
+            if(player.getConnection().equals(source))
+            {
+                playerUpdateQueue.add(playerUpdate);
+            }
+            else
+            {
+                System.out.println("The source didn't have permission to update that player");
+            }
+        }
+        
+        catch(Exception e)
+        {
+            System.out.println("The player could not be updated");
+        }
     }
 }

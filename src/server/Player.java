@@ -215,4 +215,9 @@ public class Player extends MovingEntity {
     {
         return connection;
     }
+    
+    public void setPosition(Vector3f position)
+    {
+        controller.warp(position);
+    }
 }

@@ -35,12 +35,12 @@ public class Snowball extends MovingEntity{
     
     @Override
     public void setViewDirection(Vector3f dir) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public Vector3f getViewDirection() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return Vector3f.UNIT_X;
     }
 
     @Override

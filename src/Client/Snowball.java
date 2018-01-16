@@ -37,12 +37,12 @@ public class Snowball extends MovingEntity
     
     @Override
     protected void correctPosition(float tpf) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void setViewDirection(Vector3f dir) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     
 }

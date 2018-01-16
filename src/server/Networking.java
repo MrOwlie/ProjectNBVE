@@ -64,8 +64,10 @@ public class Networking implements MessageListener<HostedConnection>, Connection
         else if(m instanceof ThrowSnowball){
             ThrowSnowball throwSnowball = (ThrowSnowball)m;
             Player player = Modeling.getPlayer(throwSnowball.getEntityId());
+            System.out.println("ThrowSnowball recieved");
             if(player != null)
             {
+                System.out.println("Player was found");
                 player.throwSnowball(throwSnowball.getDirection());
             }
         }

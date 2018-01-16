@@ -272,7 +272,7 @@ public class Main extends SimpleApplication {
             {
                 localPlayer.input(name, isPressed);
                 //myClient.send(new KeyPressed(name, isPressed, localPlayer.entityId));
-                System.out.println("Not null");
+                System.out.println("Input\nName : "+name+" isPressed : "+isPressed);
             }
         }        
     };

@@ -27,6 +27,7 @@ public class Snowball extends MovingEntity
         super(entityId);
         this.setLocalTranslation(startPos);
         truePosition = startPos;
+        Main.refRootNode.attachChild(this);
         
         controller = new RigidBodyControl(MASS);
         this.addControl(controller);

@@ -67,6 +67,6 @@ public class RemotePlayer extends MovingEntity
 
     @Override
     public void setViewDirection(Vector3f dir) {
-        controller.setViewDirection(dir);
+        controller.setViewDirection(dir.negate());
     }
 }

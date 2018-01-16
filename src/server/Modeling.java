@@ -8,7 +8,7 @@ package server;
 import com.jme3.network.Filters;
 import com.jme3.network.HostedConnection;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import packets.Packet.PlayerOrientation;
 import packets.Packet.UpdateEntity;
@@ -22,7 +22,7 @@ public class Modeling
     private static ConcurrentLinkedQueue<PlayerOrientation> playerUpdateQueue = new ConcurrentLinkedQueue<PlayerOrientation>();
     
     public static final float UPDATE_FREQUENCY = 0.025f;
-    private static HashMap<Integer, MovingEntity> entities = new HashMap<Integer, MovingEntity>();
+    private static ConcurrentHashMap<Integer, MovingEntity> entities = new ConcurrentHashMap<Integer, MovingEntity>();
     private float timeSinceLastUpdate;
     private boolean update;
     

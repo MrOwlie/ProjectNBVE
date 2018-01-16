@@ -50,6 +50,7 @@ public class Snowpile {
             if(pile.timeAlive <= 0) {
                 Snowpile.snowpiles.remove(pile);
                 Networking.server.broadcast(new DespawnSnowpile(pile.id));
+                break;
             }
         }
         

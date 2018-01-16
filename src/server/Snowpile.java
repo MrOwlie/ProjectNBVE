@@ -14,9 +14,9 @@ import packets.Packet.SpawnSnowpile;
  * @author mrowlie
  */
 public class Snowpile {
-    static final float MAX_X = 40;
-    static final float MAX_Y = 40;
-    static final float MAX_AMOUNT = 10;
+    static final float MAX_X = 10;
+    static final float MAX_Y = 10;
+    static final float MAX_AMOUNT = 60;
     static final float TIME_ALIVE = 20;
     
     static ArrayList<Snowpile> snowpiles = new ArrayList();

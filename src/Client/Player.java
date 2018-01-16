@@ -22,7 +22,7 @@ public class Player extends MovingEntity{
     public static final float CYLINDER_RADIUS = 2f;
     public static final float MASS = 5f;
     
-    public static final float SPEED = 8f;
+    public static final float SPEED = 0.13f;
     public static final float UPDATE_FREQUENCY = 0.05f;
     
     public static final int START_LEVEL = 1;

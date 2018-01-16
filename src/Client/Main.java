@@ -1,6 +1,7 @@
 package Client;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
@@ -52,6 +53,7 @@ public class Main extends SimpleApplication {
     public static FlyByCamera refFlyCam;
     public static BulletAppState bulletAppState;
     public static Camera refCam;
+    public static AssetManager refAssetManager;
     
     RigidBodyControl landscape;
     Spatial sceneModel;
@@ -96,6 +98,7 @@ public class Main extends SimpleApplication {
         refInputManager = inputManager;
         refFlyCam = flyCam;
         refCam = cam;
+        refAssetManager = assetManager;
         
         bulletAppState = new BulletAppState();
         myModel = new Modeling();
@@ -183,7 +186,7 @@ public class Main extends SimpleApplication {
         mats.setColor("Color", ColorRGBA.Blue);
         geom.setMaterial(mats);
         
-        SnowPile pile = new SnowPile(assetManager, rootNode, 20f, 20f);
+        Snowpile pile = new Snowpile(assetManager, rootNode, 20f, 20f);
         
         initiateMap();
         initiateControlls();

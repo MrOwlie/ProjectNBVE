@@ -20,7 +20,7 @@ public class Player extends Node{
     
     public static final float CYLINDER_HEIGHT = 5f;
     public static final float CYLINDER_RADIUS = 2f;
-    public static final float MASS = 5f;
+    public static final float MASS = 50f;
     
     public static final float SPEED = 8f;
     public static final float UPDATE_FREQUENCY = 0.05f;

@@ -88,6 +88,10 @@ public class Main extends SimpleApplication {
         Serializer.registerClass(UpdateEntity.class);
         Serializer.registerClass(KeyPressed.class);
         Serializer.registerClass(SpawnEntity.class);
+        Serializer.registerClass(SpawnSnowpile.class);
+        Serializer.registerClass(DespawnSnowpile.class);
+        Serializer.registerClass(ThrowSnowball.class);
+        
         
         RemotePlayer.playerModel = assetManager.loadModel("/Models/Ninja.mesh.xml");
         RemotePlayer.playerModel.scale(0.025f);

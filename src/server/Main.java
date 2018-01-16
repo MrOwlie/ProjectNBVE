@@ -46,6 +46,9 @@ public class Main extends SimpleApplication {
         Serializer.registerClass(PlayerOrientation.class);
         Serializer.registerClass(UpdateEntity.class);
         Serializer.registerClass(SpawnEntity.class);
+        Serializer.registerClass(SpawnSnowpile.class);
+        Serializer.registerClass(DespawnSnowpile.class);
+        Serializer.registerClass(ThrowSnowball.class);
         
         
         net = new Networking();

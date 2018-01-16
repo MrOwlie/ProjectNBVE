@@ -321,6 +321,7 @@ public class Packet {
         }
     }
     
+    @Serializable
     public static class SpawnSnowpile extends MyAbstractMessage {
         int id;
         float x;
@@ -348,6 +349,7 @@ public class Packet {
         
     }
     
+    @Serializable
     public static class DespawnSnowpile extends MyAbstractMessage {
         int id;
         
@@ -364,6 +366,7 @@ public class Packet {
         }
     }
     
+    @Serializable
     public static class ThrowSnowball extends MyAbstractMessage{
         protected Vector3f direction;
         protected int entityId;

@@ -211,7 +211,7 @@ public class Player extends MovingEntity {
     
     public void throwSnowball(Vector3f direction)
     {
-        if(ammo <= 0 && canThrowSnowball)
+        if(ammo > 0 && canThrowSnowball)
         {
             Snowball snowball = new Snowball(this.getLocalTranslation(), direction);
             Networking.server.broadcast(new SpawnEntity(snowball.getLocalTranslation(), snowball.entityId, Packet.SNOWBALL));

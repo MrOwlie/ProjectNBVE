@@ -64,6 +64,10 @@ public class Modeling
                 }
             }           
         }
+        
+        //Update snowpiles
+        Snowpile.update(tpf);
+        
         update = false;
     }
     

@@ -62,7 +62,7 @@ public class Player extends MovingEntity {
         this.maxHp = 20 + (level * 5);
         this.hp = this.maxHp;
         this.dmg = 10 + (level * 1);
-        this.ammo = ammo;
+        this.ammo = 99;
         this.connection = connection;
         this.direction = new Vector3f();
         this.controller = new BetterCharacterControl(CYLINDER_RADIUS, CYLINDER_HEIGHT, MASS);

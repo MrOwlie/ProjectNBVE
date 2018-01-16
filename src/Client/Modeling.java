@@ -81,7 +81,7 @@ public class Modeling
             
             else if(spawnEntity.getEntityType() == Packet.SNOWBALL)
             {
-                new Snowball(spawnEntity.getPos(),spawnEntity.getEntityId());
+                new Snowball(spawnEntity.getPos(), spawnEntity.getEntityId());
             }
         }
         

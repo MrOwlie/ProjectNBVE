@@ -33,7 +33,7 @@ public class Snowpile {
     
     public Snowpile() {
         this.x = (rand.nextFloat() * MAX_X) - (MAX_X / 2);
-        this.y = (rand.nextFloat() * MAX_Z) - (MAX_Z / 2);
+        this.z = (rand.nextFloat() * MAX_Z) - (MAX_Z / 2);
         this.timeAlive = Snowpile.TIME_ALIVE;
         this.id = Snowpile.idCounter++;
         System.out.println("ID: " + this.id + ", X: " + this.x + ", Z: " + this.z);

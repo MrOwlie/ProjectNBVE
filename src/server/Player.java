@@ -186,22 +186,7 @@ public class Player extends MovingEntity {
     @Override
     public synchronized void update(float tpf) 
     {
-        if(controller.isOnGround())
-        {
-            direction.set(Vector3f.ZERO);
-
-            if(input[0])direction.addLocal(playerForward);
-            if(input[1])direction.addLocal(playerLeft);
-            if(input[2])direction.addLocal(playerForward.negate());
-            if(input[3])direction.addLocal(playerLeft.negate());
-            if(input[4])controller.jump();
-            
-            direction.normalizeLocal();
-            
-            System.out.println(direction);
-            controller.setWalkDirection(direction.mult(SPEED));
-        }
-         
+        
     }
     
     public synchronized void setForwardAndLeft(Vector3f forward, Vector3f left)
@@ -213,23 +198,7 @@ public class Player extends MovingEntity {
     
     public synchronized void input(String name, boolean state)
     {
-        switch(name)
-        {
-            case "W":
-                input[0] = state;
-                break;
-            case "A":
-                input[1] = state;
-                break;
-            case "S":
-                input[2] = state;
-                break;
-            case "D":
-                input[3] = state;
-                break;
-            case "Jump":
-                input[4] = state;
-        }
+
     }
 
     @Override
@@ -242,4 +211,8 @@ public class Player extends MovingEntity {
         return controller.getViewDirection();
     }
     
+    public HostedConnection getConnection()
+    {
+        return connection;
+    }
 }

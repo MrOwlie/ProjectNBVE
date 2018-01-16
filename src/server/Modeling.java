@@ -5,6 +5,7 @@
  */
 package server;
 
+import com.jme3.network.Filters;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -51,7 +52,15 @@ public class Modeling
             if(update)
             {
                 System.out.println("broadcasting");
-                Networking.server.broadcast(new UpdateEntity(entity.getLocalTranslation(), entity.direction, entity.getViewDirection(), entity.getEntityId()));
+                if(entity instanceof Player)
+                {
+                    Player player = (Player)entity;
+                    Networking.server.broadcast(Filters.notEqualTo(player.getConnection()), new UpdateEntity(entity.getLocalTranslation(), entity.direction, entity.getViewDirection(), entity.getEntityId()));
+                }
+                else
+                {
+                    Networking.server.broadcast(new UpdateEntity(entity.getLocalTranslation(), entity.direction, entity.getViewDirection(), entity.getEntityId()));
+                }
             }           
         }
         update = false;

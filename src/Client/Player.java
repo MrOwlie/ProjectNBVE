@@ -22,7 +22,7 @@ public class Player extends MovingEntity{
     public static final float CYLINDER_RADIUS = 2f;
     public static final float MASS = 5f;
     
-    public static final float SPEED = 0.13f;
+    public static final float SPEED = 8f;
     public static final float UPDATE_FREQUENCY = 0.05f;
     
     public static final int START_LEVEL = 1;
@@ -101,9 +101,6 @@ public class Player extends MovingEntity{
             trueDirection.normalizeLocal();
         }
         
-        correctDirection(tpf);
-        correctPosition(tpf);
-        
         timeSinceUpdate += tpf;
         if(timeSinceUpdate >= UPDATE_FREQUENCY)
         {
@@ -115,32 +112,6 @@ public class Player extends MovingEntity{
             this.getLocalRotation(),
             this.entityId
             ));
-        }
-    }
-    
-    @Override
-    protected void correctPosition(float tpf) 
-    {
-        if(truePositionReached && controller.isOnGround())
-        {
-            controller.setWalkDirection(trueDirection.mult(SPEED));
-        }
-        
-        else if(!truePositionReached)
-        {
-            controller.setWalkDirection(Vector3f.ZERO);
-            float distance = truePosition.subtract(this.getLocalTranslation()).length();
-            
-            if(distance < tpf*CORRECTION_SPEED)
-            {
-                controller.warp(truePosition);
-                localDirection = trueDirection;
-                truePositionReached = true;
-            }
-            else
-            {
-                controller.warp(this.getLocalTranslation().add(localDirection.mult(CORRECTION_SPEED*tpf)));
-            }
         }
     }
     
@@ -164,14 +135,19 @@ public class Player extends MovingEntity{
                 input[4] = state;
         }
     }
-
-    @Override
-    public void setViewDirection(Vector3f dir) {
-        controller.setViewDirection(dir);
-    }
     
     @Override
     public Vector3f getViewDirection() {
         return controller.getViewDirection();
+    }
+
+    @Override
+    protected void correctPosition(float tpf) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setViewDirection(Vector3f dir) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -24,6 +24,7 @@ public class Modeling
     private static HashMap<Integer, MovingEntity> entities = new HashMap<Integer, MovingEntity>();
     private float currentTpf = 0f;
     private float nextTpf = 0f;
+    private Player player;
     private boolean running = true;
     
     public void update(float tpf) 

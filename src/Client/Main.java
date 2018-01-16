@@ -98,7 +98,7 @@ public class Main extends SimpleApplication {
         Sphere snowball = new Sphere(32, 32, 1.5f);
         Geometry geomSnowball = new Geometry("Snowball", snowball);
         Material matsSnowball = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        matsSnowball.setColor("snowballColor", ColorRGBA.White);
+        matsSnowball.setColor("Color", ColorRGBA.White);
         geomSnowball.setMaterial(matsSnowball);
         Snowball.snowballModel = geomSnowball;
         

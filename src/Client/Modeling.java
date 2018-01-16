@@ -100,7 +100,7 @@ public class Modeling
         
         else if (message instanceof SpawnSnowpile) {
             SpawnSnowpile p = (SpawnSnowpile) message;
-            Snowpile newPile = new Snowpile(Main.refAssetManager, Main.refRootNode, p.getId(), p.getX(), p.getY());
+            Snowpile newPile = new Snowpile(Main.refAssetManager, Main.refRootNode, p.getId(), p.getX(), p.getZ());
             Snowpile.snowpiles.add(newPile);
         }
         

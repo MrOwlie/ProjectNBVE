@@ -325,13 +325,13 @@ public class Packet {
     public static class SpawnSnowpile extends MyAbstractMessage {
         int id;
         float x;
-        float y;
+        float z;
         
         public SpawnSnowpile() {
             
         }
         
-        public SpawnSnowpile(int id, float x, float y) {
+        public SpawnSnowpile(int id, float x, float z) {
             
         }
         
@@ -343,8 +343,8 @@ public class Packet {
             return this.x;
         }
         
-        public float getY() {
-            return this.y;
+        public float getZ() {
+            return this.z;
         }
         
     }

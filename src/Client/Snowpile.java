@@ -40,7 +40,7 @@ public class Snowpile {
         snow = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         snow.setTexture("ColorMap", assetManager.loadTexture("Textures/snowmound.png"));
         geom.setMaterial(snow);
-        geom.setLocalTranslation(x, 0, z);
         node.attachChild(geom);
+        geom.setLocalTranslation(x, 0, z);
     }
 }

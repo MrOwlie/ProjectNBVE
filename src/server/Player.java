@@ -211,6 +211,7 @@ public class Player extends MovingEntity {
     
     public void throwSnowball(Vector3f direction)
     {
+        System.out.println("AMMO: " + this.ammo + ", canThrowSnowball: " + canThrowSnowball);
         if(ammo > 0 && canThrowSnowball)
         {
             Snowball snowball = new Snowball(this.getLocalTranslation(), direction);

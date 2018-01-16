@@ -16,6 +16,7 @@ import com.jme3.network.serializing.Serializable;
  */
 public class Packet {
     public static final int PLAYER = 1;
+    public static final int SNOWBALL = 2;
     
     abstract public static class MyAbstractMessage extends AbstractMessage {
         
@@ -317,6 +318,30 @@ public class Packet {
         public int getEntityType()
         {
             return entityType;
+        }
+    }
+    
+    public static class ThrowSnowball extends MyAbstractMessage{
+        protected Vector3f direction;
+        protected int entityId;
+        public ThrowSnowball(){
+            
+        }
+        
+        public ThrowSnowball(Vector3f direction, int entityId)
+        {
+            this.direction = direction;
+            this.entityId = entityId;
+        }
+        
+        public Vector3f getDirection()
+        {
+            return direction;
+        }
+        
+        public int getEntityId()
+        {
+            return entityId;
         }
     }
     

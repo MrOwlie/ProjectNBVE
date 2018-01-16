@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import packets.Packet.Authenticate;
 import packets.Packet.KeyPressed;
 import packets.Packet.PlayerOrientation;
+import packets.Packet.ThrowSnowball;
 
 /**
  *
@@ -52,13 +53,21 @@ public class Networking implements MessageListener<HostedConnection>, Connection
             Player player = Modeling.getPlayer(keyPressed.getEntityId());
             if(player != null)
             {
-                player.input(keyPressed.getKey(), keyPressed.getState());
             }
             System.out.println("Key pressed: " + ((KeyPressed) m).getKey());
         }
         
         else if(m instanceof PlayerOrientation) {
             Modeling.addPlayerUpdate((PlayerOrientation)m, source);
+        }
+        
+        else if(m instanceof ThrowSnowball){
+            ThrowSnowball throwSnowball = (ThrowSnowball)m;
+            Player player = Modeling.getPlayer(throwSnowball.getEntityId());
+            if(player != null)
+            {
+                player.throwSnowball(throwSnowball.getDirection());
+            }
         }
     }
 

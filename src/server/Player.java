@@ -30,13 +30,16 @@ public class Player extends MovingEntity {
     public static final float CYLINDER_RADIUS = 2f;
     public static final float MASS = 50f;
     public static final float SPEED = 8f;
+    public static final float SNOWBALL_CD = 0.5f;
     
     static ArrayList<Player> players = new ArrayList();
-    static int nextId;
     
-    private boolean[] input = new boolean[6];
     Vector3f playerLeft = new Vector3f();
     Vector3f playerForward = new Vector3f();
+    
+    private boolean canThrowSnowball = true;
+    private float timeSinceLastThrow;
+    
     
     String username;
     int level;
@@ -187,6 +190,16 @@ public class Player extends MovingEntity {
     public synchronized void update(float tpf) 
     {
         
+        if(!canThrowSnowball && timeSinceLastThrow == SNOWBALL_CD)
+        {
+            canThrowSnowball = true;
+            timeSinceLastThrow = 0f;
+        }
+        else if(timeSinceLastThrow != SNOWBALL_CD)
+        {
+            timeSinceLastThrow = timeSinceLastThrow+tpf >= SNOWBALL_CD ? SNOWBALL_CD : timeSinceLastThrow+tpf;
+        }
+        
     }
     
     public synchronized void setForwardAndLeft(Vector3f forward, Vector3f left)
@@ -196,9 +209,14 @@ public class Player extends MovingEntity {
         controller.setViewDirection(forward);
     }
     
-    public synchronized void input(String name, boolean state)
+    public void throwSnowball(Vector3f direction)
     {
-
+        if(ammo <= 0 && canThrowSnowball)
+        {
+            Snowball snowball = new Snowball(this.getLocalTranslation(), direction);
+            Networking.server.broadcast(new SpawnEntity(snowball.getLocalTranslation(), snowball.entityId, Packet.SNOWBALL));
+            ammo--;
+        }
     }
 
     @Override

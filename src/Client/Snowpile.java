@@ -42,5 +42,6 @@ public class Snowpile {
         geom.setMaterial(snow);
         node.attachChild(geom);
         geom.setLocalTranslation(x, 0, z);
+        System.out.println("SNOWPILE :: X: " + x + ", Z: " + z);
     }
 }

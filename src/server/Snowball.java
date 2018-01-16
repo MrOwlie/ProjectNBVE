@@ -22,6 +22,7 @@ public class Snowball extends MovingEntity{
     {
         this.setLocalTranslation(startPos);
         Main.refRootNode.attachChild(this);
+        this.direction = direction;
         
         controller = new RigidBodyControl(MASS);
         this.addControl(controller);
@@ -44,7 +45,7 @@ public class Snowball extends MovingEntity{
 
     @Override
     public void update(float tpf) {
-        
+        direction = controller.getLinearVelocity();
     }
     
 }

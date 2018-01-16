@@ -95,11 +95,18 @@ public class Modeling
         
         else if (message instanceof SpawnSnowpile) {
             SpawnSnowpile p = (SpawnSnowpile) message;
-            new Snowpile(Main.refAssetManager, Main.refRootNode, p.getId(), p.getX(), p.getY());
+            Snowpile newPile = new Snowpile(Main.refAssetManager, Main.refRootNode, p.getId(), p.getX(), p.getY());
+            Snowpile.snowpiles.add(newPile);
         }
         
         else if (message instanceof DespawnSnowpile) {
             DespawnSnowpile p = (DespawnSnowpile) message;
+            for(Snowpile pile : Snowpile.snowpiles) {
+                if(pile.id == p.getId()) {
+                    Snowpile.snowpiles.remove(pile);
+                    break;
+                }
+            }
         }
     }
     

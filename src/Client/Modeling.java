@@ -57,7 +57,6 @@ public class Modeling
             UpdateEntity updateEntity = (UpdateEntity)message;
             MovingEntity entity = entities.get(updateEntity.getEntityId());
             if(entity != null) {
-                System.out.println("ID: " + updateEntity.getEntityId() + ", POS: " + updateEntity.getTruePos() + ", DIR: " + updateEntity.getTrueDir());
                 entity.setTruePosition(updateEntity.getTruePos());
                 entity.setTrueDirection(updateEntity.getTrueDir());
                 entity.setViewDirection(updateEntity.getViewDirection());

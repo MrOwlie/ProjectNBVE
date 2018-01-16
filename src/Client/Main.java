@@ -251,10 +251,11 @@ public class Main extends SimpleApplication {
         @Override
         public void onAction(String name, boolean isPressed, float tpf)
         {
+            System.out.println("Input");
             if(localPlayer != null)
             {
                 localPlayer.input(name, isPressed);
-                myClient.send(new KeyPressed(name, isPressed, localPlayer.entityId));
+                //myClient.send(new KeyPressed(name, isPressed, localPlayer.entityId));
                 System.out.println("Not null");
             }
         }        

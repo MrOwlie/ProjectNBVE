@@ -11,6 +11,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import packets.Packet.PlayerOrientation;
+import packets.Packet.ThrowSnowball;
 
 /**
  *
@@ -130,6 +131,13 @@ public class Player extends Node{
                 break;
             case "Jump":
                 input[4] = state;
+                break;
+            case "Throw":
+                if(state)
+                {
+                    NetWrite.addMessage(new ThrowSnowball(playerCam.getDirection(),entityId));
+                }
+                break;
         }
     }
 }

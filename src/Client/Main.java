@@ -10,8 +10,10 @@ import com.jme3.input.ChaseCamera;
 import com.jme3.input.FlyByCamera;
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;
+import com.jme3.input.MouseInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
+import com.jme3.input.controls.MouseButtonTrigger;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.network.Client;
@@ -246,8 +248,9 @@ public class Main extends SimpleApplication {
         inputManager.addMapping("S", new KeyTrigger(KeyInput.KEY_S));
         inputManager.addMapping("A", new KeyTrigger(KeyInput.KEY_A));
         inputManager.addMapping("D", new KeyTrigger(KeyInput.KEY_D));
+        inputManager.addMapping("Throw", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
         inputManager.addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE));
-        inputManager.addListener(actionListener, "W", "A", "S", "D", "Jump");
+        inputManager.addListener(actionListener, "W", "A", "S", "D", "Jump", "Throw");
     }
     private final ActionListener actionListener = new ActionListener()
     {

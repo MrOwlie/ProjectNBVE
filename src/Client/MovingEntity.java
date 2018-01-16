@@ -19,8 +19,8 @@ public abstract class MovingEntity extends Node{
     public static final int PLAYER = 1;
     /////
     
-    public static final float DIRECTION_CORRECTION_SPEED = 16f;
-    public static final float CORRECTION_SPEED = 8f;
+    public static final float DIRECTION_CORRECTION_SPEED = 8f;
+    public static final float CORRECTION_SPEED = 16f;
     
     protected Vector3f truePosition;
     protected Vector3f trueDirection = new Vector3f();
@@ -47,11 +47,6 @@ public abstract class MovingEntity extends Node{
     public void setTrueDirection(Vector3f trueDirection)
     {
         this.trueDirection = trueDirection.normalize();
-    }
-    
-    public void setRotation(Quaternion rotation)
-    {
-        this.setLocalRotation(rotation);
     }
     
     public void update(float tpf)

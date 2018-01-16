@@ -33,6 +33,10 @@ public class NetRead implements MessageListener<Client>
             
         } else if(m instanceof SpawnEntity) {
             Modeling.addMessage(m);
+        } else if(m instanceof SpawnSnowpile) {
+            Modeling.addMessage(m);
+        } else if(m instanceof DespawnSnowpile) {
+            Modeling.addMessage(m);
         }
     }
     

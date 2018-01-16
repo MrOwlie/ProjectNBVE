@@ -12,6 +12,8 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import packets.Packet.SpawnEntity;
 import packets.Packet.UpdateEntity;
 import packets.Packet.AuthPlayer;
+import packets.Packet.SpawnSnowpile;
+import packets.Packet.DespawnSnowpile;
 import packets.Packet;
 
 /**
@@ -89,6 +91,15 @@ public class Modeling
                     Main.refCam,
                     p.getEntityId()                    
             );
+        }
+        
+        else if (message instanceof SpawnSnowpile) {
+            SpawnSnowpile p = (SpawnSnowpile) message;
+            new Snowpile(Main.refAssetManager, Main.refRootNode, p.getId(), p.getX(), p.getY());
+        }
+        
+        else if (message instanceof DespawnSnowpile) {
+            DespawnSnowpile p = (DespawnSnowpile) message;
         }
     }
     

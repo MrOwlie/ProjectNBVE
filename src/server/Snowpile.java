@@ -7,7 +7,8 @@ package server;
 
 import java.util.ArrayList;
 import java.util.Random;
-
+import packets.Packet.DespawnSnowpile;
+import packets.Packet.SpawnSnowpile;
 /**
  *
  * @author mrowlie
@@ -22,6 +23,10 @@ public class Snowpile {
     
     static Random rand = new Random();
     
+    static int idCounter = 0;
+    
+    int id;
+    
     float x;
     float y;
     float timeAlive;
@@ -30,17 +35,21 @@ public class Snowpile {
         this.x = (rand.nextFloat() * MAX_X) - (MAX_X / 2);
         this.y = (rand.nextFloat() * MAX_Y) - (MAX_Y / 2);
         this.timeAlive = Snowpile.TIME_ALIVE;
+        this.id = Snowpile.idCounter++;
     }
     
     public static void update(float tpf) {
         if (Snowpile.snowpiles.size() < Snowpile.MAX_AMOUNT) {
-            Snowpile.snowpiles.add(new Snowpile());
+            Snowpile newPile = new Snowpile();
+            Snowpile.snowpiles.add(newPile);
+            Networking.server.broadcast(new SpawnSnowpile(newPile.id, newPile.x, newPile.y));
         }
         
         for(Snowpile pile : Snowpile.snowpiles) {
             pile.timeAlive -= tpf;
             if(pile.timeAlive <= 0) {
                 Snowpile.snowpiles.remove(pile);
+                Networking.server.broadcast(new DespawnSnowpile(pile.id));
             }
         }
         

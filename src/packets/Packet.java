@@ -361,6 +361,9 @@ public class Packet {
         
         public int getId() {
             return this.id;
+        }
+    }
+    
     public static class ThrowSnowball extends MyAbstractMessage{
         protected Vector3f direction;
         protected int entityId;

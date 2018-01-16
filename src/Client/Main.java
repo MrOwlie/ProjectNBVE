@@ -188,8 +188,6 @@ public class Main extends SimpleApplication {
         mats.setColor("Color", ColorRGBA.Blue);
         geom.setMaterial(mats);
         
-        Snowpile pile = new Snowpile(assetManager, rootNode, 20f, 20f);
-        
         initiateMap();
         initiateControlls();
         initiatePlayer();

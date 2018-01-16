@@ -78,6 +78,11 @@ public class Modeling
             {
                 new RemotePlayer(spawnEntity.getPos(), spawnEntity.getEntityId());
             }
+            
+            else if(spawnEntity.getEntityType() == Packet.SNOWBALL)
+            {
+                new Snowball(spawnEntity.getPos(),spawnEntity.getEntityId());
+            }
         }
         
         else if(message instanceof AuthPlayer)

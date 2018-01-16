@@ -320,4 +320,47 @@ public class Packet {
         }
     }
     
+    public static class SpawnSnowpile extends MyAbstractMessage {
+        int id;
+        float x;
+        float y;
+        
+        public SpawnSnowpile() {
+            
+        }
+        
+        public SpawnSnowpile(int id, float x, float y) {
+            
+        }
+        
+        public int getId() {
+            return this.id;
+        }
+        
+        public float getX() {
+            return this.x;
+        }
+        
+        public float getY() {
+            return this.y;
+        }
+        
+    }
+    
+    public static class DespawnSnowpile extends MyAbstractMessage {
+        int id;
+        
+        public DespawnSnowpile() {
+            
+        }
+        
+        public DespawnSnowpile(int id) {
+            
+        }
+        
+        public int getId() {
+            return this.id;
+        }
+    }
+    
 }

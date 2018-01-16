@@ -28,7 +28,7 @@ import packets.Packet.SpawnEntity;
 public class Player extends MovingEntity {
     public static final float CYLINDER_HEIGHT = 5f;
     public static final float CYLINDER_RADIUS = 2f;
-    public static final float MASS = 5f;
+    public static final float MASS = 50f;
     public static final float SPEED = 8f;
     
     static ArrayList<Player> players = new ArrayList();

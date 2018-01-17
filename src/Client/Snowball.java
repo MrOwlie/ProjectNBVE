@@ -15,8 +15,8 @@ import com.jme3.scene.Spatial;
  */
 public class Snowball extends MovingEntity
 {
-    public final float SPEED = 12f;
-    public final float MASS = 2f;
+    public final float SPEED = 60f;
+    public final float MASS = 10f;
     
     public static Spatial snowballModel;
     
@@ -35,11 +35,37 @@ public class Snowball extends MovingEntity
         Main.bulletAppState.getPhysicsSpace().add(controller);
         
         Modeling.addEntity(this, entityId);
+
+        CORRECTION_SPEED = 60f;
+        DIRECTION_CORRECTION_SPEED = 60f;
     }
     
     @Override
-    protected void correctPosition(float tpf) {
+    protected void correctPosition(float tpf) 
+    {
+        System.out.println("Correct pos : "+truePosition);
+        if(truePositionReached)
+        {
+            controller.setLinearVelocity(trueDirection.mult(SPEED));
+        }
         
+        else
+        {
+            controller.setLinearVelocity(Vector3f.ZERO);
+            
+            float distance = truePosition.subtract(this.getLocalTranslation()).length();
+            
+            if(distance < tpf*CORRECTION_SPEED)
+            {
+                controller.setPhysicsLocation(truePosition);
+                localDirection = trueDirection;
+                truePositionReached = true;
+            }
+            else
+            {
+                controller.setPhysicsLocation(this.getLocalTranslation().add(localDirection.mult(CORRECTION_SPEED*tpf)));
+            }
+        }
     }
 
     @Override

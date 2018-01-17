@@ -45,7 +45,7 @@ import packets.Packet.KeyPressed;
 public class Main extends SimpleApplication {
     //Constans
     public static final String NAME = "UCS";
-    public static final String DEFAULT_SERVER = "mrowlie.asuscomm.com";
+    public static final String DEFAULT_SERVER = "localhost";
     public static final int PORT = 2000;
     public static final int VERSION = 1;
     //
@@ -99,7 +99,7 @@ public class Main extends SimpleApplication {
         mat.setTexture("ColorMap", assetManager.loadTexture("Models/Ninja.jpg"));
         RemotePlayer.playerModel.setMaterial(mat);
         
-        Sphere snowball = new Sphere(32, 32, 1.5f);
+        Sphere snowball = new Sphere(32, 32, 0.25f);
         Geometry geomSnowball = new Geometry("Snowball", snowball);
         Material matsSnowball = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
         matsSnowball.setColor("Color", ColorRGBA.White);

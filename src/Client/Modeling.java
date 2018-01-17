@@ -30,7 +30,7 @@ public class Modeling
     
     public void update(float tpf) 
     {
-        if(!playerUpdateQueue.isEmpty())
+        while(!playerUpdateQueue.isEmpty())
         {
             handleMessage(playerUpdateQueue.remove());
         }

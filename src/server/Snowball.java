@@ -5,6 +5,7 @@
  */
 package server;
 
+import com.jme3.bullet.collision.shapes.SphereCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector3f;
 
@@ -13,20 +14,20 @@ import com.jme3.math.Vector3f;
  * @author Anton
  */
 public class Snowball extends MovingEntity{
-    public final float SPEED = 12f;
-    public final float MASS = 2f;
+    public final float SPEED = 60f;
+    public final float MASS = 10f;
     
     private RigidBodyControl controller;
     
     public Snowball(Vector3f startPos, Vector3f direction)
     {
         this.setLocalTranslation(startPos);
-        Main.refRootNode.attachChild(this);
         this.direction = direction;
         
-        controller = new RigidBodyControl(MASS);
+        controller = new RigidBodyControl(new SphereCollisionShape(0.25f), MASS);
         this.addControl(controller);
         Main.bulletAppState.getPhysicsSpace().add(controller);
+        Main.refRootNode.attachChild(this);
         controller.setLinearVelocity(direction.normalize().mult(SPEED));
         
         Modeling.addEntity(this);

@@ -9,6 +9,7 @@ import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.math.Vector3f;
 import com.jme3.network.Filters;
 import com.jme3.network.HostedConnection;
+import com.jme3.scene.Node;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -28,7 +29,7 @@ import packets.Packet.SpawnEntity;
 public class Player extends MovingEntity {
     public static final float CYLINDER_HEIGHT = 5f;
     public static final float CYLINDER_RADIUS = 2f;
-    public static final float MASS = 50f;
+    public static final float MASS = 150f;
     public static final float SPEED = 8f;
     public static final float SNOWBALL_CD = 0.5f;
     
@@ -51,6 +52,7 @@ public class Player extends MovingEntity {
     
     HostedConnection connection;
     BetterCharacterControl controller;
+    Node shootNode;
     
         
     private Player(String username, HostedConnection connection, int level, int exp, int ammo, float startX,  float startY, float startZ) {
@@ -66,6 +68,10 @@ public class Player extends MovingEntity {
         this.connection = connection;
         this.direction = new Vector3f();
         this.controller = new BetterCharacterControl(CYLINDER_RADIUS, CYLINDER_HEIGHT, MASS);
+        
+        shootNode = new Node();
+        this.attachChild(shootNode);
+        shootNode.setLocalTranslation(0, 5f, 5f);
         this.setLocalTranslation(startX, startY, startZ);
         
         Main.bulletAppState.getPhysicsSpace().add(controller);
@@ -195,7 +201,7 @@ public class Player extends MovingEntity {
             canThrowSnowball = true;
             timeSinceLastThrow = 0f;
         }
-        else if(timeSinceLastThrow != SNOWBALL_CD)
+        else if(!canThrowSnowball && timeSinceLastThrow != SNOWBALL_CD)
         {
             timeSinceLastThrow = timeSinceLastThrow+tpf >= SNOWBALL_CD ? SNOWBALL_CD : timeSinceLastThrow+tpf;
         }
@@ -214,9 +220,10 @@ public class Player extends MovingEntity {
         System.out.println("AMMO: " + this.ammo + ", canThrowSnowball: " + canThrowSnowball);
         if(ammo > 0 && canThrowSnowball)
         {
-            Snowball snowball = new Snowball(this.getLocalTranslation(), direction);
+            Snowball snowball = new Snowball(shootNode.getWorldTranslation(), direction);
             Networking.server.broadcast(new SpawnEntity(snowball.getLocalTranslation(), snowball.entityId, Packet.SNOWBALL));
             ammo--;
+            canThrowSnowball=false;
         }
     }
 

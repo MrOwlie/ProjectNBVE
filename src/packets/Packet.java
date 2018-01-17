@@ -321,6 +321,7 @@ public class Packet {
         }
     }
     
+    @Serializable
     public static class DestroyEntity extends MyAbstractMessage {
         protected int entityId;
         

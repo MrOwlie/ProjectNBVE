@@ -92,6 +92,7 @@ public class Main extends SimpleApplication {
         Serializer.registerClass(DespawnSnowpile.class);
         Serializer.registerClass(ThrowSnowball.class);
         Serializer.registerClass(Reload.class);
+        Serializer.registerClass(DestroyEntity.class);
         
         
         RemotePlayer.playerModel = assetManager.loadModel("/Models/Ninja.mesh.xml");

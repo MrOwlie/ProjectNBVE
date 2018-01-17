@@ -50,6 +50,7 @@ public class Main extends SimpleApplication {
         Serializer.registerClass(DespawnSnowpile.class);
         Serializer.registerClass(ThrowSnowball.class);
         Serializer.registerClass(Reload.class);
+        Serializer.registerClass(DestroyEntity.class);
         
         
         net = new Networking();
@@ -57,6 +58,7 @@ public class Main extends SimpleApplication {
         bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
         myModel = new Modeling();
+        bulletAppState.getPhysicsSpace().addCollisionListener(myModel);
         initiateMap();
     }
 

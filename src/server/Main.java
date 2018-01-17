@@ -51,7 +51,7 @@ public class Main extends SimpleApplication {
         Serializer.registerClass(ThrowSnowball.class);
         Serializer.registerClass(Reload.class);
         Serializer.registerClass(DestroyEntity.class);
-        
+        Serializer.registerClass(UpdateGUI.class);
         
         net = new Networking();
         refRootNode = rootNode;

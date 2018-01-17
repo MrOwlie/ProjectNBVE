@@ -8,7 +8,10 @@ package Client;
 import com.jme3.audio.AudioData.DataType;
 import com.jme3.audio.AudioNode;
 import com.jme3.bullet.control.BetterCharacterControl;
+import com.jme3.font.BitmapFont;
+import com.jme3.font.BitmapText;
 import com.jme3.input.ChaseCamera;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
@@ -39,6 +42,12 @@ public class Player extends Node{
     private int nSnowballs;
     private int dmg;
     private int entityId;
+    
+    BitmapFont uiFont;
+    BitmapText uiHp;
+    BitmapText uiAmmo;
+    BitmapText uiExp;
+    BitmapText uiLevel;
     
     private float timeSinceUpdate = 0f;
             
@@ -87,6 +96,58 @@ public class Player extends Node{
         chaseCam.setMaxDistance(1f);
         chaseCam.setMinDistance(1f);
         chaseCam.setDragToRotate(false);
+        
+        //UI
+        uiFont = Main.refAssetManager.loadFont("Interface/Fonts/Console.fnt");
+        
+        uiExp = new BitmapText(uiFont, false);
+        uiExp.setSize(26);
+        uiExp.setColor(ColorRGBA.Magenta);
+        uiExp.setText(this.experience + " / " + 100 * this.level);
+        uiExp.setLocalTranslation(1, 50, 0);
+        Main.refGuiNode.attachChild(uiExp);
+        
+        uiLevel = new BitmapText(uiFont, false);
+        uiLevel.setSize(26);
+        uiLevel.setColor(ColorRGBA.Pink);
+        uiLevel.setText("" + 1);
+        uiLevel.setLocalTranslation(1, 100, 0);
+        Main.refGuiNode.attachChild(uiLevel);
+        
+        uiAmmo = new BitmapText(uiFont, false);
+        uiAmmo.setSize(26);
+        uiAmmo.setColor(ColorRGBA.Blue);
+        uiAmmo.setText("" + 0);
+        uiAmmo.setLocalTranslation(1, 150, 0);
+        Main.refGuiNode.attachChild(uiAmmo);
+        
+        uiHp = new BitmapText(uiFont, false);
+        uiHp.setSize(26);
+        uiHp.setColor(ColorRGBA.Red);
+        uiHp.setText(((this.level * 5) + 20) + " / " + ((this.level * 5) + 20));
+        uiHp.setLocalTranslation(1, 200, 0);
+        Main.refGuiNode.attachChild(uiHp);
+        
+        
+        
+        
+        
+        
+    }
+    
+    public void updateUI(int hp, int ammo, int level, int exp) {
+        this.nSnowballs = ammo;
+        this.level = level;
+        this.experience = exp;
+        Main.refGuiNode.detachAllChildren();
+        uiExp.setText("Exp: " + exp + " / " + 100 * level);
+        uiHp.setText("HP: " + hp + " / " + ((this.level * 5) + 20));
+        uiAmmo.setText("Ammo: " + ammo);
+        uiLevel.setText("Level: " + level);
+        Main.refGuiNode.attachChild(uiExp);
+        Main.refGuiNode.attachChild(uiHp);
+        Main.refGuiNode.attachChild(uiAmmo);
+        Main.refGuiNode.attachChild(uiLevel);
         
     }
     

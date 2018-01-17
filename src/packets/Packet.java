@@ -428,4 +428,39 @@ public class Packet {
         
     }
     
+    @Serializable
+    public static class UpdateGUI extends MyAbstractMessage {
+        int hp;
+        int ammo;
+        int exp;
+        int level;
+        
+        public UpdateGUI() {
+            
+        }
+        
+        public UpdateGUI(int hp, int ammo, int exp, int level) {
+            this.hp = hp;
+            this.ammo = ammo;
+            this.exp = exp;
+            this.level = level;
+        }
+        
+        public int getHp() {
+            return this.hp;
+        }
+        
+        public int getAmmo() {
+            return this.ammo;
+        }
+        
+        public int getExp() {
+            return this.exp;
+        }
+        
+        public int getLevel() {
+            return this.level;
+        }
+    }
+    
 }

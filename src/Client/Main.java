@@ -57,6 +57,8 @@ public class Main extends SimpleApplication {
     public static BulletAppState bulletAppState;
     public static Camera refCam;
     public static AssetManager refAssetManager;
+    public static Node refGuiNode;
+    public static Main refMain;
     
     RigidBodyControl landscape;
     Spatial sceneModel;
@@ -93,6 +95,7 @@ public class Main extends SimpleApplication {
         Serializer.registerClass(ThrowSnowball.class);
         Serializer.registerClass(Reload.class);
         Serializer.registerClass(DestroyEntity.class);
+        Serializer.registerClass(UpdateGUI.class);
         
         
         RemotePlayer.playerModel = assetManager.loadModel("/Models/Ninja.mesh.xml");
@@ -115,6 +118,8 @@ public class Main extends SimpleApplication {
         refFlyCam = flyCam;
         refCam = cam;
         refAssetManager = assetManager;
+        refGuiNode = guiNode;
+        refMain = this;
         
         bulletAppState = new BulletAppState();
         myModel = new Modeling();

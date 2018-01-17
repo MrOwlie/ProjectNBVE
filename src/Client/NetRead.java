@@ -39,6 +39,8 @@ public class NetRead implements MessageListener<Client>
             Modeling.addMessage(m);
         } else if(m instanceof DestroyEntity){
             Modeling.addMessage(m);
+        } else if(m instanceof UpdateGUI){
+            Modeling.addMessage(m);
         }
     }
     

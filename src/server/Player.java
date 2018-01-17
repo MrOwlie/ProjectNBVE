@@ -113,7 +113,7 @@ public class Player extends MovingEntity {
                 
                 }
             } else {
-                Player player = new Player(username, connection, 0, 0, 0, 40f, 10f, 0);
+                Player player = new Player(username, connection, 1, 0, 0, 40f, 10f, 0);
                 connection.send(new Packet.AuthPlayer(0, 0, 0, 40f, 10f, 0, player.getEntityId()));
                 Player.create(username, password);
                 Player.players.add(player);
@@ -154,7 +154,7 @@ public class Player extends MovingEntity {
         
         bw.write(password);
         bw.newLine();
-        bw.write("0");
+        bw.write("1");
         bw.newLine();
         bw.write("0");
         bw.newLine();
@@ -179,18 +179,22 @@ public class Player extends MovingEntity {
                 this.exp = this.exp + exp - 100 * this.level;
                 this.level++;
                 this.maxHp = 20 + (level * 5);
+                this.hp = maxHp;
                 this.dmg = 10 + (level * 1);
             }
+            this.connection.send(new Packet.UpdateGUI(this.hp, this.ammo, this.exp, this.level));
         }
     }
     
     public boolean takeDamage(int damage){
         hp = hp - damage < 0 ? 0 : hp - damage;
+        this.connection.send(new Packet.UpdateGUI(this.hp, this.ammo, this.exp, this.level));
         return hp == 0;
     }
     
     public void reload(){
         this.ammo++;
+        this.connection.send(new Packet.UpdateGUI(this.hp, this.ammo, this.exp, this.level));
     }
 
     @Override
@@ -225,6 +229,7 @@ public class Player extends MovingEntity {
             Networking.server.broadcast(new SpawnEntity(snowball.getLocalTranslation(), snowball.entityId, Packet.SNOWBALL));
             ammo--;
             canThrowSnowball=false;
+            this.connection.send(new Packet.UpdateGUI(this.hp, this.ammo, this.exp, this.level));
         }
     }
 

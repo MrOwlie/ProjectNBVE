@@ -51,6 +51,11 @@ public class Networking implements MessageListener<HostedConnection>, Connection
             Authenticate packet = (Authenticate) m;
             System.out.println(packet.getUsername() + "  :  " + packet.getPassword());
             Player.authenticate(packet.getUsername(), packet.getPassword(), source);
+            for(Player player: Player.players) {
+                if(source == player.connection) {
+                    source.send(new Packet.UpdateGUI(player.hp, player.ammo, player.exp, player.level));
+                }
+            }
         }
         
         else if(m instanceof KeyPressed) {
@@ -88,7 +93,7 @@ public class Networking implements MessageListener<HostedConnection>, Connection
                             System.out.println("DISTANCE: " + player.getLocalTranslation().distance(new Vector3f(pile.x, 0, pile.z)));
                             if(player.getLocalTranslation().distance(new Vector3f(pile.x, 0, pile.z)) < 10f) {
                                 System.out.println("ADDING AMMO AND REMOVING PILE..");
-                                player.ammo++;
+                                player.reload();
                                 Networking.server.broadcast(new Packet.DespawnSnowpile(pile.id));
                                 Snowpile.snowpiles.remove(pile);
                                 break;

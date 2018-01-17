@@ -16,6 +16,7 @@ import packets.Packet.SpawnSnowpile;
 import packets.Packet.DespawnSnowpile;
 import packets.Packet;
 import packets.Packet.DestroyEntity;
+import packets.Packet.UpdateGUI;
 
 /**
  *
@@ -125,6 +126,12 @@ public class Modeling
             DestroyEntity destroyEntity = (DestroyEntity)message;
             MovingEntity entity = entities.get(destroyEntity.getEntityId());
             if(entity != null) entity.destroyEntity();
+        }
+        
+        else if (message instanceof UpdateGUI) {
+            UpdateGUI p = (UpdateGUI)message;
+            System.out.println("UPDATEGUI # HP: " + p.getHp() + ", AMMO: " + p.getAmmo() + ", LEVEL: " + p.getLevel() + ", EXP: " + p.getExp());
+            Main.localPlayer.updateUI(p.getHp(), p.getAmmo(), p.getLevel(), p.getExp());
         }
     }
     

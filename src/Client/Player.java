@@ -5,6 +5,8 @@
  */
 package Client;
 
+import com.jme3.audio.AudioData.DataType;
+import com.jme3.audio.AudioNode;
 import com.jme3.bullet.control.BetterCharacterControl;
 import com.jme3.input.ChaseCamera;
 import com.jme3.math.Vector3f;
@@ -43,6 +45,7 @@ public class Player extends Node{
     private BetterCharacterControl controller;
     private Camera playerCam;
     private Vector3f direction = new Vector3f();
+    private AudioNode stepAudio;
     private boolean input[] = new boolean[5];
     
     public Player (
@@ -67,6 +70,13 @@ public class Player extends Node{
         Main.bulletAppState.getPhysicsSpace().add(controller);
         Main.refRootNode.attachChild(this);
         this.addControl(controller);
+        
+        stepAudio = new AudioNode(Main.refAssetManager, "Sounds/snow_footsteps.wav", DataType.Stream);
+        stepAudio.setLooping(true);  
+        stepAudio.setPositional(true);
+        stepAudio.setVolume(3);
+        this.attachChild(stepAudio);
+        
         
         Main.refFlyCam.setEnabled(true);
         Node camNode = new Node();
@@ -98,8 +108,13 @@ public class Player extends Node{
             if(input[3])direction.addLocal(left.negate());
             if(input[4])controller.jump();
             direction.normalizeLocal();
+            controller.setWalkDirection(direction.mult(SPEED));
+            
+            if(direction.equals(Vector3f.ZERO)) stepAudio.stop();
+            else stepAudio.play();
         }
-        controller.setWalkDirection(direction.mult(SPEED));
+        else stepAudio.stop();
+            
         timeSinceUpdate += tpf;
         if(timeSinceUpdate >= UPDATE_FREQUENCY)
         {
@@ -109,6 +124,7 @@ public class Player extends Node{
             forward,
             left,
             this.getLocalTranslation(),
+            direction,
             this.entityId
             ));
         }

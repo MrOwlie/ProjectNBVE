@@ -117,7 +117,7 @@ public class Packet {
         protected Vector3f forward;
         protected Vector3f left;
         protected Vector3f position;
-        
+        protected Vector3f direction;
         
         int entityId;
         
@@ -125,10 +125,11 @@ public class Packet {
         
         }
         
-        public PlayerOrientation(Vector3f forward, Vector3f left, Vector3f position, int entityId){
+        public PlayerOrientation(Vector3f forward, Vector3f left, Vector3f position, Vector3f direction, int entityId){
             this.forward = forward;
             this.left = left;
             this.position = position;
+            this.direction = direction;
             this.entityId = entityId;
         }
         
@@ -146,6 +147,12 @@ public class Packet {
         {
             return position;
         }
+        
+        public Vector3f getDirection()
+        {
+            return direction;
+        }
+        
         
         public int getEntityId()
         {
@@ -258,6 +265,7 @@ public class Packet {
         Vector3f truePosition;
         Vector3f trueDirection;
         Vector3f viewDirection;
+        
         
         public UpdateEntity(){
             

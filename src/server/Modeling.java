@@ -39,6 +39,7 @@ public class Modeling implements PhysicsCollisionListener
             {
                 player.setForwardAndLeft(newOrientation.getForward(), newOrientation.getLeft());
                 player.setPosition(newOrientation.getPosition());
+                player.setDirection(newOrientation.getDirection());
             }
         }
         
@@ -135,7 +136,7 @@ public class Modeling implements PhysicsCollisionListener
         
         if(event.getNodeB().getName().equals("Snowball"))
         {
-            Snowball snowball = (Snowball)event.getNodeA();
+            Snowball snowball = (Snowball)event.getNodeB();
             
             if(event.getNodeA().getName().equals("Player"))
             {

@@ -247,6 +247,11 @@ public class Player extends MovingEntity {
     {
         controller.warp(position);
     }
+    
+    public void setDirection(Vector3f direction)
+    {
+        this.direction = direction;
+    }
 
     @Override
     public void destroyEntity() {

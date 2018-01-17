@@ -49,6 +49,7 @@ public class Main extends SimpleApplication {
         Serializer.registerClass(SpawnSnowpile.class);
         Serializer.registerClass(DespawnSnowpile.class);
         Serializer.registerClass(ThrowSnowball.class);
+        Serializer.registerClass(Reload.class);
         
         
         net = new Networking();

@@ -361,7 +361,7 @@ public class Packet {
         }
         
         public DespawnSnowpile(int id) {
-            
+            this.id = id;
         }
         
         public int getId() {
@@ -392,6 +392,15 @@ public class Packet {
         {
             return entityId;
         }
+    }
+    
+    @Serializable
+    public static class Reload extends MyAbstractMessage {
+        
+        public Reload() {
+            
+        }
+        
     }
     
 }

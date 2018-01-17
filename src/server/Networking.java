@@ -5,6 +5,7 @@
  */
 package server;
 
+import com.jme3.math.Vector3f;
 import com.jme3.network.ConnectionListener;
 import com.jme3.network.HostedConnection;
 import com.jme3.network.Message;
@@ -14,10 +15,12 @@ import com.jme3.network.Server;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import packets.Packet;
 import packets.Packet.Authenticate;
 import packets.Packet.KeyPressed;
 import packets.Packet.PlayerOrientation;
 import packets.Packet.ThrowSnowball;
+import packets.Packet.Reload;
 
 /**
  *
@@ -41,8 +44,10 @@ public class Networking implements MessageListener<HostedConnection>, Connection
 
     @Override
     public void messageReceived(HostedConnection source, Message m) {
-        System.out.println("message recieved.");
         if(m instanceof Authenticate){
+            for(Snowpile pile : Snowpile.snowpiles) {
+                source.send(new Packet.SpawnSnowpile(pile.id, pile.x, pile.z));
+            }
             Authenticate packet = (Authenticate) m;
             System.out.println(packet.getUsername() + "  :  " + packet.getPassword());
             Player.authenticate(packet.getUsername(), packet.getPassword(), source);
@@ -71,12 +76,35 @@ public class Networking implements MessageListener<HostedConnection>, Connection
                 player.throwSnowball(throwSnowball.getDirection());
             }
         }
+        
+        else if(m instanceof Reload) {
+            System.out.println("Recieved Reload Message!");
+            for(Player player : Player.players) {
+                if(player.ammo < 3) {
+                    System.out.println("I NEED AMMO");
+                    if(source == player.getConnection()) {
+                        System.out.println("CONNECTION MATCH");
+                        for(Snowpile pile : Snowpile.snowpiles) {
+                            System.out.println("DISTANCE: " + player.getLocalTranslation().distance(new Vector3f(pile.x, 0, pile.z)));
+                            if(player.getLocalTranslation().distance(new Vector3f(pile.x, 0, pile.z)) < 10f) {
+                                System.out.println("ADDING AMMO AND REMOVING PILE..");
+                                player.ammo++;
+                                Networking.server.broadcast(new Packet.DespawnSnowpile(pile.id));
+                                Snowpile.snowpiles.remove(pile);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @Override
     public void connectionAdded(Server server, HostedConnection conn) {
         //Player joins game
         System.out.println("Player joined game.");
+        
     }
 
     @Override

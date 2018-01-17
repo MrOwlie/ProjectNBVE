@@ -108,6 +108,7 @@ public class Modeling
             DespawnSnowpile p = (DespawnSnowpile) message;
             for(Snowpile pile : Snowpile.snowpiles) {
                 if(pile.id == p.getId()) {
+                    Main.refRootNode.detachChild(pile.geom);
                     Snowpile.snowpiles.remove(pile);
                     break;
                 }

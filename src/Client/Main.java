@@ -91,6 +91,7 @@ public class Main extends SimpleApplication {
         Serializer.registerClass(SpawnSnowpile.class);
         Serializer.registerClass(DespawnSnowpile.class);
         Serializer.registerClass(ThrowSnowball.class);
+        Serializer.registerClass(Reload.class);
         
         
         RemotePlayer.playerModel = assetManager.loadModel("/Models/Ninja.mesh.xml");
@@ -260,7 +261,8 @@ public class Main extends SimpleApplication {
         inputManager.addMapping("D", new KeyTrigger(KeyInput.KEY_D));
         inputManager.addMapping("Throw", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
         inputManager.addMapping("Jump", new KeyTrigger(KeyInput.KEY_SPACE));
-        inputManager.addListener(actionListener, "W", "A", "S", "D", "Jump", "Throw");
+        inputManager.addMapping("Reload", new KeyTrigger(KeyInput.KEY_R));
+        inputManager.addListener(actionListener, "W", "A", "S", "D", "Jump", "Throw", "Reload");
     }
     private final ActionListener actionListener = new ActionListener()
     {

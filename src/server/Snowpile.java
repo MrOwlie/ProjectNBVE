@@ -14,9 +14,9 @@ import packets.Packet.SpawnSnowpile;
  * @author mrowlie
  */
 public class Snowpile {
-    static final float MAX_X = 1000;
-    static final float MAX_Z = 1000;
-    static final float MAX_AMOUNT = 60;
+    static final float MAX_X = 120;
+    static final float MAX_Z = 120;
+    static final float MAX_AMOUNT = 40;
     static final float TIME_ALIVE = 20;
     
     static ArrayList<Snowpile> snowpiles = new ArrayList();
@@ -44,7 +44,9 @@ public class Snowpile {
         if (Snowpile.snowpiles.size() < Snowpile.MAX_AMOUNT) {
             Snowpile newPile = new Snowpile();
             Snowpile.snowpiles.add(newPile);
-            Networking.server.broadcast(new SpawnSnowpile(newPile.id, newPile.x, newPile.z));
+            System.out.println("ID: " + newPile.id + ", X: " + newPile.x + ", Z: " + newPile.z);
+            SpawnSnowpile packet = new SpawnSnowpile(newPile.id, newPile.x, newPile.z);
+            Networking.server.broadcast(packet);
         }
         
         for(Snowpile pile : Snowpile.snowpiles) {

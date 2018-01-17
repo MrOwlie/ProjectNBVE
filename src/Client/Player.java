@@ -12,6 +12,7 @@ import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import packets.Packet.PlayerOrientation;
 import packets.Packet.ThrowSnowball;
+import packets.Packet.Reload;
 
 /**
  *
@@ -138,6 +139,12 @@ public class Player extends Node{
                     NetWrite.addMessage(new ThrowSnowball(playerCam.getDirection(),entityId));
                 }
                 break;
+                
+            case "Reload":
+                if(state) {
+                    System.out.println("Writing reload message");
+                    NetWrite.addMessage(new Reload());
+                }
         }
     }
 }

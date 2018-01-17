@@ -61,7 +61,6 @@ public class Snowball extends MovingEntity{
     @Override
     public void destroyEntity() 
     {
-        System.out.println("Destroying");
         Modeling.removeEntity(entityId);
         Main.refRootNode.detachChild(this);
         Main.bulletAppState.getPhysicsSpace().remove(controller);

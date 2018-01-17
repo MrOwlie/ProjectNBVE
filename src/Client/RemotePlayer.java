@@ -42,7 +42,7 @@ public class RemotePlayer extends MovingEntity
         stepAudio = new AudioNode(Main.refAssetManager, "Sounds/snow_footsteps.wav", DataType.Stream);
         stepAudio.setLooping(true);  
         stepAudio.setPositional(true);
-        stepAudio.setVolume(3);
+        stepAudio.setVolume(0.5f);
         this.attachChild(stepAudio);
         
         controller = new BetterCharacterControl(CYLINDER_RADIUS, CYLINDER_HEIGHT, MASS);

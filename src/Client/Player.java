@@ -45,8 +45,9 @@ public class Player extends Node{
     private BetterCharacterControl controller;
     private Camera playerCam;
     private Vector3f direction = new Vector3f();
-    private AudioNode stepAudio;
     private boolean input[] = new boolean[5];
+    
+    private AudioNode stepAudio; 
     
     public Player (
             int level,
@@ -73,8 +74,7 @@ public class Player extends Node{
         
         stepAudio = new AudioNode(Main.refAssetManager, "Sounds/snow_footsteps.wav", DataType.Stream);
         stepAudio.setLooping(true);  
-        stepAudio.setPositional(true);
-        stepAudio.setVolume(3);
+        stepAudio.setVolume(0.5f);
         this.attachChild(stepAudio);
         
         

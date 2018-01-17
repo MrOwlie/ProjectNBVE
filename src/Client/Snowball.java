@@ -5,6 +5,8 @@
  */
 package Client;
 
+import com.jme3.audio.AudioData.DataType;
+import com.jme3.audio.AudioNode;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
@@ -22,9 +24,13 @@ public class Snowball extends MovingEntity
     
     private RigidBodyControl controller;
     
+    
     public Snowball(Vector3f startPos, int entityId)
     {
         super(entityId);
+        CORRECTION_SPEED = 60f;
+        DIRECTION_CORRECTION_SPEED = 60f;
+        
         this.setLocalTranslation(startPos);
         truePosition = startPos;
         Main.refRootNode.attachChild(this);
@@ -35,9 +41,13 @@ public class Snowball extends MovingEntity
         Main.bulletAppState.getPhysicsSpace().add(controller);
         
         Modeling.addEntity(this, entityId);
-
-        CORRECTION_SPEED = 60f;
-        DIRECTION_CORRECTION_SPEED = 60f;
+        
+        AudioNode throwAudio = new AudioNode(Main.refAssetManager, "Sounds/throw.wav", DataType.Buffer);
+        this.attachChild(throwAudio);
+        throwAudio.setDirectional(true);
+        throwAudio.setVolume(2);
+        throwAudio.playInstance();
+        
     }
     
     @Override
@@ -75,6 +85,12 @@ public class Snowball extends MovingEntity
 
     @Override
     public void destroyEntity() {
+        AudioNode impactSound = new AudioNode(Main.refAssetManager, "Sounds/snowball_hit.wav", DataType.Buffer);
+        impactSound.setDirectional(true);
+        impactSound.setVolume(2);
+        impactSound.playInstance();
+        this.attachChild(impactSound);
+        
         Modeling.removeEntity(entityId);
         Main.refRootNode.detachChild(this);
         Main.bulletAppState.getPhysicsSpace().remove(controller);

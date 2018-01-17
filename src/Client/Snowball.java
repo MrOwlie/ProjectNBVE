@@ -24,7 +24,6 @@ public class Snowball extends MovingEntity
     
     private RigidBodyControl controller;
     
-    
     public Snowball(Vector3f startPos, int entityId)
     {
         super(entityId);
@@ -77,7 +76,8 @@ public class Snowball extends MovingEntity
             }
         }
     }
-
+    
+    
     @Override
     public void setViewDirection(Vector3f dir) {
         
@@ -88,8 +88,10 @@ public class Snowball extends MovingEntity
         AudioNode impactSound = new AudioNode(Main.refAssetManager, "Sounds/snowball_hit.wav", DataType.Buffer);
         impactSound.setDirectional(true);
         impactSound.setVolume(2);
+        impactSound.setLocalTranslation(truePosition);
+        Main.refRootNode.attachChild(impactSound);
         impactSound.playInstance();
-        this.attachChild(impactSound);
+        
         
         Modeling.removeEntity(entityId);
         Main.refRootNode.detachChild(this);

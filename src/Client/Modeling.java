@@ -41,6 +41,7 @@ public class Modeling
         {
             entity.update(tpf);
         }
+        
         if(Main.localPlayer != null)
         {
             Main.localPlayer.update(tpf);

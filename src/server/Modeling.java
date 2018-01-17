@@ -5,6 +5,8 @@
  */
 package server;
 
+import com.jme3.bullet.collision.PhysicsCollisionEvent;
+import com.jme3.bullet.collision.PhysicsCollisionListener;
 import com.jme3.network.Filters;
 import com.jme3.network.HostedConnection;
 import java.util.Collection;
@@ -17,7 +19,7 @@ import packets.Packet.UpdateEntity;
  *
  * @author Anton
  */
-public class Modeling 
+public class Modeling implements PhysicsCollisionListener
 {
     private static ConcurrentLinkedQueue<PlayerOrientation> playerUpdateQueue = new ConcurrentLinkedQueue<PlayerOrientation>();
     
@@ -108,6 +110,42 @@ public class Modeling
         catch(Exception e)
         {
             System.out.println("The player could not be updated");
+        }
+    }
+
+    @Override
+    public void collision(PhysicsCollisionEvent event)
+    {
+        if(event.getNodeA().getName().equals("Snowball"))
+        {
+            Snowball snowball = (Snowball)event.getNodeA();
+            
+            if(event.getNodeB().getName().equals("Player"))
+            {
+                Player playerThrow = (Player)getPlayer(snowball.getOwnerId());
+                Player playerHit = (Player)event.getNodeB();
+                if(playerHit.takeDamage(playerThrow.dmg))
+                {
+                    playerThrow.addExp();
+                }
+            }
+            snowball.destroyEntity();        
+        }
+        
+        if(event.getNodeB().getName().equals("Snowball"))
+        {
+            Snowball snowball = (Snowball)event.getNodeA();
+            
+            if(event.getNodeA().getName().equals("Player"))
+            {
+                Player playerThrow = (Player)getPlayer(snowball.getOwnerId());
+                Player playerHit = (Player)event.getNodeA();
+                if(playerHit.takeDamage(playerThrow.dmg))
+                {
+                    playerThrow.addExp();
+                }
+            }
+            snowball.destroyEntity();
         }
     }
 }

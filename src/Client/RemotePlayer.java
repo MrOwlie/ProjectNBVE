@@ -69,4 +69,9 @@ public class RemotePlayer extends MovingEntity
     public void setViewDirection(Vector3f dir) {
         controller.setViewDirection(dir.negate());
     }
+
+    @Override
+    public void destroyEntity() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

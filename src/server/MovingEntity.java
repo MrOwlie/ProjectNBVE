@@ -36,4 +36,6 @@ public abstract class MovingEntity extends Node
     
     public abstract void update(float tpf);
     
+    public abstract void destroyEntity();
+    
 }

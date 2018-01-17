@@ -59,6 +59,8 @@ public abstract class MovingEntity extends Node{
     
     public abstract void setViewDirection(Vector3f dir);
     
+    public abstract void destroyEntity();
+    
     protected void correctDirection(float tpf)
     {
         Vector3f chaseDirection = 

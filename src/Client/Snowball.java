@@ -72,5 +72,12 @@ public class Snowball extends MovingEntity
     public void setViewDirection(Vector3f dir) {
         
     }
+
+    @Override
+    public void destroyEntity() {
+        Modeling.removeEntity(entityId);
+        Main.refRootNode.detachChild(this);
+        Main.bulletAppState.getPhysicsSpace().remove(controller);
+    }
     
 }

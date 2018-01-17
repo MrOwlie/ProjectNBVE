@@ -56,7 +56,7 @@ public class Player extends MovingEntity {
     
         
     private Player(String username, HostedConnection connection, int level, int exp, int ammo, float startX,  float startY, float startZ) {
-        
+        this.name = "Player";
         this.type = Packet.PLAYER;
         this.username = username;
         this.level = level;
@@ -184,8 +184,9 @@ public class Player extends MovingEntity {
         }
     }
     
-    public void takeDamage(int damage){
+    public boolean takeDamage(int damage){
         hp = hp - damage < 0 ? 0 : hp - damage;
+        return hp == 0;
     }
     
     public void reload(){
@@ -220,7 +221,7 @@ public class Player extends MovingEntity {
         System.out.println("AMMO: " + this.ammo + ", canThrowSnowball: " + canThrowSnowball);
         if(ammo > 0 && canThrowSnowball)
         {
-            Snowball snowball = new Snowball(shootNode.getWorldTranslation(), direction);
+            Snowball snowball = new Snowball(shootNode.getWorldTranslation(), direction, entityId);
             Networking.server.broadcast(new SpawnEntity(snowball.getLocalTranslation(), snowball.entityId, Packet.SNOWBALL));
             ammo--;
             canThrowSnowball=false;
@@ -245,5 +246,10 @@ public class Player extends MovingEntity {
     public void setPosition(Vector3f position)
     {
         controller.warp(position);
+    }
+
+    @Override
+    public void destroyEntity() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

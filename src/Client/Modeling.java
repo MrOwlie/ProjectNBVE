@@ -15,6 +15,7 @@ import packets.Packet.AuthPlayer;
 import packets.Packet.SpawnSnowpile;
 import packets.Packet.DespawnSnowpile;
 import packets.Packet;
+import packets.Packet.DestroyEntity;
 
 /**
  *
@@ -48,6 +49,11 @@ public class Modeling
     public static void addEntity(MovingEntity entity, int entityId)
     {
         entities.put(entityId, entity);
+    }
+    
+    public static void removeEntity(int entityId)
+    {
+        entities.remove(entityId);
     }
     
     public static void addMessage(Message message)
@@ -113,6 +119,12 @@ public class Modeling
                     break;
                 }
             }
+        }
+        
+        else if (message instanceof DestroyEntity){
+            DestroyEntity destroyEntity = (DestroyEntity)message;
+            MovingEntity entity = entities.get(destroyEntity.getEntityId());
+            if(entity != null) entity.destroyEntity();
         }
     }
     

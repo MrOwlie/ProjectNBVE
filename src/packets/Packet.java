@@ -321,6 +321,22 @@ public class Packet {
         }
     }
     
+    public static class DestroyEntity extends MyAbstractMessage {
+        protected int entityId;
+        
+        public DestroyEntity(){
+            
+        }
+        
+        public DestroyEntity(int entityId){
+            this.entityId = entityId;
+        }
+        
+        public int getEntityId(){
+            return entityId;
+        }
+    }
+    
     @Serializable
     public static class SpawnSnowpile extends MyAbstractMessage {
         int id;

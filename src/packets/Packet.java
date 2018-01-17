@@ -332,6 +332,9 @@ public class Packet {
         }
         
         public SpawnSnowpile(int id, float x, float z) {
+            this.id = id;
+            this.x = x;
+            this.z = z;
             
         }
         

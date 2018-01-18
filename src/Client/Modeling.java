@@ -82,6 +82,8 @@ public class Modeling
         {
             SpawnEntity spawnEntity = (SpawnEntity)message;
             
+            if(entities.get(spawnEntity.getEntityId()) != null) return; 
+            
             if(spawnEntity.getEntityType() == Packet.PLAYER)
             {
                 new RemotePlayer(spawnEntity.getPos(), spawnEntity.getEntityId());

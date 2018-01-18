@@ -33,10 +33,6 @@ public class Modeling
     
     public void update(float tpf) 
     {
-        while(!playerUpdateQueue.isEmpty())
-        {
-            handleMessage(playerUpdateQueue.remove());
-        }
         
         for(MovingEntity entity : entities.values())
         {
@@ -46,6 +42,11 @@ public class Modeling
         if(Main.localPlayer != null)
         {
             Main.localPlayer.update(tpf);
+        }
+        
+        while(!playerUpdateQueue.isEmpty())
+        {
+            handleMessage(playerUpdateQueue.remove());
         }
     }
     
@@ -140,7 +141,9 @@ public class Modeling
         
         else if (message instanceof Death) {
             Death p = (Death) message;
+            System.out.println("ID: " + p.getId());
             if(Main.localPlayer.entityId == p.getId()) {
+                System.out.println("LOCAL");
                 Main.localPlayer.controller.warp(new Vector3f(p.getX(), p.getY(), p.getZ()));
             } else {
                 entities.get(p.getId()).warp(new Vector3f(p.getX(), p.getY(), p.getZ()));

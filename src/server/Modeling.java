@@ -121,8 +121,9 @@ public class Modeling implements PhysicsCollisionListener
         {
             Snowball snowball = (Snowball)event.getNodeA();
             
-            if(event.getNodeB().getName().equals("Player"))
+            if(event.getNodeB().getName().equals("Player") && !snowball.hasImpacted())
             {
+                snowball.setImpact(true);
                 Player playerThrow = (Player)getPlayer(snowball.getOwnerId());
                 Player playerHit = (Player)event.getNodeB();
                 if(playerHit.takeDamage(playerThrow.dmg))
@@ -130,15 +131,16 @@ public class Modeling implements PhysicsCollisionListener
                     playerThrow.addExp();
                 }
             }
-            snowball.destroyEntity();        
+            snowball.destroyEntity();
         }
         
         if(event.getNodeB().getName().equals("Snowball"))
         {
             Snowball snowball = (Snowball)event.getNodeB();
             
-            if(event.getNodeA().getName().equals("Player"))
+            if(event.getNodeA().getName().equals("Player") && !snowball.hasImpacted())
             {
+                snowball.setImpact(true);
                 Player playerThrow = (Player)getPlayer(snowball.getOwnerId());
                 Player playerHit = (Player)event.getNodeA();
                 if(playerHit.takeDamage(playerThrow.dmg))

@@ -20,6 +20,7 @@ public class Snowball extends MovingEntity{
     
     private RigidBodyControl controller;
     private int idOwner;
+    private boolean impact;
     
     public Snowball(Vector3f startPos, Vector3f direction, int idOwner)
     {
@@ -70,4 +71,13 @@ public class Snowball extends MovingEntity{
         Networking.server.broadcast(new DestroyEntity(entityId));
     }
     
+    public void setImpact(boolean impact)
+    {
+        this.impact = impact;
+    }
+    
+    public boolean hasImpacted()
+    {
+        return impact;
+    }
 }

@@ -30,16 +30,17 @@ public class NetRead implements MessageListener<Client>
             Main.nifty.gotoScreen("none");
         } else if(m instanceof UpdateEntity) {
             Modeling.addMessage(m);
-            
         } else if(m instanceof SpawnEntity) {
             Modeling.addMessage(m);
         } else if(m instanceof SpawnSnowpile) {
             Modeling.addMessage(m);
         } else if(m instanceof DespawnSnowpile) {
             Modeling.addMessage(m);
-        } else if(m instanceof DestroyEntity){
+        } else if(m instanceof DestroyEntity) {
             Modeling.addMessage(m);
-        } else if(m instanceof UpdateGUI){
+        } else if(m instanceof UpdateGUI) {
+            Modeling.addMessage(m);
+        } else if(m instanceof Death) {
             Modeling.addMessage(m);
         }
     }

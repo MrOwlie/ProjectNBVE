@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -94,6 +94,12 @@ public class RemotePlayer extends MovingEntity
 
     @Override
     public void destroyEntity() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Modeling.removeEntity(entityId);
+        Main.refRootNode.detachChild(this);
+    }
+
+    @Override
+    public void warp(Vector3f v) {
+        controller.warp(v);
     }
 }

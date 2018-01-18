@@ -61,6 +61,8 @@ public abstract class MovingEntity extends Node{
     
     public abstract void destroyEntity();
     
+    public abstract void warp(Vector3f v);
+    
     protected void correctDirection(float tpf)
     {
         Vector3f chaseDirection = 

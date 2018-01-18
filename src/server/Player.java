@@ -7,6 +7,7 @@ package server;
 
 import com.jme3.bullet.collision.shapes.CylinderCollisionShape;
 import com.jme3.bullet.control.CharacterControl;
+import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.network.Filters;
 import com.jme3.network.HostedConnection;
@@ -20,8 +21,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import packets.Packet;
 import packets.Packet.SpawnEntity;
+import packets.Packet.Death;
 
 /**
  *
@@ -103,7 +106,7 @@ public class Player extends MovingEntity {
                                                             Integer.parseInt(account.get(2)), 
                                                             Integer.parseInt(account.get(3)),
                                                             Float.parseFloat(account.get(4)),
-                                                            Float.parseFloat(account.get(5)),
+                                                            Float.parseFloat(account.get(5)) + 5f,
                                                             Float.parseFloat(account.get(6))
                     );
                     Player.players.add(player);
@@ -189,8 +192,24 @@ public class Player extends MovingEntity {
     
     public boolean takeDamage(int damage){
         hp = hp - damage < 0 ? 0 : hp - damage;
+        
         this.connection.send(new Packet.UpdateGUI(this.hp, this.ammo, this.exp, this.level));
-        return hp == 0;
+        
+        
+        if(hp < 1) {
+            Random rand = new Random();
+            
+            float x = rand.nextFloat() * 120 - 60;
+            float z = rand.nextFloat() * 120 - 60;
+            float y = Main.terrain.getHeight(new Vector2f(x, z));
+            this.hp = this.maxHp;
+            this.connection.send(new Packet.UpdateGUI(this.hp, this.ammo, this.exp, this.level));
+            Networking.server.broadcast(new Death(this.entityId, x, y, z));
+            this.controller.warp(new Vector3f(x, y, z));
+            return true;
+        } else {
+            return false;
+        }
     }
     
     public void reload(){

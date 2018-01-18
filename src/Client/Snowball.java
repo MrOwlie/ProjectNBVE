@@ -97,5 +97,10 @@ public class Snowball extends MovingEntity
         Main.refRootNode.detachChild(this);
         Main.bulletAppState.getPhysicsSpace().remove(controller);
     }
+
+    @Override
+    public void warp(Vector3f v) {
+        controller.setPhysicsLocation(v);
+    }
     
 }

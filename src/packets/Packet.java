@@ -469,4 +469,37 @@ public class Packet {
         }
     }
     
+    @Serializable
+    public static class Death extends MyAbstractMessage {
+        int entityId;
+        float x;
+        float y;
+        float z;
+        
+        public Death() {
+            
+        }
+        
+        public Death(int id, float x, float y, float z) {
+            
+        }
+        
+        public int getId() {
+            return entityId;
+        }
+        
+        public float getX() {
+            return x;
+        }
+        
+        public float getY() {
+            return y;
+        }
+        
+        public float getZ() {
+            return z;
+        }
+        
+    }
+    
 }

@@ -17,6 +17,7 @@ import packets.Packet.DespawnSnowpile;
 import packets.Packet;
 import packets.Packet.DestroyEntity;
 import packets.Packet.UpdateGUI;
+import packets.Packet.Death;
 
 /**
  *
@@ -135,6 +136,11 @@ public class Modeling
             UpdateGUI p = (UpdateGUI)message;
             System.out.println("UPDATEGUI # HP: " + p.getHp() + ", AMMO: " + p.getAmmo() + ", LEVEL: " + p.getLevel() + ", EXP: " + p.getExp());
             Main.localPlayer.updateUI(p.getHp(), p.getAmmo(), p.getLevel(), p.getExp());
+        }
+        
+        else if (message instanceof Death) {
+            Death p = (Death) message;
+            entities.get(p.getId()).warp(new Vector3f(p.getX(), p.getY(), p.getZ()));
         }
     }
     

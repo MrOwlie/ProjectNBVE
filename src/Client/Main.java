@@ -135,7 +135,8 @@ public class Main extends SimpleApplication {
         myModel = new Modeling();
         stateManager.attach(bulletAppState);
         this.flyCam.setMoveSpeed(333);
-        
+        setDisplayFps(false);
+        setDisplayStatView(false);
 
         loginScreen = new LoginScreen();
         

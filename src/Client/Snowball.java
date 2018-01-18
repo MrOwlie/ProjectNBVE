@@ -38,9 +38,9 @@ public class Snowball extends MovingEntity
         this.attachChild(snowballModel.clone());
                 
         controller = new RigidBodyControl(MASS);
-        controller.setKinematicSpatial(true);
+        //controller.setKinematicSpatial(true);
         this.addControl(controller);
-        controller.setKinematic(true);
+        //controller.setKinematic(true);
         Main.bulletAppState.getPhysicsSpace().add(controller);
         
         

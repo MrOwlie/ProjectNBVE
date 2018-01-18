@@ -27,8 +27,8 @@ import packets.Packet.Reload;
  */
 public class Player extends Node{
     
-    public static final float CYLINDER_HEIGHT = 10f;
-    public static final float CYLINDER_RADIUS = 2f;
+    public static final float CYLINDER_HEIGHT = 15f;
+    public static final float CYLINDER_RADIUS = 5f;
     
     public static final float SPEED = 16f/60f;
     public static final float UPDATE_FREQUENCY = 0.05f;

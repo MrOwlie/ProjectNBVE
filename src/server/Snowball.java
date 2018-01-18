@@ -34,6 +34,9 @@ public class Snowball extends MovingEntity{
         Main.refRootNode.attachChild(this);
         controller.setLinearVelocity(direction.mult(SPEED));
         
+        controller.setCcdMotionThreshold(0f);
+        controller.setCcdSweptSphereRadius(0.25f);
+        
         Modeling.addEntity(this);
     }
     

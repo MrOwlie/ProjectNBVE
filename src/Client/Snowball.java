@@ -30,6 +30,8 @@ public class Snowball extends MovingEntity
         CORRECTION_SPEED = 160f;
         DIRECTION_CORRECTION_SPEED = 160f;
         
+        
+        
         this.setLocalTranslation(startPos);
         truePosition = startPos;
         Main.refRootNode.attachChild(this);
@@ -38,6 +40,7 @@ public class Snowball extends MovingEntity
         controller = new RigidBodyControl(MASS);
         this.addControl(controller);
         Main.bulletAppState.getPhysicsSpace().add(controller);
+        
         
         Modeling.addEntity(this, entityId);
         

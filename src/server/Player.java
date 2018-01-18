@@ -32,7 +32,7 @@ import packets.Packet.Death;
  */
 public class Player extends MovingEntity {
     public static final float CYLINDER_HEIGHT = 10f;
-    public static final float CYLINDER_RADIUS = 5f;
+    public static final float CYLINDER_RADIUS = 3f;
     public static final float MASS = 150f;
     public static final float SPEED = 8f;
     public static final float SNOWBALL_CD = 0.5f;
@@ -71,7 +71,7 @@ public class Player extends MovingEntity {
         this.ammo = ammo;
         this.connection = connection;
         this.direction = new Vector3f();
-        this.controller = new CharacterControl(new CylinderCollisionShape(new Vector3f(CYLINDER_RADIUS, CYLINDER_HEIGHT/2f, 0f),1), 1f);
+        this.controller = new CharacterControl(new CylinderCollisionShape(new Vector3f(CYLINDER_RADIUS, CYLINDER_HEIGHT/2f, 0f),1), 0.1f);
         
         shootNode = new Node();
         this.attachChild(shootNode);
@@ -203,9 +203,10 @@ public class Player extends MovingEntity {
             float z = rand.nextFloat() * 120 - 60;
             float y = Main.terrain.getHeight(new Vector2f(x, z));
             this.hp = this.maxHp;
+            System.out.println("MAXHP: " + this.maxHp);
             this.connection.send(new Packet.UpdateGUI(this.hp, this.ammo, this.exp, this.level));
-            Networking.server.broadcast(new Death(this.entityId, x, y, z));
-            this.controller.warp(new Vector3f(x, y, z));
+            Networking.server.broadcast(new Death(this.entityId, x, y + 5, z));
+            this.controller.warp(new Vector3f(x, y + 5, z));
             return true;
         } else {
             return false;

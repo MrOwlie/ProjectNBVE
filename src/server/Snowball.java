@@ -15,7 +15,7 @@ import packets.Packet.DestroyEntity;
  * @author Anton
  */
 public class Snowball extends MovingEntity{
-    public final float SPEED = 60f;
+    public final float SPEED = 160f;
     public final float MASS = 10f;
     
     private RigidBodyControl controller;

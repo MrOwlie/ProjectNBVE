@@ -17,7 +17,7 @@ import com.jme3.scene.Spatial;
  */
 public class Snowball extends MovingEntity
 {
-    public final float SPEED = 60f;
+    public final float SPEED = 160f;
     public final float MASS = 10f;
     
     public static Spatial snowballModel;
@@ -27,8 +27,8 @@ public class Snowball extends MovingEntity
     public Snowball(Vector3f startPos, int entityId)
     {
         super(entityId);
-        CORRECTION_SPEED = 60f;
-        DIRECTION_CORRECTION_SPEED = 60f;
+        CORRECTION_SPEED = 160f;
+        DIRECTION_CORRECTION_SPEED = 160f;
         
         this.setLocalTranslation(startPos);
         truePosition = startPos;

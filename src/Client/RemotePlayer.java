@@ -20,7 +20,7 @@ import com.jme3.scene.Spatial;
  */
 public class RemotePlayer extends MovingEntity
 {   
-    public static final float SPEED = 8f;
+    public static final float SPEED = 16f/60f;
     public static final float TIME_NOT_MOVING_THRESHOLD = 0.1f;
     public static final float MOVEMENT_THRESHOLD = 0.005f;
     public static final float DISTANCE_THRESHOLD = 0.005f;

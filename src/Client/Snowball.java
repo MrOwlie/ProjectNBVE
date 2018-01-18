@@ -40,6 +40,7 @@ public class Snowball extends MovingEntity
         controller = new RigidBodyControl(MASS);
         this.addControl(controller);
         Main.bulletAppState.getPhysicsSpace().add(controller);
+        controller.setKinematic(true);
         
         
         Modeling.addEntity(this, entityId);

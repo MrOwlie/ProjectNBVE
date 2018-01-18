@@ -61,6 +61,8 @@ public class RemotePlayer extends MovingEntity
         if(truePositionReached)
         {
             controller.setWalkDirection(trueDirection.mult(SPEED));
+            if(trueDirection.equals(Vector3f.ZERO)) stepAudio.stop();
+            else stepAudio.play();
         }
         
         else

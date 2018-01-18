@@ -19,7 +19,7 @@ public abstract class MovingEntity extends Node{
     public static final int PLAYER = 1;
     /////
     
-    protected float DIRECTION_CORRECTION_SPEED = 8f;
+    protected float DIRECTION_CORRECTION_SPEED = 16f;
     protected float CORRECTION_SPEED = 16f;
     
     protected Vector3f truePosition;

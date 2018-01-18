@@ -140,7 +140,11 @@ public class Modeling
         
         else if (message instanceof Death) {
             Death p = (Death) message;
-            entities.get(p.getId()).warp(new Vector3f(p.getX(), p.getY(), p.getZ()));
+            if(Main.localPlayer.entityId == p.getId()) {
+                Main.localPlayer.controller.warp(new Vector3f(p.getX(), p.getY(), p.getZ()));
+            } else {
+                entities.get(p.getId()).warp(new Vector3f(p.getX(), p.getY(), p.getZ()));
+            }
         }
     }
     

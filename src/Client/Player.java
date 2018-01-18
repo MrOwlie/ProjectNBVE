@@ -27,8 +27,8 @@ import packets.Packet.Reload;
  */
 public class Player extends Node{
     
-    public static final float CYLINDER_HEIGHT = 5f;
-    public static final float CYLINDER_RADIUS = 2f;
+    public static final float CYLINDER_HEIGHT = 10f;
+    public static final float CYLINDER_RADIUS = 5f;
     
     public static final float SPEED = 16f/60f;
     public static final float UPDATE_FREQUENCY = 0.05f;
@@ -42,7 +42,7 @@ public class Player extends Node{
     private int experience;
     private int nSnowballs;
     private int dmg;
-    private int entityId;
+    public int entityId;
     
     BitmapFont uiFont;
     BitmapText uiHp;
@@ -52,7 +52,7 @@ public class Player extends Node{
     
     private float timeSinceUpdate = 0f;
             
-    private CharacterControl controller;
+    public CharacterControl controller;
     private Camera playerCam;
     private Vector3f direction = new Vector3f();
     private boolean input[] = new boolean[5];

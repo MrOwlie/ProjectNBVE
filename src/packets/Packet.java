@@ -481,7 +481,10 @@ public class Packet {
         }
         
         public Death(int id, float x, float y, float z) {
-            
+            this.entityId = id;
+            this.x = x;
+            this.y = y;
+            this.z = z;
         }
         
         public int getId() {

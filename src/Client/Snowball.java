@@ -57,7 +57,6 @@ public class Snowball extends MovingEntity
     @Override
     protected void correctPosition(float tpf) 
     {
-        System.out.println("Correct pos : "+truePosition);
         if(truePositionReached)
         {
             controller.setLinearVelocity(trueDirection.mult(SPEED));

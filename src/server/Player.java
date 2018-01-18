@@ -204,6 +204,7 @@ public class Player extends MovingEntity {
             float y = Main.terrain.getHeight(new Vector2f(x, z));
             this.hp = this.maxHp;
             System.out.println("MAXHP: " + this.maxHp);
+            System.out.println("ID: " + this.entityId);
             this.connection.send(new Packet.UpdateGUI(this.hp, this.ammo, this.exp, this.level));
             Networking.server.broadcast(new Death(this.entityId, x, y + 5, z));
             this.controller.warp(new Vector3f(x, y + 5, z));

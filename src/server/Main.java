@@ -54,6 +54,7 @@ public class Main extends SimpleApplication {
         Serializer.registerClass(Reload.class);
         Serializer.registerClass(DestroyEntity.class);
         Serializer.registerClass(UpdateGUI.class);
+        Serializer.registerClass(Death.class);
         
         net = new Networking();
         refRootNode = rootNode;

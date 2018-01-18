@@ -104,6 +104,7 @@ public class Main extends SimpleApplication {
         Serializer.registerClass(Reload.class);
         Serializer.registerClass(DestroyEntity.class);
         Serializer.registerClass(UpdateGUI.class);
+        Serializer.registerClass(Death.class);
         
         
         RemotePlayer.playerModel = assetManager.loadModel("/Models/Ninja.mesh.xml");

@@ -7,11 +7,13 @@ package Client;
 
 import com.jme3.audio.AudioData.DataType;
 import com.jme3.audio.AudioNode;
-import com.jme3.bullet.control.BetterCharacterControl;
+import com.jme3.bullet.collision.shapes.CylinderCollisionShape;
+import com.jme3.bullet.control.CharacterControl;
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
 import com.jme3.input.ChaseCamera;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
@@ -27,9 +29,8 @@ public class Player extends Node{
     
     public static final float CYLINDER_HEIGHT = 5f;
     public static final float CYLINDER_RADIUS = 2f;
-    public static final float MASS = 150f;
     
-    public static final float SPEED = 8f;
+    public static final float SPEED = 16f/60f;
     public static final float UPDATE_FREQUENCY = 0.05f;
     
     public static final int START_LEVEL = 1;
@@ -51,10 +52,11 @@ public class Player extends Node{
     
     private float timeSinceUpdate = 0f;
             
-    private BetterCharacterControl controller;
+    private CharacterControl controller;
     private Camera playerCam;
     private Vector3f direction = new Vector3f();
     private boolean input[] = new boolean[5];
+
     
     private AudioNode stepAudio; 
     
@@ -75,8 +77,8 @@ public class Player extends Node{
         this.setLocalTranslation(startPos);
         this.entityId = entityId;
         
-        controller = new BetterCharacterControl(CYLINDER_RADIUS, CYLINDER_HEIGHT, MASS);
-        controller.setGravity(new Vector3f(0f,1f,0f));
+        controller = new CharacterControl(new CylinderCollisionShape(new Vector3f(CYLINDER_RADIUS,CYLINDER_HEIGHT/2f,0f), 1), 1f);
+        
         Main.bulletAppState.getPhysicsSpace().add(controller);
         Main.refRootNode.attachChild(this);
         this.addControl(controller);
@@ -158,8 +160,8 @@ public class Player extends Node{
         Vector3f left = playerCam.getLeft().clone().normalize();
         forward.y = 0;
         left.y = 0;
-            
-        if(controller.isOnGround())
+        
+        if(controller.onGround())
         {
             direction.set(Vector3f.ZERO);
 
@@ -174,7 +176,10 @@ public class Player extends Node{
             if(direction.equals(Vector3f.ZERO)) stepAudio.stop();
             else stepAudio.play();
         }
-        else stepAudio.stop();
+        else
+        {
+            stepAudio.stop();
+        }
             
         timeSinceUpdate += tpf;
         if(timeSinceUpdate >= UPDATE_FREQUENCY)

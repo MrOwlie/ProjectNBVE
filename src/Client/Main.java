@@ -14,8 +14,12 @@ import com.jme3.input.MouseInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.input.controls.MouseButtonTrigger;
+import com.jme3.light.AmbientLight;
+import com.jme3.light.PointLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.FastMath;
+import com.jme3.math.Vector3f;
 import com.jme3.network.Client;
 import com.jme3.network.Network;
 import com.jme3.network.serializing.Serializer;
@@ -71,7 +75,11 @@ public class Main extends SimpleApplication {
     Modeling myModel;
     ChaseCamera chaseCam;
     
-    
+    PointLight testLight;
+    PointLight testLight2;
+    Node sunAndMoonNode;
+    Node sun;
+    Node moon;
     //public NiftyJmeDisplay niftyDisplay;
     //public Nifty nifty;
     
@@ -99,9 +107,9 @@ public class Main extends SimpleApplication {
         
         
         RemotePlayer.playerModel = assetManager.loadModel("/Models/Ninja.mesh.xml");
-        RemotePlayer.playerModel.scale(0.025f);
-        Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        mat.setTexture("ColorMap", assetManager.loadTexture("Models/Ninja.jpg"));
+        RemotePlayer.playerModel.scale(0.05f);
+        Material mat = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
+        mat.setTexture("DiffuseMap", assetManager.loadTexture("Models/Ninja.jpg"));
         RemotePlayer.playerModel.setMaterial(mat);
         
         Sphere snowball = new Sphere(32, 32, 0.25f);
@@ -218,6 +226,10 @@ public class Main extends SimpleApplication {
         //if(this.isLoggedIn){
             myModel.update(tpf);
             
+            sunAndMoonNode.rotate(0f, 0f, tpf*FastMath.PI/90f);
+            
+            testLight.setPosition(sun.getWorldTranslation());
+            testLight2.setPosition(moon.getWorldTranslation());
         //}
         //System.out.println(player.getLocalTranslation());
     }
@@ -257,6 +269,55 @@ public class Main extends SimpleApplication {
         sceneModel.addControl(landscape);
         bulletAppState.getPhysicsSpace().add(landscape);
         rootNode.attachChild(sceneModel);
+        
+        sunAndMoonNode = new Node("SunAndMoon");
+        
+        Sphere sphere = new Sphere(32, 32, 20f);
+        Geometry geomSphere = new Geometry("Snowball", sphere);
+        Material matsSphere = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
+        //matsSnowball.setColor("Color", ColorRGBA.White);
+        geomSphere.setMaterial(matsSphere);
+        
+        testLight = new PointLight();
+        testLight.setColor(ColorRGBA.White);
+        testLight.setRadius(700f);
+        testLight.setPosition(Vector3f.UNIT_Y.mult(500f));
+        sun = new Node("Sun");
+        sun.setLocalTranslation(Vector3f.UNIT_Y.mult(500f));
+        
+        testLight2 = new PointLight();
+        testLight2.setColor(ColorRGBA.Blue.mult(0.5f));
+        testLight2.setRadius(700f);
+        testLight2.setPosition(Vector3f.UNIT_Y.negate().mult(500f));
+        moon = new Node("Moon");
+        moon.setLocalTranslation(Vector3f.UNIT_Y.negate().mult(500f));
+        
+        rootNode.addLight(testLight);
+        rootNode.addLight(testLight2);
+        
+        Geometry testGeom = geomSphere.clone();
+        testGeom.setLocalTranslation(Vector3f.UNIT_Y.mult(40f));
+        
+        Geometry testGeom2 = geomSphere.clone();
+        testGeom2.setLocalTranslation(Vector3f.UNIT_Y.negate().mult(40f));
+        
+        AmbientLight sunAmbient = new AmbientLight();
+        sunAmbient.setColor(ColorRGBA.Yellow.mult(0.3f));
+        sun.addLight(sunAmbient);
+        sun.attachChild(testGeom);
+        
+        AmbientLight moonAmbient = new AmbientLight();
+        moonAmbient.setColor(ColorRGBA.Blue.mult(0.3f));
+        moon.addLight(moonAmbient);
+        moon.attachChild(testGeom2);
+        
+        sunAndMoonNode.attachChild(sun);
+        sunAndMoonNode.attachChild(moon);
+        rootNode.attachChild(sunAndMoonNode);
+        
+        AmbientLight al = new AmbientLight();
+        al.setColor(ColorRGBA.White.mult(0.1f));
+        rootNode.addLight(al);
     }
     
     private void initiateControlls()

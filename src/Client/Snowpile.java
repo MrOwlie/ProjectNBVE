@@ -37,8 +37,8 @@ public class Snowpile {
         this.id = id;
         
         geom = new Geometry("Sphere", s);
-        snow = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        snow.setTexture("ColorMap", assetManager.loadTexture("Textures/snowmound.png"));
+        snow = new Material(assetManager, "Common/MatDefs/Light/Lighting.j3md");
+        snow.setTexture("DiffuseMap", assetManager.loadTexture("Textures/snowmound.png"));
         geom.setMaterial(snow);
         node.attachChild(geom);
         geom.setLocalTranslation(x, 0, z);

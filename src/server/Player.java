@@ -5,7 +5,8 @@
  */
 package server;
 
-import com.jme3.bullet.control.BetterCharacterControl;
+import com.jme3.bullet.collision.shapes.CylinderCollisionShape;
+import com.jme3.bullet.control.CharacterControl;
 import com.jme3.math.Vector3f;
 import com.jme3.network.Filters;
 import com.jme3.network.HostedConnection;
@@ -51,7 +52,7 @@ public class Player extends MovingEntity {
     int ammo;
     
     HostedConnection connection;
-    BetterCharacterControl controller;
+    CharacterControl controller;
     Node shootNode;
     
         
@@ -67,7 +68,7 @@ public class Player extends MovingEntity {
         this.ammo = ammo;
         this.connection = connection;
         this.direction = new Vector3f();
-        this.controller = new BetterCharacterControl(CYLINDER_RADIUS, CYLINDER_HEIGHT, MASS);
+        this.controller = new CharacterControl(new CylinderCollisionShape(new Vector3f(CYLINDER_RADIUS, CYLINDER_HEIGHT/2f, 0f),1), 1f);
         
         shootNode = new Node();
         this.attachChild(shootNode);
@@ -113,8 +114,8 @@ public class Player extends MovingEntity {
                 
                 }
             } else {
-                Player player = new Player(username, connection, 1, 0, 0, 40f, 10f, 0);
-                connection.send(new Packet.AuthPlayer(0, 0, 0, 40f, 10f, 0, player.getEntityId()));
+                Player player = new Player(username, connection, 1, 0, 0, 100f, 10f, 0);
+                connection.send(new Packet.AuthPlayer(0, 0, 0, 100f, 10f, 0, player.getEntityId()));
                 Player.create(username, password);
                 Player.players.add(player);
                 Networking.server.broadcast(Filters.notEqualTo(connection), new SpawnEntity(player.getLocalTranslation(), player.entityId, Packet.PLAYER));

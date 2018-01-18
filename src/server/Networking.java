@@ -114,6 +114,10 @@ public class Networking implements MessageListener<HostedConnection>, Connection
 
     @Override
     public void connectionRemoved(Server server, HostedConnection conn) {
-        
+        for(Player player: Player.players) {
+            if(player.connection == conn) {
+                Networking.server.broadcast(new Packet.DestroyEntity(player.entityId));
+            }
+        }
     }
 }

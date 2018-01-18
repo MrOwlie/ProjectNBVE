@@ -61,6 +61,7 @@ public class Main extends SimpleApplication {
         Serializer.registerClass(DestroyEntity.class);
         Serializer.registerClass(UpdateGUI.class);
         Serializer.registerClass(Death.class);
+        Serializer.registerClass(InitiateSolarSystem.class);
         
         net = new Networking();
         refRootNode = rootNode;

@@ -505,6 +505,7 @@ public class Packet {
         
     }
     
+    @Serializable
     public static class InitiateSolarSystem extends MyAbstractMessage{
         Quaternion startRotation;
         

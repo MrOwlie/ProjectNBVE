@@ -46,7 +46,7 @@ public class Networking implements MessageListener<HostedConnection>, Connection
     public void messageReceived(HostedConnection source, Message m) {
         if(m instanceof Authenticate){
             for(Snowpile pile : Snowpile.snowpiles) {
-                source.send(new Packet.SpawnSnowpile(pile.id, pile.x, pile.z));
+                source.send(new Packet.SpawnSnowpile(pile.id, pile.x, pile.z, pile.y));
             }
             Authenticate packet = (Authenticate) m;
             System.out.println(packet.getUsername() + "  :  " + packet.getPassword());
@@ -91,7 +91,7 @@ public class Networking implements MessageListener<HostedConnection>, Connection
                         System.out.println("CONNECTION MATCH");
                         for(Snowpile pile : Snowpile.snowpiles) {
                             System.out.println("DISTANCE: " + player.getLocalTranslation().distance(new Vector3f(pile.x, 0, pile.z)));
-                            if(player.getLocalTranslation().distance(new Vector3f(pile.x, 0, pile.z)) < 10f) {
+                            if(player.getLocalTranslation().distance(new Vector3f(pile.x, pile.y, pile.z)) < 15f) {
                                 System.out.println("ADDING AMMO AND REMOVING PILE..");
                                 player.reload();
                                 Networking.server.broadcast(new Packet.DespawnSnowpile(pile.id));

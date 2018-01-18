@@ -5,6 +5,7 @@
  */
 package server;
 
+import com.jme3.math.Vector2f;
 import java.util.ArrayList;
 import java.util.Random;
 import packets.Packet.DespawnSnowpile;
@@ -29,14 +30,15 @@ public class Snowpile {
     
     float x;
     float z;
+    float y;
     //float timeAlive;
     
     public Snowpile() {
         this.x = (rand.nextFloat() * MAX_X) - (MAX_X / 2);
         this.z = (rand.nextFloat() * MAX_Z) - (MAX_Z / 2);
+        this.y = Main.terrain.getHeight(new Vector2f(this.x, this.z));
         //this.timeAlive = Snowpile.TIME_ALIVE;
         this.id = Snowpile.idCounter++;
-        System.out.println("ID: " + this.id + ", X: " + this.x + ", Z: " + this.z);
         
     }
     
@@ -44,8 +46,7 @@ public class Snowpile {
         if (Snowpile.snowpiles.size() < Snowpile.MAX_AMOUNT) {
             Snowpile newPile = new Snowpile();
             Snowpile.snowpiles.add(newPile);
-            System.out.println("ID: " + newPile.id + ", X: " + newPile.x + ", Z: " + newPile.z);
-            SpawnSnowpile packet = new SpawnSnowpile(newPile.id, newPile.x, newPile.z);
+            SpawnSnowpile packet = new SpawnSnowpile(newPile.id, newPile.x, newPile.z, newPile.y);
             Networking.server.broadcast(packet);
         }
         /*

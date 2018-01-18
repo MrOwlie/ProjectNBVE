@@ -31,7 +31,7 @@ public class Snowpile {
     
     
     
-    public Snowpile(AssetManager assetManager, Node node, int id, float x, float z) {
+    public Snowpile(AssetManager assetManager, Node node, int id, float x, float z, float y) {
         Sphere s = new Sphere(10, 10, 2);
         
         this.id = id;
@@ -41,7 +41,6 @@ public class Snowpile {
         snow.setTexture("DiffuseMap", assetManager.loadTexture("Textures/snowmound.png"));
         geom.setMaterial(snow);
         node.attachChild(geom);
-        geom.setLocalTranslation(x, 0, z);
-        System.out.println("SNOWPILE :: X: " + x + ", Z: " + z);
+        geom.setLocalTranslation(x, y, z);
     }
 }

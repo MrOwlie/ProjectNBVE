@@ -351,15 +351,17 @@ public class Packet {
         int id;
         float x;
         float z;
+        float y;
         
         public SpawnSnowpile() {
             
         }
         
-        public SpawnSnowpile(int id, float x, float z) {
+        public SpawnSnowpile(int id, float x, float z, float y) {
             this.id = id;
             this.x = x;
             this.z = z;
+            this.y = y;
             
         }
         
@@ -373,6 +375,10 @@ public class Packet {
         
         public float getZ() {
             return this.z;
+        }
+        
+        public float getY() {
+            return this.y;
         }
         
     }

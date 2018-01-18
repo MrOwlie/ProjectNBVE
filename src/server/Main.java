@@ -11,6 +11,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.system.AppSettings;
 import com.jme3.system.JmeContext;
+import com.jme3.terrain.geomipmap.TerrainQuad;
 import packets.Packet.*;
 
 /**
@@ -24,6 +25,7 @@ public class Main extends SimpleApplication {
     
     RigidBodyControl landscape;
     Spatial sceneModel;
+    public static TerrainQuad terrain;
     
     private Modeling myModel;
     static Networking net;
@@ -68,6 +70,9 @@ public class Main extends SimpleApplication {
         sceneModel = assetManager.loadModel("Scenes/MainScene.j3o");
         CollisionShape sceneShape = CollisionShapeFactory.createMeshShape(sceneModel);
         landscape = new RigidBodyControl(sceneShape, 0);
+        Node terrainNode = (Node)sceneModel;
+        terrain = (TerrainQuad)terrainNode.getChild("terrain-MainScene");
+        
         sceneModel.addControl(landscape);
         bulletAppState.getPhysicsSpace().add(landscape);
         rootNode.attachChild(sceneModel);

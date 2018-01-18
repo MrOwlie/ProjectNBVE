@@ -117,6 +117,7 @@ public class Networking implements MessageListener<HostedConnection>, Connection
         for(Player player: Player.players) {
             if(player.connection == conn) {
                 Networking.server.broadcast(new Packet.DestroyEntity(player.entityId));
+                Modeling.removeEntity(player.entityId);
             }
         }
     }

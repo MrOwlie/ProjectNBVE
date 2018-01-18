@@ -32,8 +32,8 @@ import packets.Packet.InitiateSolarSystem;
  * @author fredr
  */
 public class Player extends MovingEntity {
-    public static final float CYLINDER_HEIGHT = 15f;
-    public static final float CYLINDER_RADIUS = 5f;
+    public static final float CYLINDER_HEIGHT = 10f;
+    public static final float CYLINDER_RADIUS = 4f;
     public static final float MASS = 150f;
     public static final float SPEED = 8f;
     public static final float SNOWBALL_CD = 0.5f;

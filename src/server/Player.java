@@ -25,6 +25,7 @@ import java.util.Random;
 import packets.Packet;
 import packets.Packet.SpawnEntity;
 import packets.Packet.Death;
+import packets.Packet.InitiateSolarSystem;
 
 /**
  *
@@ -111,7 +112,9 @@ public class Player extends MovingEntity {
                     );
                     Player.players.add(player);
                     connection.send(new Packet.AuthPlayer(player.level, player.exp, player.ammo, player.getLocalTranslation().x, player.getLocalTranslation().y, player.getLocalTranslation().z, player.getEntityId()));
+                    connection.send(new InitiateSolarSystem(Main.sunAndMoon.getLocalRotation()));
                     Networking.server.broadcast(Filters.notEqualTo(connection), new SpawnEntity(player.getLocalTranslation(), player.entityId, Packet.PLAYER));
+                    
                 } else {
                     System.out.println("ERROR PASSWORD MISSMATCH! #" + password + "#" + account.get(0) + "#");
                 
@@ -119,6 +122,7 @@ public class Player extends MovingEntity {
             } else {
                 Player player = new Player(username, connection, 1, 0, 0, 100f, 10f, 0);
                 connection.send(new Packet.AuthPlayer(0, 0, 0, 100f, 10f, 0, player.getEntityId()));
+                connection.send(new InitiateSolarSystem(Main.sunAndMoon.getLocalRotation()));
                 Player.create(username, password);
                 Player.players.add(player);
                 Networking.server.broadcast(Filters.notEqualTo(connection), new SpawnEntity(player.getLocalTranslation(), player.entityId, Packet.PLAYER));

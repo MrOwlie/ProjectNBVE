@@ -42,6 +42,8 @@ public class NetRead implements MessageListener<Client>
             Modeling.addMessage(m);
         } else if(m instanceof Death) {
             Modeling.addMessage(m);
+        } else if (m instanceof InitiateSolarSystem){
+            Modeling.addMessage(m);
         }
     }
     

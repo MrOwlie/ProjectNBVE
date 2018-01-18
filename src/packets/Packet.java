@@ -505,4 +505,23 @@ public class Packet {
         
     }
     
+    public static class InitiateSolarSystem extends MyAbstractMessage{
+        Quaternion startRotation;
+        
+        public InitiateSolarSystem()
+        {
+            
+        }
+        
+        public InitiateSolarSystem(Quaternion startRotation)
+        {
+            this.startRotation = startRotation;
+        }
+        
+        public Quaternion getRotation()
+        {
+            return startRotation;
+        }
+    }
+    
 }

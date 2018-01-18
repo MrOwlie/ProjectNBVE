@@ -5,6 +5,8 @@ import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.bullet.util.CollisionShapeFactory;
+import com.jme3.math.FastMath;
+import com.jme3.math.Vector3f;
 import com.jme3.network.serializing.Serializer;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Node;
@@ -29,6 +31,10 @@ public class Main extends SimpleApplication {
     
     private Modeling myModel;
     static Networking net;
+    
+    public static Node sunAndMoon;
+    private Node sun;
+    private Node moon;
     
     
     public static void main(String[] args){
@@ -63,6 +69,16 @@ public class Main extends SimpleApplication {
         myModel = new Modeling();
         bulletAppState.getPhysicsSpace().addCollisionListener(myModel);
         initiateMap();
+        
+        sun = new Node("Sun");
+        sun.setLocalTranslation(Vector3f.UNIT_Y.mult(500f));
+        
+        moon = new Node("Moon");
+        moon.setLocalTranslation(Vector3f.UNIT_Y.negate().mult(500f));
+        
+        sunAndMoon = new Node("SunAndMoon");
+        sunAndMoon.attachChild(sun);
+        sunAndMoon.attachChild(moon);
     }
 
     private void initiateMap()
@@ -83,6 +99,7 @@ public class Main extends SimpleApplication {
     public void simpleUpdate(float tpf) 
     {
         myModel.update(tpf);
+        sunAndMoon.rotate(0f, 0f, FastMath.PI*tpf/90);
     }
 
     @Override

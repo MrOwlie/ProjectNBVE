@@ -77,7 +77,7 @@ public class Main extends SimpleApplication {
     
     PointLight testLight;
     PointLight testLight2;
-    Node sunAndMoonNode;
+    public static Node sunAndMoonNode;
     Node sun;
     Node moon;
     //public NiftyJmeDisplay niftyDisplay;

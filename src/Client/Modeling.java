@@ -18,6 +18,7 @@ import packets.Packet;
 import packets.Packet.DestroyEntity;
 import packets.Packet.UpdateGUI;
 import packets.Packet.Death;
+import packets.Packet.InitiateSolarSystem;
 
 /**
  *
@@ -148,6 +149,12 @@ public class Modeling
             } else {
                 entities.get(p.getId()).warp(new Vector3f(p.getX(), p.getY(), p.getZ()));
             }
+        }
+        
+        else if (message instanceof InitiateSolarSystem)
+        {
+            InitiateSolarSystem i = (InitiateSolarSystem) message;
+            Main.sunAndMoonNode.setLocalRotation(i.getRotation());
         }
     }
     

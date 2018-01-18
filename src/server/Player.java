@@ -32,7 +32,7 @@ import packets.Packet.Death;
  */
 public class Player extends MovingEntity {
     public static final float CYLINDER_HEIGHT = 10f;
-    public static final float CYLINDER_RADIUS = 3f;
+    public static final float CYLINDER_RADIUS = 2f;
     public static final float MASS = 150f;
     public static final float SPEED = 8f;
     public static final float SNOWBALL_CD = 0.5f;

@@ -117,7 +117,6 @@ public class Modeling implements PhysicsCollisionListener
     @Override
     public void collision(PhysicsCollisionEvent event)
     {
-        System.out.println("Collision");
         if(event.getNodeA().getName().equals("Snowball"))
         {
             Snowball snowball = (Snowball)event.getNodeA();
